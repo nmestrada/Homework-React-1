@@ -19,8 +19,8 @@ describe("SinglePet component", () => {
     ]
   }
 
-  const franky = {
-    name: "Franky",
+  const frankie = {
+    name: "Frankie",
     description: "Small black cat who loves to stick his head in cups",
     favoriteFoods: [
       "Leaves",
@@ -40,8 +40,8 @@ describe("SinglePet component", () => {
   })
 
   it("renders different name and description if passed different props", () => {
-    const { getByText } = render(<SinglePet pet={franky} />)
-    const name = getByText("Franky")
+    const { getByText } = render(<SinglePet pet={frankie} />)
+    const name = getByText("Frankie")
     const description = getByText(content =>
       content.includes("Small black cat who loves to stick his head in cups")
     )
@@ -49,12 +49,12 @@ describe("SinglePet component", () => {
     assert.isNotNull(description)
   })
 
-  it("has some state", () => {
-    const { getByText } = render(<SinglePet pet={franky} />)
-    const counterBefore = getByText("Counter: 0")
-    fireEvent.click(getByText("Increment"))
-    const counterAfter = getByText("Counter: 1")
-    assert.isNotNull(counterBefore)
-    assert.isNotNull(counterAfter)
+  it("renders a button that toggles whether the pet is adopted", () => {
+    const { getByText } = render(<SinglePet pet={frankie} />)
+    const adoptedBefore = getByText("Available for Adoption")
+    fireEvent.click(getByText("Toggle Adopted"))
+    const adoptedAfter = getByText("Adopted!")
+    assert.isNotNull(adoptedBefore)
+    assert.isNotNull(adoptedAfter)
   })
 })

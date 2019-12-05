@@ -3,15 +3,15 @@ import React, { useState } from "react"
 // React Hooks Component
 const SinglePet = props => {
   const { name, description } = props.pet
-  const [counter, setCounter] = useState(0)
+  const [adopted, setAdopted] = useState(false)
   return (
     <>
       <div className="single-pet">
         <h2>{name}</h2>
         <div>Description: {description}</div>
         <hr />
-        <button onClick={() => setCounter(counter + 1)}>Increment</button>
-        <div>Counter: {counter}</div>
+        <div>{adopted ? "Adopted!" : "Available for Adoption"}</div>
+        <button onClick={() => setAdopted(!adopted)}>Toggle Adopted</button>
         <div>Favorite foods:</div>
         <ul>
           <li>Fancy Feast: Salmon Pâté</li>
