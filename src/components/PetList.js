@@ -6,7 +6,7 @@ const PetList = props => {
   return (
     <div className="pet-list">
       {pets.map(pet => {
-        return <SinglePet key={pet.id} pet={pet} />
+        return <SinglePet key={pet.name} pet={pet} />
       })}
     </div>
   )

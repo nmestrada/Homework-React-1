@@ -59,4 +59,6 @@ describe("SinglePet component", () => {
     assert.isNull(favFoodsBefore)
     assert.isNotNull(favFoodsAfter)
   })
+
+  // TODO: Write a test for handling the possibility of favoriteFoods undefined
 })
