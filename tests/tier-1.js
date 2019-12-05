@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import React from "react"
-import { render, cleanup } from "@testing-library/react"
+import { render, cleanup, fireEvent } from "@testing-library/react"
 import { assert } from "chai"
 
 import SinglePet from "../src/components/SinglePet"
@@ -47,5 +47,14 @@ describe("SinglePet component", () => {
     )
     assert.isNotNull(name)
     assert.isNotNull(description)
+  })
+
+  it("has some state", () => {
+    const { getByText } = render(<SinglePet pet={franky} />)
+    const counterBefore = getByText("Counter: 0")
+    fireEvent.click(getByText("Increment"))
+    const counterAfter = getByText("Counter: 1")
+    assert.isNotNull(counterBefore)
+    assert.isNotNull(counterAfter)
   })
 })
