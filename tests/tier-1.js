@@ -19,13 +19,33 @@ describe("SinglePet component", () => {
     ]
   }
 
+  const franky = {
+    name: "Franky",
+    description: "Small black cat who loves to stick his head in cups",
+    favoriteFoods: [
+      "Leaves",
+      "Friskies: Poultry and Gravy",
+      "Fancy Feast: Salmon Pâté"
+    ]
+  }
+
   it("renders pet.name and pet.description passed in as props", () => {
-    const { getByText, getAllByText } = render(<SinglePet pet={rigatoni} />)
+    const { getByText } = render(<SinglePet pet={rigatoni} />)
     const name = getByText("Rigatoni")
-    const description = getAllByText(content => {
-      return content.includes("A flaming hot cheetoh in feline form")
-    })
+    const description = getByText(content =>
+      content.includes("A flaming hot cheetoh in feline form")
+    )
     assert.isNotNull(name)
-    assert.lengthOf(description, 1)
+    assert.isNotNull(description)
+  })
+
+  it("renders different name and description if passed different props", () => {
+    const { getByText } = render(<SinglePet pet={franky} />)
+    const name = getByText("Franky")
+    const description = getByText(content =>
+      content.includes("Small black cat who loves to stick his head in cups")
+    )
+    assert.isNotNull(name)
+    assert.isNotNull(description)
   })
 })
