@@ -6,3 +6,14 @@ ul {
   list-style: none;
   padding: 0px;
 }
+
+.pet-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.single-pet {
+  width: 15rem;
+  margin: 0.5rem;
+}

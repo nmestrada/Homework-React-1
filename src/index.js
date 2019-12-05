@@ -11,13 +11,14 @@ import React from "react"
 import ReactDOM from "react-dom"
 import SinglePet from "./components/SinglePet"
 import pets from "./petdata"
+import PetList from "./components/PetList"
 
 const App = () => {
-  const [rigatoni] = pets
   return (
     <>
       <h1>Adoption Center</h1>
-      <SinglePet pet={rigatoni} />
+      {/* <SinglePet pet={rigatoni} /> */}
+      <PetList pets={pets} />
     </>
   )
 }
