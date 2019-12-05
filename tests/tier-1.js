@@ -11,6 +11,7 @@ describe("SinglePet component", () => {
   const rigatoni = {
     name: "Rigatoni",
     description: "A flaming hot cheetoh in feline form",
+    adopted: true,
     favoriteFoods: [
       "Fancy Feast: Salmon Pâté",
       "Fancy Feast: Chicken Liver Pâté",
@@ -22,6 +23,7 @@ describe("SinglePet component", () => {
   const frankie = {
     name: "Frankie",
     description: "Small black cat who loves to stick his head in cups",
+    adopted: false,
     favoriteFoods: [
       "Leaves",
       "Friskies: Poultry and Gravy",
@@ -49,12 +51,12 @@ describe("SinglePet component", () => {
     assert.isNotNull(description)
   })
 
-  it("renders a button that toggles whether the pet is adopted", () => {
-    const { getByText } = render(<SinglePet pet={frankie} />)
-    const adoptedBefore = getByText("Available for Adoption")
-    fireEvent.click(getByText("Toggle Adopted"))
-    const adoptedAfter = getByText("Adopted!")
-    assert.isNotNull(adoptedBefore)
-    assert.isNotNull(adoptedAfter)
+  it("renders a button that toggles whether to display the pet's favorite foods", () => {
+    const { queryByText } = render(<SinglePet pet={rigatoni} />)
+    const favFoodsBefore = queryByText(content => content.includes("Shoelaces"))
+    fireEvent.click(queryByText("Show/Hide Favorite Foods"))
+    const favFoodsAfter = queryByText(content => content.includes("Shoelaces"))
+    assert.isNull(favFoodsBefore)
+    assert.isNotNull(favFoodsAfter)
   })
 })

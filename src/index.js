@@ -5,22 +5,13 @@ import "regenerator-runtime/runtime"
 import React from "react"
 import ReactDOM from "react-dom"
 import SinglePet from "./components/SinglePet"
-
-const rigatoni = {
-  name: "Rigatoni",
-  description: "A flaming hot cheetoh in feline form",
-  favoriteFoods: [
-    "Fancy Feast: Salmon Pâté",
-    "Fancy Feast: Chicken Liver Pâté",
-    "Tuna straight from the can",
-    "Shoelaces"
-  ]
-}
+import pets from "./petdata"
 
 const App = () => {
+  const [rigatoni] = pets
   return (
     <>
-      <h1>Hello World</h1>
+      <h1>Adoption Center</h1>
       <SinglePet pet={rigatoni} />
     </>
   )
