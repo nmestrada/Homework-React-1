@@ -4,13 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --watch tests --require @babel/register",
+    "test": "mocha --watch tests",
     "start": "parcel src/index.html"
+  },
+  "mocha": {
+    "diff": true,
+    "require": [
+      "@babel/register",
+      "jsdom-global/register"
+    ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@testing-library/react": "^9.3.2",
     "chai": "^4.2.0",
     "core-js": "^3.4.7",
     "mocha": "^6.2.2",
@@ -23,6 +31,8 @@
     "@babel/preset-env": "^7.7.4",
     "@babel/preset-react": "^7.7.4",
     "@babel/register": "^7.7.4",
+    "jsdom": "^15.2.1",
+    "jsdom-global": "^3.0.2",
     "sass": "^1.23.7"
   }
 }
