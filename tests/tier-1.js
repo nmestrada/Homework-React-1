@@ -17,9 +17,12 @@ describe("SinglePet component", () => {
   }
 
   it("renders the pet name passed in as props", async () => {
-    const { findAllByText } = render(<SinglePet pet={rigatoni} />)
+    const { findAllByText, container, baseElement } = render(
+      <SinglePet pet={rigatoni} />
+    )
     const matching = await findAllByText("Rigatoni")
-    console.log('MATCHING', matching.length)
+    console.log("MATCHING", matching.length)
+    // console.log(baseElement)
   })
   it("Test 2", () => {
     // throw new Error("Bad things")
