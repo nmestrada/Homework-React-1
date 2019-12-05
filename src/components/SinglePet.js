@@ -1,11 +1,12 @@
 import React from "react"
 
-const SinglePet = () => {
+const SinglePet = props => {
+  const { name, description } = props.pet
   return (
     <>
       <div className="single-pet">
-        <h2>Rigatoni</h2>
-        <div>Description: A flaming hot cheetoh in feline form</div>
+        <h2>{name}</h2>
+        <div>Description: {description}</div>
         <hr />
         <div>Favorite foods:</div>
         <ul>
