@@ -7,7 +7,7 @@ const SinglePet = props => {
   return (
     <div className="single-pet">
       <h2>{name}</h2>
-      <div>Description: {description}</div>
+      <div>{description}</div>
       <hr />
       <div>{adopted ? "Adopted!" : "Available for adoption"}</div>
       <button onClick={() => setAdopted(!adopted)}>Toggle Adopted</button>

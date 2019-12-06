@@ -8,25 +8,25 @@ const [rigatoni] = pets
 // to SinglePet in the browser as they work. When they get to Tier 2, they modify
 // this component to render a list instead of just one SinglePet.
 // General Solution
-// const PetList = props => {
-//   const { pets } = props
-//   return (
-//     <div className="pet-list">
-//       {pets.map(pet => {
-//         return <SinglePet key={pet.name} pet={pet} />
-//       })}
-//     </div>
-//   )
-// }
-
-// Currently, PetList renders one SinglePet. We'd like it to render a list of
-// pets, passed in as props.pets.
-const PetList = () => {
+const PetList = props => {
+  const { pets } = props
   return (
     <div className="pet-list">
-      <SinglePet pet={rigatoni} />
+      {pets.map(pet => {
+        return <SinglePet pet={pet} />
+      })}
     </div>
   )
 }
+
+// Currently, PetList renders one SinglePet. We'd like it to render a list of
+// pets, passed in as props.pets.
+// const PetList = () => {
+//   return (
+//     <div className="pet-list">
+//       <SinglePet pet={rigatoni} />
+//     </div>
+//   )
+// }
 
 export default PetList

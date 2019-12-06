@@ -33,22 +33,19 @@ describe("SinglePet component", () => {
 
   it("renders pet.name and pet.description passed in as props", () => {
     const { getByText } = render(<SinglePet pet={rigatoni} />)
-    const name = getByText("Rigatoni")
-    const description = getByText(content =>
-      content.includes("A flaming hot cheetoh in feline form")
-    )
-    assert.isNotNull(name)
-    assert.isNotNull(description)
+    getByText("Rigatoni", { exact: false })
+    getByText("A flaming hot cheetoh in feline form", {
+      exact: false
+    })
   })
 
   it("renders different name and description if passed different props", () => {
     const { getByText } = render(<SinglePet pet={frankie} />)
-    const name = getByText("Frankie")
-    const description = getByText(content =>
-      content.includes("Small black cat who loves to stick his head in cups")
+    getByText("Frankie", { exact: true })
+    getByText(
+      "Small black cat who loves to stick his head in cups",
+      { exact: false }
     )
-    assert.isNotNull(name)
-    assert.isNotNull(description)
   })
 
   it("renders a 'Toggle Adopted' button", () => {

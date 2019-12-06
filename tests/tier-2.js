@@ -43,14 +43,17 @@ describe("PetList component", () => {
   ]
 
   it("renders a list of SinglePets", () => {
-    const { queryByText } = render(<PetList pets={pets} />)
-    const foundRigatoni = queryByText("Rigatoni")
-    const foundFrankie = queryByText("Frankie")
-    const foundCody = queryByText("Cody")
-    const foundAnabelle = queryByText("Anabelle")
-    assert.isNotNull(foundRigatoni)
-    assert.isNotNull(foundFrankie)
-    assert.isNotNull(foundCody)
-    assert.isNotNull(foundAnabelle)
+    const { getByText } = render(<PetList pets={pets} />)
+    getByText("Rigatoni", { exact: false })
+    getByText("Frankie", { exact: false })
+    getByText("Cody", { exact: false })
+    getByText("Anabelle", { exact: false })
   })
+
+  // Not sure if this test is necessary (or even possible with RTL? ¯\_(ツ)_/¯)
+  // it("renders each SinglePets with a unique key", () => {
+  //   const allThings = render(<PetList pets={pets} />)
+  //   console.log(allThings)
+
+  // })
 })
