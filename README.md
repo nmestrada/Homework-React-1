@@ -7,16 +7,13 @@
 3. Run the tests: `npm test`
 4. Run it locally: `npm start`
 
-Your goal here is to make all the tests pass. Currently, they are all pending.
-So, you'll need to un-pend them by replacing `xit` with `it` for each test, as
-you work through each test.
+Your goal here is to make all the tests pass. The tests are organized in tiers.
+You are advised to work through these tiers in order (`tests/tier-1` followed
+by `tests/tier-2.js`, etc).
 
-The tests are organized in tiers. You are advised to work through these tiers in
-order (`tests/tier-1` followed by `tests/tier-2.js`, etc).
-
-You may want to run a single test in isolation (it keeps the test output a lot
-cleaner). To do so, replace `it` with `it.only`. Just remember to change it back
-to `it` after you're done with that test. 😉
+You may want to run a single test in isolation. To do so, replace `it` with
+`it.only`. Just remember to change it back to `it` after you're done with that
+test. 😉
 
 The React Dev Tools are your friend!
 
@@ -28,7 +25,7 @@ application in your browser, especially because you will be able to leverage the
 awesome power of the React Dev Tools.
 
 By default, Parcel will open up the React application at
-[localhost:1234](localhost:1234)
+[localhost:1234](http://localhost:1234)
 
 ## Learning Goals
 
