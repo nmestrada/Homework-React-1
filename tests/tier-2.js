@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 import React from "react"
 import { render, cleanup } from "@testing-library/react"
-import { assert } from "chai"
+// import { assert } from "chai"
 
 import PetList from "../src/components/PetList"
 

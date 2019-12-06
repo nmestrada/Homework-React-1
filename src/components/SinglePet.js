@@ -10,8 +10,8 @@ const SinglePet = props => {
       <div>
         Species: {species}
         <span>
-          {species === "cat" && " 😸"}
-          {species === "dog" && " 🐶"}
+          {species === "cat"}
+          {species === "dog"}
         </span>
       </div>
       <div>{description}</div>
