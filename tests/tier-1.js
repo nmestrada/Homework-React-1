@@ -51,14 +51,26 @@ describe("SinglePet component", () => {
     assert.isNotNull(description)
   })
 
-  it("renders a button that toggles whether to display the pet's favorite foods", () => {
+  it("renders a button that toggles the pet's adopted status", () => {
     const { queryByText } = render(<SinglePet pet={rigatoni} />)
-    const favFoodsBefore = queryByText(content => content.includes("Shoelaces"))
-    assert.isNull(favFoodsBefore)
-    fireEvent.click(queryByText("Show/Hide Favorite Foods"))
-    const favFoodsAfter = queryByText(content => content.includes("Shoelaces"))
-    assert.isNotNull(favFoodsAfter)
-  })
 
-  // TODO: Write a test for handling the possibility of favoriteFoods undefined
+    // The component should render "Available for adoption" and not "Adopted!"
+    const availableForAdoptedBefore = queryByText(content =>
+      content.includes("Available for adoption")
+    )
+    const adoptedBefore = queryByText(content => content.includes("Adopted!"))
+    assert.isNotNull(availableForAdoptedBefore)
+    assert.isNull(adoptedBefore)
+
+    // Now we click the button!
+    fireEvent.click(queryByText("Toggle Adopted"))
+
+    // The component should now render "Adopted!" and not "Available for adoption"
+    const availableForAdoptedAfter = queryByText(content =>
+      content.includes("Available for adoption")
+    )
+    const adoptedAfter = queryByText(content => content.includes("Adopted!"))
+    assert.isNull(availableForAdoptedAfter)
+    assert.isNotNull(adoptedAfter)
+  })
 })
