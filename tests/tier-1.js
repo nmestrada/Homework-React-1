@@ -11,40 +11,27 @@ describe("SinglePet component", () => {
   const rigatoni = {
     name: "Rigatoni",
     description: "A flaming hot cheetoh in feline form",
-    adopted: true,
-    favoriteFoods: [
-      "Fancy Feast: Salmon Pâté",
-      "Fancy Feast: Chicken Liver Pâté",
-      "Tuna straight from the can",
-      "Shoelaces"
-    ]
+    species: "cat"
   }
 
-  const frankie = {
-    name: "Frankie",
-    description: "Small black cat who loves to stick his head in cups",
-    adopted: false,
-    favoriteFoods: [
-      "Leaves",
-      "Friskies: Poultry and Gravy",
-      "Fancy Feast: Salmon Pâté"
-    ]
+  const cody = {
+    name: "Cody",
+    description: "Adorable pug who loves to hug",
+    species: "dog"
   }
 
-  it("renders pet.name and pet.description passed in as props", () => {
+  it("renders a pet's name, description, and species passed in as props", () => {
     const { getByText } = render(<SinglePet pet={rigatoni} />)
     getByText("Rigatoni", { exact: false })
-    getByText("A flaming hot cheetoh in feline form", {
-      exact: false
-    })
+    getByText("A flaming hot cheetoh in feline form", { exact: false })
+    getByText("cat", { exact: false })
   })
 
-  it("renders different name and description if passed different props", () => {
-    const { getByText } = render(<SinglePet pet={frankie} />)
-    getByText("Frankie", { exact: true })
-    getByText("Small black cat who loves to stick his head in cups", {
-      exact: false
-    })
+  it("renders different name, description, and species if passed different props", () => {
+    const { getByText } = render(<SinglePet pet={cody} />)
+    getByText("Cody", { exact: true })
+    getByText("Adorable pug who loves to hug", { exact: false })
+    getByText("dog", { exact: false })
   })
 
   it("renders a 'Toggle Adopted' button", () => {

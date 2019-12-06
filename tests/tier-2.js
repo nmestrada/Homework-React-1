@@ -50,6 +50,10 @@ describe("PetList component", () => {
     getByText("Anabelle", { exact: false })
   })
 
+  // Idea: Give the PetList a <select> to filer pets by species
+  // Or maybe just render two different PetLists with a header above each one
+  // according to the species
+
   // Not sure if this test is necessary (or even possible with RTL? ¯\_(ツ)_/¯)
   // it("renders each SinglePets with a unique key", () => {
   //   const allThings = render(<PetList pets={pets} />)

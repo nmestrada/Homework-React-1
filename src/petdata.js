@@ -12,7 +12,7 @@ const pets = [
   },
   {
     name: "Frankie",
-    description: "Small black cat who loves to stick his head in cups",
+    description: "The snuggliest kitty",
     species: "cat",
     favoriteFoods: [
       "Leaves",
@@ -27,7 +27,7 @@ const pets = [
   },
   {
     name: "Anabelle",
-    description: "Completely apathetic towards anyone but her owner",
+    description: "Might each your couch",
     species: "dog"
   }
 ]

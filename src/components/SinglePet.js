@@ -2,11 +2,18 @@ import React, { useState } from "react"
 
 // React Hooks Component
 const SinglePet = props => {
-  const { name, description } = props.pet
+  const { name, description, species } = props.pet
   const [adopted, setAdopted] = useState(false)
   return (
     <div className="single-pet">
       <h2>{name}</h2>
+      <div>
+        Species: {species}
+        <span>
+          {species === "cat" && " 😸"}
+          {species === "dog" && " 🐶"}
+        </span>
+      </div>
       <div>{description}</div>
       <hr />
       <div>{adopted ? "Adopted!" : "Available for adoption"}</div>
