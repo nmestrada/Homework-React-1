@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 // React Hooks Component
 const SinglePet = props => {
-  const { name, description } = props.pet
+  const { name, description, favoriteFoods } = props.pet
   const [adopted, setAdopted] = useState(false)
   const [displayFavFoods, setDisplayFavFoods] = useState(false)
   return (
@@ -15,17 +15,19 @@ const SinglePet = props => {
       <button onClick={() => setDisplayFavFoods(!displayFavFoods)}>
         Show/Hide Favorite Foods
       </button>
-      {displayFavFoods && (
+      {displayFavFoods && favoriteFoods && favoriteFoods.length ? (
         <>
-          <div>Favorite foods:</div>
+          <div>{name} likes to eat:</div>
           <ul>
-            <li>Fancy Feast: Salmon Pâté</li>
-            <li>Fancy Feast: Chicken Liver Pâté</li>
-            <li>Tuna straight from the can</li>
-            <li>Shoelaces</li>
+            {favoriteFoods.map(favFood => {
+              return <li key={favFood}>{favFood}</li>
+            })}
+            {/* <li>Fancy Feast: Chicken Liver Pâté</li>
+              <li>Tuna straight from the can</li>
+              <li>Shoelaces</li> */}
           </ul>
         </>
-      )}
+      ) : ''}
     </div>
   )
 }

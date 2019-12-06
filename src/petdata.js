@@ -22,13 +22,13 @@ const pets = [
   },
   {
     name: "Cody",
-    species: "dog",
-    description: "Adorable pug who loves to hug"
+    description: "Adorable pug who loves to hug",
+    species: "dog"
   },
   {
-    name: "Professor Squeeks",
-    species: "mouse",
-    description: "A smol mouse who lives in a house"
+    name: "Anabelle",
+    description: "Completely apathetic towards anyone but her owner",
+    species: "dog"
   }
 ]
 

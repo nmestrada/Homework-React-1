@@ -36,17 +36,21 @@ describe("PetList component", () => {
       description: "Adorable pug who loves to hug"
     },
     {
-      name: "Professor Squeeks",
-      species: "mouse",
-      description: "A smol mouse who lives in a house"
+      name: "Anabelle",
+      species: "dog",
+      description: "Completely apathetic towards anyone but her owner"
     }
   ]
 
   it("renders a list of SinglePets", () => {
-    const { container } = render(<PetList pets={pets} />)
-    console.log([...container.firstChild.children])
-
-
+    const { queryByText } = render(<PetList pets={pets} />)
+    const foundRigatoni = queryByText("Rigatoni")
+    const foundFrankie = queryByText("Frankie")
+    const foundCody = queryByText("Cody")
+    const foundAnabelle = queryByText("Anabelle")
+    assert.isNotNull(foundRigatoni)
+    assert.isNotNull(foundFrankie)
+    assert.isNotNull(foundCody)
+    assert.isNotNull(foundAnabelle)
   })
-
 })

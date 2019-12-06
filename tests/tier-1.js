@@ -54,9 +54,9 @@ describe("SinglePet component", () => {
   it("renders a button that toggles whether to display the pet's favorite foods", () => {
     const { queryByText } = render(<SinglePet pet={rigatoni} />)
     const favFoodsBefore = queryByText(content => content.includes("Shoelaces"))
+    assert.isNull(favFoodsBefore)
     fireEvent.click(queryByText("Show/Hide Favorite Foods"))
     const favFoodsAfter = queryByText(content => content.includes("Shoelaces"))
-    assert.isNull(favFoodsBefore)
     assert.isNotNull(favFoodsAfter)
   })
 
