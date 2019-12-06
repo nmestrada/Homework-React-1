@@ -2,23 +2,12 @@ const pets = [
   {
     name: "Rigatoni",
     description: "A flaming hot cheetoh in feline form",
-    species: "cat",
-    favoriteFoods: [
-      "Fancy Feast: Salmon Pâté",
-      "Fancy Feast: Chicken Liver Pâté",
-      "Tuna straight from the can",
-      "Shoelaces"
-    ]
+    species: "cat"
   },
   {
     name: "Frankie",
     description: "The snuggliest kitty",
-    species: "cat",
-    favoriteFoods: [
-      "Leaves",
-      "Friskies: Poultry and Gravy",
-      "Fancy Feast: Salmon Pâté"
-    ]
+    species: "cat"
   },
   {
     name: "Cody",
