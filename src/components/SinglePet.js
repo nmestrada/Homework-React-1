@@ -40,13 +40,6 @@ export default SinglePet
 //           <hr />
 //           <button onClick={this.increment}>Increment</button>
 //           <div>Counter: {this.state.counter}</div>
-//           <div>Favorite foods:</div>
-//           <ul>
-//             <li>Fancy Feast: Salmon Pâté</li>
-//             <li>Fancy Feast: Chicken Liver Pâté</li>
-//             <li>Tuna straight from the can</li>
-//             <li>Shoelaces</li>
-//           </ul>
 //         </div>
 //       </>
 //     )
