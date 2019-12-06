@@ -51,7 +51,14 @@ describe("SinglePet component", () => {
     assert.isNotNull(description)
   })
 
-  it("renders a button that toggles the pet's adopted status", () => {
+  it("renders a 'Toggle Adopted' button", () => {
+    // This button doesn't need to do anything yet. See the next test...
+    const { getByRole } = render(<SinglePet pet={rigatoni} />)
+    const { innerHTML } = getByRole("button")
+    assert.equal(innerHTML, "Toggle Adopted")
+  })
+
+  it("the 'Toggle Adopted' button toggles the pet's adopted status", () => {
     const { queryByText } = render(<SinglePet pet={rigatoni} />)
 
     // The component should render "Available for adoption" and not "Adopted!"
