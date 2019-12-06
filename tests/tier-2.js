@@ -54,6 +54,7 @@ describe("PetList component", () => {
   // it("renders each SinglePets with a unique key", () => {
   //   const allThings = render(<PetList pets={pets} />)
   //   console.log(allThings)
-
   // })
+
+
 })

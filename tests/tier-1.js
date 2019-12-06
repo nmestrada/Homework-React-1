@@ -42,10 +42,9 @@ describe("SinglePet component", () => {
   it("renders different name and description if passed different props", () => {
     const { getByText } = render(<SinglePet pet={frankie} />)
     getByText("Frankie", { exact: true })
-    getByText(
-      "Small black cat who loves to stick his head in cups",
-      { exact: false }
-    )
+    getByText("Small black cat who loves to stick his head in cups", {
+      exact: false
+    })
   })
 
   it("renders a 'Toggle Adopted' button", () => {
@@ -56,25 +55,23 @@ describe("SinglePet component", () => {
   })
 
   it("the 'Toggle Adopted' button toggles the pet's adopted status", () => {
-    const { queryByText } = render(<SinglePet pet={rigatoni} />)
+    const { queryByText, getByText } = render(<SinglePet pet={rigatoni} />)
 
     // The component should render "Available for adoption" and not "Adopted!"
-    const availableForAdoptedBefore = queryByText(content =>
-      content.includes("Available for adoption")
-    )
-    const adoptedBefore = queryByText(content => content.includes("Adopted!"))
-    assert.isNotNull(availableForAdoptedBefore)
+    getByText("Available for Adoption", {
+      exact: false
+    })
+    const adoptedBefore = queryByText("Adopted!", { exact: false })
     assert.isNull(adoptedBefore)
 
     // Now we click the button!
     fireEvent.click(queryByText("Toggle Adopted"))
 
     // The component should now render "Adopted!" and not "Available for adoption"
-    const availableForAdoptedAfter = queryByText(content =>
-      content.includes("Available for adoption")
-    )
-    const adoptedAfter = queryByText(content => content.includes("Adopted!"))
+    const availableForAdoptedAfter = queryByText("Available for adoption", {
+      exact: false
+    })
+    getByText("Adopted!", { exact: false })
     assert.isNull(availableForAdoptedAfter)
-    assert.isNotNull(adoptedAfter)
   })
 })

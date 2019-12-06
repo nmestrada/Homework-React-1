@@ -13,7 +13,7 @@ const PetList = props => {
   return (
     <div className="pet-list">
       {pets.map(pet => {
-        return <SinglePet pet={pet} />
+        return <SinglePet key={pet.name} pet={pet} />
       })}
     </div>
   )
