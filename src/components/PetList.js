@@ -1,21 +1,34 @@
-import React from "react"
+import React, { useState } from "react"
 import SinglePet from "./SinglePet"
-import pets from "../petdata"
-const [rigatoni] = pets
+// import pets from "../petdata"
+// const [rigatoni] = pets
 
-// Idea: PetList starts out by rendering a SinglePet and PetList is rendered
-// in the root. That way, when they start off, they can still see their changes
-// to SinglePet in the browser as they work. When they get to Tier 2, they modify
-// this component to render a list instead of just one SinglePet.
-// General Solution
 const PetList = props => {
+  const [filter, setFilter] = useState("all")
+  const handleSelectChange = evt => {
+    setFilter(evt.target.value)
+  }
   const { pets } = props
   return (
-    <div className="pet-list">
-      {pets.map(pet => {
-        return <SinglePet key={pet.name} pet={pet} />
-      })}
-    </div>
+    <>
+      <div>
+        <label htmlFor="speciesFilter">Filter by species: </label>
+        <select
+          onChange={handleSelectChange}
+          value={filter}
+          name="speciesFilter"
+        >
+          <option>all</option>
+          <option>cats</option>
+          <option>dogs</option>
+        </select>
+      </div>
+      <div className="pet-list">
+        {pets.map(pet => {
+          return <SinglePet key={pet.name} pet={pet} />
+        })}
+      </div>
+    </>
   )
 }
 
