@@ -8,7 +8,11 @@ const PetList = props => {
   const handleSelectChange = evt => {
     setFilter(evt.target.value)
   }
-  const { pets } = props
+  const pets = props.pets.filter(pet => {
+    if (filter === "all") return pet
+    if (filter === "cats") return pet.species === "cat"
+    if (filter === "dogs") return pet.species === "dog"
+  })
   return (
     <>
       <div>

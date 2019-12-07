@@ -12,41 +12,30 @@ describe("PetList component", () => {
     {
       name: "Rigatoni",
       description: "A flaming hot cheetoh in feline form",
-      species: "cat",
-      favoriteFoods: [
-        "Fancy Feast: Salmon Pâté",
-        "Fancy Feast: Chicken Liver Pâté",
-        "Tuna straight from the can",
-        "Shoelaces"
-      ]
-    },
-    {
-      name: "Frankie",
-      description: "Small black cat who loves to stick his head in cups",
-      species: "cat",
-      favoriteFoods: [
-        "Leaves",
-        "Friskies: Poultry and Gravy",
-        "Fancy Feast: Salmon Pâté"
-      ]
+      species: "cat"
     },
     {
       name: "Cody",
-      species: "dog",
-      description: "Adorable pug who loves to hug"
+      description: "Adorable pug who loves to hug",
+      species: "dog"
+    },
+    {
+      name: "Frankie",
+      description: "The snuggliest kitty",
+      species: "cat"
     },
     {
       name: "Anabelle",
-      species: "dog",
-      description: "Completely apathetic towards anyone but her owner"
+      description: "Might each your couch",
+      species: "dog"
     }
   ]
 
   it("renders a list of SinglePets", () => {
     const { getByText } = render(<PetList pets={pets} />)
     getByText("Rigatoni", { exact: false })
-    getByText("Frankie", { exact: false })
     getByText("Cody", { exact: false })
+    getByText("Frankie", { exact: false })
     getByText("Anabelle", { exact: false })
   })
 
@@ -59,6 +48,4 @@ describe("PetList component", () => {
   //   const allThings = render(<PetList pets={pets} />)
   //   console.log(allThings)
   // })
-
-
 })
