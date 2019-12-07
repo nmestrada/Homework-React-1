@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 import React from "react"
 import { render, cleanup } from "@testing-library/react"
-// import { assert } from "chai"
+import { assert } from "chai"
 
 import PetList from "../src/components/PetList"
 
@@ -39,13 +39,11 @@ describe("PetList component", () => {
     getByText("Anabelle", { exact: false })
   })
 
-  // Idea: Give the PetList a <select> to filer pets by species
-  // Or maybe just render two different PetLists with a header above each one
-  // according to the species
-
-  // Not sure if this test is necessary (or even possible with RTL? ¯\_(ツ)_/¯)
-  // it("renders each SinglePets with a unique key", () => {
-  //   const allThings = render(<PetList pets={pets} />)
-  //   console.log(allThings)
-  // })
+  it("renders a select dropdown with three options: all, cats, dogs", () => {
+    const { queryByTestId } = render(<PetList pets={pets} />)
+    const select = queryByTestId("species-filter")
+    const options = [...select.querySelectorAll("option")].map(n => n.innerHTML)
+    assert.lengthOf(options, 3)
+    assert.includeMembers(options, ["all", "cats", "dogs"])
+  })
 })

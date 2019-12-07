@@ -15,7 +15,7 @@ const PetList = props => {
   })
   return (
     <>
-      <div>
+      <div data-testid="species-filter">
         <label htmlFor="speciesFilter">Filter by species: </label>
         <select
           onChange={handleSelectChange}
