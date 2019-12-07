@@ -15,6 +15,8 @@ const PetList = props => {
   })
   return (
     <>
+      {/* We've added a testid to this div so that we can easily find it
+          in the tests. */}
       <div data-testid="species-filter">
         <label htmlFor="speciesFilter">Filter by species: </label>
         <select
