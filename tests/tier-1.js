@@ -29,7 +29,7 @@ describe("SinglePet component", () => {
 
   it("renders different name, description, and species if passed different props", () => {
     const { getByText } = render(<SinglePet pet={cody} />)
-    getByText("Cody", { exact: true })
+    getByText("Cody", { exact: false })
     getByText("Adorable pug who loves to hug", { exact: false })
     getByText("dog", { exact: false })
   })

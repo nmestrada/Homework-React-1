@@ -46,4 +46,14 @@ describe("PetList component", () => {
     assert.lengthOf(options, 3)
     assert.includeMembers(options, ["all", "cats", "dogs"])
   })
+
+  // TODO: Write this test
+  it("when the filter is set to 'cats', only render SinglePets with cats", () => {
+
+  })
+
+  // TODO: Write this test
+  it("when the filter is set to 'dogs', only render SinglePets with dogs", () => {
+
+  })
 })
