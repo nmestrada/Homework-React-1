@@ -9,18 +9,10 @@ import "regenerator-runtime/runtime"
 
 import React from "react"
 import ReactDOM from "react-dom"
-import pets from "./petdata"
-import PetList from "./components/PetList"
-// import SinglePet from "./components/SinglePet"
+import Root from "./components/Root"
 
 const App = () => {
-  return (
-    <>
-      <h1>Adoption Center</h1>
-      <PetList pets={pets} />
-      {/* <SinglePet pet={pets[0]} /> */}
-    </>
-  )
+  return <Root />
 }
 
 ReactDOM.render(<App />, document.getElementById("app"))
