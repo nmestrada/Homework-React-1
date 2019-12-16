@@ -26,7 +26,7 @@ describe("PetList component", () => {
     },
     {
       name: "Anabelle",
-      description: "Might each your couch",
+      description: "Might eat your couch",
       species: "dog"
     }
   ]
