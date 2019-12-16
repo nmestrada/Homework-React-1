@@ -1,10 +1,15 @@
 import React, { useEffect } from "react"
 import pets from "../petdata"
 import PetList from "./PetList"
+import axios from 'axios'
 
 const Root = () => {
   useEffect(() => {
-    console.log('Mounting Root')
+    console.log('Retrieving data...')
+    ;(async function() {
+      const { data } = await axios.get('http://localhost:4321/api/pets')
+      console.log(data)
+    })()
   })
   return (
     <>
