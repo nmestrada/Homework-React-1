@@ -49,11 +49,10 @@ describe("PetList component", () => {
 
   // TODO: Write this test
   it("when the filter is set to 'cats', only render SinglePets with cats", () => {
-
+    const { queryByTestId } = render(<PetList pets={pets} />)
+    const select = queryByTestId("species-filter")
   })
 
   // TODO: Write this test
-  it("when the filter is set to 'dogs', only render SinglePets with dogs", () => {
-
-  })
+  it("when the filter is set to 'dogs', only render SinglePets with dogs", () => {})
 })
