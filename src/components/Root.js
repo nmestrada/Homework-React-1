@@ -8,7 +8,8 @@ const Root = () => {
   useEffect(() => {
     console.log("Retrieving data...")
     ;(async function() {
-      const { data } = await axios.get("http://localhost:4321/api/pets")
+      // const { data } = await axios.get("http://localhost:4321/api/pets")
+      const { data } = await axios.get("/api/pets")
       console.log(data)
       setPets(data)
     })()
