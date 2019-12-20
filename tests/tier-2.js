@@ -66,8 +66,8 @@ describe("PetList component", () => {
       <PetList pets={pets} />
     )
     const select = queryByTestId("species-filter")
-
     fireEvent.change(select, { target: { value: "dogs" } })
+
     assert.equal(select.value, "dogs")
     getByText("Cody", { exact: false })
     getByText("Anabelle", { exact: false })
