@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --watch tests",
+    "test": "mocha --watch tests --ignore dist --ignore .cache",
     "start": "npm run start-server",
     "start-client": "parcel src/index.html",
     "start-server": "nodemon server"
