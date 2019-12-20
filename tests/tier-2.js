@@ -63,7 +63,7 @@ describe("PetList component", () => {
 
   it("renders a select dropdown with three options: all, cats, dogs", () => {
     const { queryByTestId } = render(<PetList pets={pets} />)
-    const select = queryByTestId("species-filter")
+    const select = queryByTestId("species-filter").querySelector("select")
     const options = [...select.querySelectorAll("option")].map(n => n.value)
     assert.lengthOf(options, 3)
     assert.includeMembers(options, ["all", "cats", "dogs"])
@@ -73,7 +73,7 @@ describe("PetList component", () => {
     const { queryByTestId, getByText, queryByText } = render(
       <PetList pets={pets} />
     )
-    const select = queryByTestId("species-filter")
+    const select = queryByTestId("species-filter").querySelector("select")
     fireEvent.change(select, { target: { value: "cats" } })
 
     assert.equal(select.value, "cats")
@@ -87,7 +87,7 @@ describe("PetList component", () => {
     const { queryByTestId, getByText, queryByText } = render(
       <PetList pets={pets} />
     )
-    const select = queryByTestId("species-filter")
+    const select = queryByTestId("species-filter").querySelector("select")
     fireEvent.change(select, { target: { value: "dogs" } })
 
     assert.equal(select.value, "dogs")
