@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import React from "react"
-import { render, cleanup } from "@testing-library/react"
+import { render, cleanup, fireEvent } from "@testing-library/react"
 import { assert } from "chai"
 
 import PetList from "../src/components/PetList"
@@ -42,7 +42,7 @@ describe("PetList component", () => {
   it("renders a select dropdown with three options: all, cats, dogs", () => {
     const { queryByTestId } = render(<PetList pets={pets} />)
     const select = queryByTestId("species-filter")
-    const options = [...select.querySelectorAll("option")].map(n => n.innerHTML)
+    const options = [...select.querySelectorAll("option")].map(n => n.value)
     assert.lengthOf(options, 3)
     assert.includeMembers(options, ["all", "cats", "dogs"])
   })
@@ -51,6 +51,9 @@ describe("PetList component", () => {
   it("when the filter is set to 'cats', only render SinglePets with cats", () => {
     const { queryByTestId } = render(<PetList pets={pets} />)
     const select = queryByTestId("species-filter")
+    console.log(select.value)
+    fireEvent.change(select, {target: { value: 'cats' }})
+    console.log(select.value)
   })
 
   // TODO: Write this test
