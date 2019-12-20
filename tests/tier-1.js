@@ -5,6 +5,27 @@ import { assert } from "chai"
 
 import SinglePet from "../src/components/SinglePet"
 
+/**
+ * Tier 1 is about
+ * - rendering data from props
+ * - handling a click event from a button
+ * - setting state (boolean)
+ */
+
+/** Instructions:
+ * Edit the SinglePet component in src/components/SinglePet.js
+ * It will be passed a pet object as props.pet
+ * A pet object looks like this:
+ * {
+ *   name: "Some Pet Name"
+ *   description: "Describing the pet"
+ *   species: either "dog" or "cat"
+ * }
+ *
+ * By default, every pet is not adopted
+ * Add a button that, when clicked, toggles the pet's adoption status
+ */
+
 describe("SinglePet component", () => {
   afterEach(cleanup)
 

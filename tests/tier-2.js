@@ -5,6 +5,28 @@ import { assert } from "chai"
 
 import PetList from "../src/components/PetList"
 
+/**
+ * Tier 2 is about
+ * - rendering a list
+ * - handling a change event from a select
+ * - setting state (string)
+ * - filter a list of rendered components
+ */
+
+/** Instructions:
+ * Edit the PetList component in src/components/PetList.js
+ * It will be passed an array of pet objects as props.pets
+ * Pass each pet to a SinglePet component as a prop
+ * Create a dropdown that allows the user to select between three options:
+ * - all (the default option)
+ * - cats
+ * - dogs
+ * When the user selects a new option, set state accordingly
+ * If the selected option is "all", render all the pets
+ * If the selected option is "cats", render only the cats
+ * If the selected option is "dogs", render only the dogs
+ */
+
 describe("PetList component", () => {
   afterEach(cleanup)
 

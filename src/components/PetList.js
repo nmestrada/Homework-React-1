@@ -15,12 +15,11 @@ const PetList = props => {
   })
   return (
     <>
-      <div>
+      <div data-testid="species-filter">
         <label htmlFor="speciesFilter">Filter by species: </label>
         {/* We've added a testid to this selecg so that we can easily find it
           in the tests. */}
         <select
-          data-testid="species-filter"
           onChange={handleSelectChange}
           value={filter}
           name="speciesFilter"
