@@ -21,4 +21,4 @@ const pets = [
   }
 ]
 
-export default pets
+module.exports = pets
