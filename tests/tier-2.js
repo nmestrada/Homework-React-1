@@ -53,7 +53,7 @@ describe("PetList component", () => {
     }
   ]
 
-  xit("renders a list of SinglePets", () => {
+  it("renders a list of SinglePets", () => {
     const { getByText } = render(<PetList pets={pets} />)
     getByText("Rigatoni", { exact: false })
     getByText("Cody", { exact: false })

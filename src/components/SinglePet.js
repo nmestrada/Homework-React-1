@@ -10,10 +10,10 @@ import React, { useState } from "react"
   }
 }
 */
+
 const SinglePet = props => {
-  console.log(props)
+  const { name, description, species } = props.pet
   const [adopted, setAdopted] = useState(false)
-  const { name, description, species } = props
   return (
     <div className="single-pet">
       <h2>{name}</h2>
