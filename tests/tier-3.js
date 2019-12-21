@@ -1,16 +1,10 @@
 /* eslint-env mocha */
 import React from "react"
-import {
-  render,
-  cleanup,
-  fireEvent,
-  waitForElement,
-  wait
-} from "@testing-library/react"
+import { render, cleanup, wait } from "@testing-library/react"
 import { assert } from "chai"
 
 import Root from "../src/components/Root"
-import { mock } from "./setup"
+import { mockAxios } from "./setup"
 
 const getReqs = mockObj => mockObj.history.get.length
 // const postReqs = mockObj => mockObj.history.post.length
@@ -25,14 +19,14 @@ const getReqs = mockObj => mockObj.history.get.length
 
 describe("Root component", () => {
   afterEach(cleanup)
-  afterEach(mock.reset)
+  afterEach(mockAxios.reset)
 
   it("fetches data from /api/pets once Root first mounts", async () => {
     render(<Root />)
-    assert.equal(getReqs(mock), 0)
+    assert.equal(getReqs(mockAxios), 0)
     await wait(
       () => {
-        assert.equal(getReqs(mock), 1)
+        assert.equal(getReqs(mockAxios), 1)
       },
       { timeout: 10, interval: 5 }
     )

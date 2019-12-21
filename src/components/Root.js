@@ -6,13 +6,6 @@ import axios from "axios"
 const Root = () => {
   const [pets, setPets] = useState([])
 
-  // Using axios within "render" instead of useEffect will sorta work...
-  // But you'll run into problems once you start trying to set state
-  // ;(async function() {
-  //   const { data } = await axios.get("/api/pets")
-  //   setPets(data)
-  // })()
-
   useEffect(() => {
     (async function() {
       const { data } = await axios.get("/api/pets")
@@ -24,8 +17,6 @@ const Root = () => {
       //   console.error(err)
       // }
     })()
-    // If you don't provide a dependency array here, the component will
-    // re-render in an infinite loop
   }, [])
   return (
     <>
