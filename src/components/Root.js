@@ -5,7 +5,6 @@ import axios from "axios"
 
 const Root = () => {
   const [pets, setPets] = useState([])
-
   useEffect(() => {
     (async function() {
       const { data } = await axios.get("/api/pets")

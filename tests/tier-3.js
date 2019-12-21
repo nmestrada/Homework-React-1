@@ -21,7 +21,7 @@ describe("Root component", () => {
   afterEach(cleanup)
   afterEach(mockAxios.reset)
 
-  it("fetches data from /api/pets once Root first mounts", async () => {
+  it("fetches data from /api/pets once after Root first mounts", async () => {
     render(<Root />)
     assert.equal(getReqs(mockAxios), 0)
     await wait(
@@ -32,8 +32,30 @@ describe("Root component", () => {
     )
   })
 
-  it("renders PetList with the data retrieved from /api/pets", () => {
-
+  it("renders PetList with the data retrieved from /api/pets", async () => {
+    const samplePets = [
+      {
+        name: "Rigatoni",
+        description: "A flaming hot cheetoh in feline form",
+        species: "cat"
+      },
+      {
+        name: "Cody",
+        description: "Adorable pug who loves to hug",
+        species: "dog"
+      }
+    ]
+    mockAxios.onGet("/api/pets").reply(200, samplePets)
+    const { getByText } = render(<Root />)
+    await wait(
+      () => {
+        getByText("Rigatoni", { exact: false })
+        getByText("Cody", { exact: false })
+        assert.throws(() => getByText("Anabelle", { exact: false }))
+        assert.throws(() => getByText("Frankie", { exact: false }))
+      },
+      { timeout: 10, interval: 5 }
+    )
   })
   it("some test", () => {})
   it("some test", () => {})
