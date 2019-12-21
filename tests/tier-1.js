@@ -56,30 +56,24 @@ describe("SinglePet component", () => {
   })
 
   xit("renders a 'Toggle Adopted' button", () => {
-    // This button doesn't need to do anything yet. See the next test...
+    // The button doesn't need to "do anything" yet. See the next test.
     const { getByRole } = render(<SinglePet pet={rigatoni} />)
     const { innerHTML } = getByRole("button")
     assert.equal(innerHTML, "Toggle Adopted")
   })
 
   xit("the 'Toggle Adopted' button toggles the pet's adopted status", () => {
-    const { queryByText, getByText } = render(<SinglePet pet={rigatoni} />)
+    const { getByText } = render(<SinglePet pet={rigatoni} />)
 
     // The component should render "Available for adoption" and not "Adopted!"
-    getByText("Available for Adoption", {
-      exact: false
-    })
-    const adoptedBefore = queryByText("Adopted!", { exact: false })
-    assert.isNull(adoptedBefore)
+    getByText("Available for Adoption", { exact: false })
+    assert.throws(() => getByText("Adopted!", { exact: false }))
 
-    // Now we click the button!
-    fireEvent.click(queryByText("Toggle Adopted"))
+    // Click the button!
+    fireEvent.click(getByText("Toggle Adopted"))
 
-    // The component should now render "Adopted!" and not "Available for adoption"
-    const availableForAdoptedAfter = queryByText("Available for adoption", {
-      exact: false
-    })
+    // NOW the component should render "Adopted!"
     getByText("Adopted!", { exact: false })
-    assert.isNull(availableForAdoptedAfter)
+    assert.throws(() => getByText("Available for adoption", { exact: false }))
   })
 })

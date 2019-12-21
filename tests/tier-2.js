@@ -70,30 +70,26 @@ describe("PetList component", () => {
   })
 
   xit("when the filter is set to 'cats', only render SinglePets with cats", () => {
-    const { queryByTestId, getByText, queryByText } = render(
-      <PetList pets={pets} />
-    )
+    const { queryByTestId, getByText } = render(<PetList pets={pets} />)
     const select = queryByTestId("species-filter").querySelector("select")
     fireEvent.change(select, { target: { value: "cats" } })
 
     assert.equal(select.value, "cats")
     getByText("Rigatoni", { exact: false })
     getByText("Frankie", { exact: false })
-    assert.isNull(queryByText("Cody", { exact: false }))
-    assert.isNull(queryByText("Anabelle", { exact: false }))
+    assert.throws(() => getByText("Cody", { exact: false }))
+    assert.throws(() => getByText("Anabelle", { exact: false }))
   })
 
   xit("when the filter is set to 'dogs', only render SinglePets with dogs", () => {
-    const { queryByTestId, getByText, queryByText } = render(
-      <PetList pets={pets} />
-    )
+    const { queryByTestId, getByText } = render(<PetList pets={pets} />)
     const select = queryByTestId("species-filter").querySelector("select")
     fireEvent.change(select, { target: { value: "dogs" } })
 
     assert.equal(select.value, "dogs")
     getByText("Cody", { exact: false })
     getByText("Anabelle", { exact: false })
-    assert.isNull(queryByText("Rigatoni", { exact: false }))
-    assert.isNull(queryByText("Frankie", { exact: false }))
+    assert.throws(() => getByText("Rigatoni", { exact: false }))
+    assert.throws(() => getByText("Frankie", { exact: false }))
   })
 })

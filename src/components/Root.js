@@ -5,19 +5,23 @@ import axios from "axios"
 
 const Root = () => {
   const [pets, setPets] = useState([])
+  const [error, setError] = useState(null)
   useEffect(() => {
-    console.log("Retrieving data...")
-    ;(async function() {
-      // const { data } = await axios.get("http://localhost:4321/api/pets")
-      const { data } = await axios.get("/api/pets")
-      console.log(data)
-      setPets(data)
+    (async function() {
+      // const { data } = await axios.get("/api/pets")
+      // setPets(data)
+      try {
+        const { data } = await axios.get("/api/pets")
+        setPets(data)
+      } catch (err) {
+        setError(err.message)
+        // console.error(err)
+      }
     })()
-    // If you don't provide a dependency array here, the component will
-    // re-render in an infinite loop
   }, [])
   return (
     <>
+      {error}
       <h1>Adoption Center</h1>
       <PetList pets={pets} />
     </>

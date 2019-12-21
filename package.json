@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --watch tests --ignore dist --ignore .cache",
+    "test": "mocha --watch tests --ignore dist --ignore .cache --ignore node_modules",
     "start": "npm run start-server",
     "start-client": "parcel src/index.html",
-    "start-server": "nodemon server"
+    "start-server": "nodemon main"
   },
   "mocha": {
     "require": [
@@ -21,6 +21,7 @@
   "dependencies": {
     "@testing-library/react": "^9.3.2",
     "axios": "^0.19.0",
+    "axios-mock-adapter": "^1.17.0",
     "chai": "^4.2.0",
     "core-js": "^3.4.7",
     "express": "^4.17.1",
