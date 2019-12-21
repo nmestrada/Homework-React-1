@@ -13,6 +13,7 @@ const Root = () => {
         const { data } = await axios.get("/api/pets")
         // console.log(data)
         setPets(data)
+        // setPets([])
       } catch (err) {
         console.error(err)
       }

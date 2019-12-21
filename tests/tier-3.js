@@ -1,6 +1,12 @@
 /* eslint-env mocha */
 import React from "react"
-import { render, cleanup, fireEvent, waitForElement } from "@testing-library/react"
+import {
+  render,
+  cleanup,
+  fireEvent,
+  waitForElement,
+  wait
+} from "@testing-library/react"
 import { assert } from "chai"
 
 import Root from "../src/components/Root"
@@ -13,17 +19,16 @@ import { mock } from "./setup"
 
 describe("Root component", () => {
   afterEach(cleanup)
+  afterEach(mock.reset)
 
-  it("fetches data from /api/pets when Root first mounts", async () => {
-    const allThings = render(<Root />)
-
-    return waitForElement(() => {
-      console.log(
-        // Object.keys(mock)
-        mock.history.get
-      )
-      // assert()
-    })
+  it.only("fetches data from /api/pets when Root first mounts", async () => {
+    render(<Root />)
+    await wait(
+      () => {
+        assert.equal(mock.history.get.length, 1)
+      },
+      { timeout: 10, interval: 5 }
+    )
   })
 
   it("some test", () => {})
