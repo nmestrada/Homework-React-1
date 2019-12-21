@@ -53,8 +53,38 @@ describe("Root component", () => {
       () => {
         getByText("Rigatoni", { exact: false })
         getByText("Cody", { exact: false })
-        assert.throws(() => getByText("Anabelle", { exact: false }))
         assert.throws(() => getByText("Frankie", { exact: false }))
+        assert.throws(() => getByText("Anabelle", { exact: false }))
+        assert.throws(() =>
+          getByText("Request failed with status code 500", { exact: false })
+        )
+      },
+      { timeout: 10, interval: 5 }
+    )
+  })
+
+  it("renders PetList with DIFFERENT data retrieved from /api/pets", async () => {
+    const samplePets = [
+      {
+        name: "Frankie",
+        description: "The snuggliest kitty",
+        species: "cat"
+      },
+      {
+        name: "Anabelle",
+        description: "Might eat your couch",
+        species: "dog"
+      }
+    ]
+    mockAxios.onGet("/api/pets").reply(200, samplePets)
+    const { getByText } = render(<Root />)
+
+    await wait(
+      () => {
+        getByText("Frankie", { exact: false })
+        getByText("Anabelle", { exact: false })
+        assert.throws(() => getByText("Rigatoni", { exact: false }))
+        assert.throws(() => getByText("Cody", { exact: false }))
         assert.throws(() =>
           getByText("Request failed with status code 500", { exact: false })
         )
