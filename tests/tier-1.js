@@ -69,9 +69,10 @@ describe("SinglePet component", () => {
     getByText("Available for Adoption", { exact: false })
     assert.throws(() => getByText("Adopted!", { exact: false }))
 
-    // Now we click the button!
+    // Click the button!
     fireEvent.click(getByText("Toggle Adopted"))
 
+    // NOW the component should render "Adopted!"
     getByText("Adopted!", { exact: false })
     assert.throws(() => getByText("Available for adoption", { exact: false }))
   })
