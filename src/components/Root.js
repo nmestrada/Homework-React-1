@@ -5,20 +5,23 @@ import axios from "axios"
 
 const Root = () => {
   const [pets, setPets] = useState([])
+  const [error, setError] = useState(null)
   useEffect(() => {
     (async function() {
-      const { data } = await axios.get("/api/pets")
-      setPets(data)
-      // try {
-      //   const { data } = await axios.get("/api/pets")
-      //   setPets(data)
-      // } catch (err) {
-      //   console.error(err)
-      // }
+      // const { data } = await axios.get("/api/pets")
+      // setPets(data)
+      try {
+        const { data } = await axios.get("/api/pets")
+        setPets(data)
+      } catch (err) {
+        setError(err.message)
+        // console.error(err)
+      }
     })()
   }, [])
   return (
     <>
+      {error}
       <h1>Adoption Center</h1>
       <PetList pets={pets} />
     </>

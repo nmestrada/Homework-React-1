@@ -9,6 +9,7 @@ const app = express()
 app.use(morgan("dev"))
 
 app.get("/api/pets", (req, res) => {
+  // res.sendStatus(500)
   res.json(pets)
 })
 
