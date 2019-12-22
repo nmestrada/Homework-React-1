@@ -1,15 +1,29 @@
 import React, { useEffect, useState } from "react"
-import samplePets from "../petdata"
+// import oldPets from "../petdata"
 import PetList from "./PetList"
-import axios from 'axios'
+import axios from "axios"
 
-// For now, Root renders PetList using sample pets data, but you can comment
-// that out once you've got real data from the server to work with.
 const Root = () => {
+  const [pets, setPets] = useState([])
+  const [error, setError] = useState(null)
+  useEffect(() => {
+    (async function() {
+      // const { data } = await axios.get("/api/pets")
+      // setPets(data)
+      try {
+        const { data } = await axios.get("/api/pets")
+        setPets(data)
+      } catch (err) {
+        setError(err.message)
+        // console.error(err)
+      }
+    })()
+  }, [])
   return (
     <>
+      {error}
       <h1>Adoption Center</h1>
-      <PetList pets={samplePets} />
+      <PetList pets={pets} />
     </>
   )
 }
