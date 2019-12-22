@@ -16,7 +16,7 @@ import PetList from "../src/components/PetList"
 /** Instructions:
  * Edit the PetList component in src/components/PetList.js
  * It will be passed an array of pet objects as props.pets
- * Pass each pet to a SinglePet component as a prop
+ * Pass each pet to a SinglePet component as a prop called `pet`
  * Create a dropdown that allows the user to select between three options:
  * - all (the default option)
  * - cats

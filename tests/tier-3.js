@@ -7,14 +7,22 @@ import Root from "../src/components/Root"
 import { mockAxios } from "./setup"
 
 const getRequests = () => mockAxios.history.get.length
-// const postRequests = () => mockAxios.history.post.length
-// const deleteRequests = () => mockAxios.history.delete.length
-// const putRequests = () => mockAxios.history.put.length
 
 /**
- * Tier 2 is about
+ * Tier 3 is about
  * - fetching data from a server
- * -
+ * - using React lifecycle (componentDidMount or useEffect)
+ * - setting state (array) from the server's response
+ * - setting state (error object) if the server replies with a 500 status code
+ */
+
+/** Instructions:
+ * Edit the Root component in src/components/Root.js
+ * Once the component mounts, use axios to make a GET request to /api/pets
+ * NOTE: You do not need to edit the express server for any of these tests
+ * Pass the pet data as a prop called `pets` to PetList
+ * Root should only make one GET request, not every time it renders
+ * If an error occurs, display the error message and don't render any pets
  */
 
 describe("Root component", () => {
@@ -91,6 +99,11 @@ describe("Root component", () => {
       },
       { timeout: 10, interval: 5 }
     )
+  })
+
+  // TODO: Write this test
+  xit("displays loading message while waiting for the data", async () => {
+
   })
 
   xit("displays error message if the server responds with status code 500", async () => {
