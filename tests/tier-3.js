@@ -29,7 +29,7 @@ describe("Root component", () => {
   afterEach(cleanup)
   afterEach(mockAxios.reset)
 
-  xit("fetches data from /api/pets once after Root first mounts", async () => {
+  it("fetches data from /api/pets once after Root first mounts", async () => {
     render(<Root />)
 
     assert.equal(getRequests(), 0)
@@ -41,7 +41,7 @@ describe("Root component", () => {
     )
   })
 
-  xit("renders PetList with data retrieved from /api/pets", async () => {
+  it("renders PetList with data retrieved from /api/pets", async () => {
     const samplePets = [
       {
         name: "Rigatoni",
@@ -71,7 +71,7 @@ describe("Root component", () => {
     )
   })
 
-  xit("renders PetList with DIFFERENT data retrieved from /api/pets", async () => {
+  it("renders PetList with DIFFERENT data retrieved from /api/pets", async () => {
     const samplePets = [
       {
         name: "Frankie",
@@ -102,11 +102,11 @@ describe("Root component", () => {
   })
 
   // TODO: Write this test
-  xit("displays loading message while waiting for the data", async () => {
+  it("displays loading message while waiting for the data", async () => {
 
   })
 
-  xit("displays error message if the server responds with status code 500", async () => {
+  it("displays error message if the server responds with status code 500", async () => {
     mockAxios.onGet("/api/pets").reply(500)
     const { getByText } = render(<Root />)
 

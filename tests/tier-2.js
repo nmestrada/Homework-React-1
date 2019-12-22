@@ -53,7 +53,7 @@ describe("PetList component", () => {
     }
   ]
 
-  xit("renders a list of SinglePets", () => {
+  it("renders a list of SinglePets", () => {
     const { getByText } = render(<PetList pets={pets} />)
     getByText("Rigatoni", { exact: false })
     getByText("Cody", { exact: false })
@@ -61,7 +61,7 @@ describe("PetList component", () => {
     getByText("Anabelle", { exact: false })
   })
 
-  xit("renders a select dropdown with three options: all, cats, dogs", () => {
+  it("renders a select dropdown with three options: all, cats, dogs", () => {
     const { queryByTestId } = render(<PetList pets={pets} />)
     const select = queryByTestId("species-filter").querySelector("select")
     const options = [...select.querySelectorAll("option")].map(n => n.value)
@@ -69,7 +69,7 @@ describe("PetList component", () => {
     assert.includeMembers(options, ["all", "cats", "dogs"])
   })
 
-  xit("when the filter is set to 'cats', only render SinglePets with cats", () => {
+  it("when the filter is set to 'cats', only render SinglePets with cats", () => {
     const { queryByTestId, getByText } = render(<PetList pets={pets} />)
     const select = queryByTestId("species-filter").querySelector("select")
     fireEvent.change(select, { target: { value: "cats" } })
@@ -81,7 +81,7 @@ describe("PetList component", () => {
     assert.throws(() => getByText("Anabelle", { exact: false }))
   })
 
-  xit("when the filter is set to 'dogs', only render SinglePets with dogs", () => {
+  it("when the filter is set to 'dogs', only render SinglePets with dogs", () => {
     const { queryByTestId, getByText } = render(<PetList pets={pets} />)
     const select = queryByTestId("species-filter").querySelector("select")
     fireEvent.change(select, { target: { value: "dogs" } })
