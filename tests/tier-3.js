@@ -71,7 +71,8 @@ describe("Root component", () => {
     )
   })
 
-  it("renders PetList with DIFFERENT data retrieved from /api/pets", async () => {
+  // TODO: Finish writing this test
+  it("displays loading message while waiting for the data", async () => {
     const samplePets = [
       {
         name: "Frankie",
@@ -99,11 +100,6 @@ describe("Root component", () => {
       },
       { timeout: 10, interval: 5 }
     )
-  })
-
-  // TODO: Write this test
-  it("displays loading message while waiting for the data", async () => {
-
   })
 
   it("displays error message if the server responds with status code 500", async () => {
