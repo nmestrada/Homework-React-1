@@ -19,7 +19,14 @@ describe("Tier 4: AddPet component", () => {
   afterEach(cleanup)
   afterEach(mockAxios.reset)
 
-  it("a test", async () => {})
+  it("has two inputs ", async () => {
+    const { getByPlaceholderText } = render(<AddPet />)
+    const nameInput = getByPlaceholderText("Name", { exact: false })
+    const descriptionInput = getByPlaceholderText("Description", {
+      exact: false
+    })
+    console.log(nameInput)
+  })
 
   it("a test", async () => {})
 
