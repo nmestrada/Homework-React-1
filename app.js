@@ -5,6 +5,7 @@ const { join } = require("path")
 const pets = require("./petdata")
 
 const app = express()
+app.use(express.json())
 
 app.use(morgan("dev"))
 
@@ -21,6 +22,13 @@ app.get("/api/pets", (req, res) => {
 
   // This is how this endpoint SHOULD behave:
   res.json(pets)
+})
+
+app.post("/api/pets", (req, res) => {
+  const { name, description, species } = req.body
+  const newPet = { name, description, species }
+  pets.push(newPet)
+  res.json(newPet)
 })
 
 const bundler = new ParcelBundler(join(__dirname, "./src/index.html"))

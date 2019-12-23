@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import axios from "axios"
 
 const AddPet = () => {
   const [name, setName] = useState("")
@@ -9,18 +10,30 @@ const AddPet = () => {
     if (evt.target.name === "description") setDescription(evt.target.value)
     if (evt.target.name === "species") setSpecies(evt.target.value)
   }
+  const handleSubmit = async evt => {
+    evt.preventDefault()
+    try {
+      const reqBody = { name, description, species }
+      const response = await axios.post("/api/pets", reqBody)
+      console.log(response)
+    } catch (err) {
+      console.error(err.message)
+    }
+  }
   return (
-    <form className="add-pet-form">
+    <form className="add-pet-form" onSubmit={handleSubmit}>
       <input
         name="name"
         type="text"
         placeholder="Name"
+        value={name}
         onChange={handleChange}
       />
       <input
         name="description"
         type="text"
         placeholder="Description"
+        value={description}
         onChange={handleChange}
       />
       <select name="species" value={species} onChange={handleChange}>
