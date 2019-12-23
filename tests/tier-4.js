@@ -3,7 +3,7 @@ import React from "react"
 import { render, cleanup, wait } from "@testing-library/react"
 import { assert } from "chai"
 
-// import Root from "../src/components/Root"
+import AddPet from "../src/components/AddPet"
 import { mockAxios } from "./setup"
 
 /**

@@ -16,12 +16,12 @@ app.get("/api/pets", (req, res) => {
 
   // Wanna see what would happen if this endpoint were to take a whole second?
   // Uncomment this line and comment out the other responses:
-  setTimeout(() => {
-    res.json(pets)
-  }, 1000)
+  // setTimeout(() => {
+  //   res.json(pets)
+  // }, 1000)
 
   // This is how this endpoint SHOULD behave:
-  // res.json(pets)
+  res.json(pets)
 })
 
 const bundler = new ParcelBundler(join(__dirname, "./src/index.html"))

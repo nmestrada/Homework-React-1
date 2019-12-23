@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 // import oldPets from "../petdata"
 import PetList from "./PetList"
 import axios from "axios"
+import AddPet from "./AddPet"
 
 const Root = () => {
   const [pets, setPets] = useState([])
@@ -27,6 +28,7 @@ const Root = () => {
       {error}
       {loading && "Loading"}
       <h1>Adoption Center</h1>
+      <AddPet />
       <PetList pets={pets} />
     </>
   )
