@@ -26,7 +26,7 @@ import SinglePet from "../src/components/SinglePet"
  * Add a button that, when clicked, toggles the pet's adoption status
  */
 
-describe("SinglePet component", () => {
+describe("Tier 1: SinglePet component", () => {
   afterEach(cleanup)
 
   const rigatoni = {

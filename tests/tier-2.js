@@ -27,7 +27,7 @@ import PetList from "../src/components/PetList"
  * If the selected option is "dogs", render only the dogs
  */
 
-describe("PetList component", () => {
+describe("Tier 2: PetList component", () => {
   afterEach(cleanup)
 
   const pets = [

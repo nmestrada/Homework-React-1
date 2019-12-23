@@ -23,9 +23,10 @@ const getRequests = () => mockAxios.history.get.length
  * Pass the pet data as a prop called `pets` to PetList
  * Root should only make one GET request, not every time it renders
  * If an error occurs, display the error message and don't render any pets
+ * While the data is loading, display a simple "Loading" message
  */
 
-describe("Root component", () => {
+describe("Tier 3: Root component", () => {
   afterEach(cleanup)
   afterEach(mockAxios.reset)
 
@@ -71,7 +72,6 @@ describe("Root component", () => {
     )
   })
 
-  // TODO: Finish writing this test
   it("displays loading message while waiting for the data", async () => {
     const samplePets = [
       {
@@ -88,8 +88,10 @@ describe("Root component", () => {
     mockAxios.onGet("/api/pets").reply(200, samplePets)
     const { getByText } = render(<Root />)
 
+    getByText("Loading", { exact: false })
     await wait(
       () => {
+        assert.throws(() => getByText("Loading", { exact: false }))
         getByText("Frankie", { exact: false })
         getByText("Anabelle", { exact: false })
         assert.throws(() => getByText("Rigatoni", { exact: false }))
