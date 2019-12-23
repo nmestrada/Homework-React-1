@@ -9,7 +9,6 @@ const app = express()
 app.use(morgan("dev"))
 
 app.get("/api/pets", (req, res) => {
-
   // Wanna see what would happen if this endpoint were to fail? Uncomment
   // this line and comment out the other responses:
   // res.sendStatus(500)

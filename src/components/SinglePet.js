@@ -18,7 +18,7 @@ const SinglePet = props => {
     <div className="single-pet">
       <h2>{name}</h2>
       <div>
-        Species: {species}
+        {species}
         <span>
           {species === "cat" && " 😸"}
           {species === "dog" && " 🐶"}
