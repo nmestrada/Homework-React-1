@@ -22,6 +22,7 @@ const Root = () => {
     })()
   }, [fetchCounter])
   const refetch = () => setFetchCounter(fetchCounter + 1)
+  // const refetch = () => {}
   return (
     <>
       {error}
