@@ -12,13 +12,12 @@ const AddPet = () => {
   }
   const handleSubmit = async evt => {
     evt.preventDefault()
-    // try {
-    const reqBody = { name, description, species }
-    const response = await axios.post("/api/pets", reqBody)
-    // console.log(response)
-    // } catch (err) {
-    //   console.error(err.message)
-    // }
+    try {
+      const reqBody = { name, description, species }
+      await axios.post("/api/pets", reqBody)
+    } catch (err) {
+      console.error(err.message)
+    }
   }
   return (
     <form
@@ -26,12 +25,6 @@ const AddPet = () => {
       onSubmit={handleSubmit}
       data-testid="add-pet"
     >
-      {/* <input placeholder="Name" type="text" name="name" />
-      <input placeholder="Description" type="text" name="description" />
-      <select>
-        <option>cat</option>
-        <option>dog</option>
-      </select> */}
       <input
         name="name"
         type="text"

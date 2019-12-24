@@ -66,6 +66,7 @@ describe("Tier 4: AddPet component", () => {
     container.addEventListener("submit", event => {
       defaultPrevented = event.defaultPrevented
     })
+
     fireEvent.submit(form)
 
     await wait(
@@ -76,7 +77,7 @@ describe("Tier 4: AddPet component", () => {
     )
   })
 
-  // TODO: Write this test
+  // TODO: Revisit this test for clarity
   it("submitting the form posts the new pet data to /api/pets", async () => {
     const lucky = {
       name: "Lucky",
@@ -96,11 +97,14 @@ describe("Tier 4: AddPet component", () => {
 
     const speciesSelect = form.querySelector("select")
     fireEvent.change(speciesSelect, { target: { value: lucky.species } })
+
     fireEvent.submit(form)
 
     await wait(
       () => {
         assert.equal(postRequests(), 1)
+        const postRequestBody = JSON.parse(mockAxios.history.post[0].data)
+        assert.deepEqual(postRequestBody, lucky)
       },
       { timeout: 10, interval: 5 }
     )
