@@ -6,6 +6,8 @@ import { assert } from "chai"
 import AddPet from "../src/components/AddPet"
 import { mockAxios } from "./setup"
 
+const postRequests = () => mockAxios.history.post.length
+
 /**
  * Tier 4 is about
  * - posting data to a server
@@ -16,8 +18,8 @@ import { mockAxios } from "./setup"
  */
 
 describe("Tier 4: AddPet component", () => {
-  afterEach(cleanup)
-  afterEach(mockAxios.reset)
+  afterEach(() => cleanup())
+  afterEach(() => mockAxios.reset())
 
   it("renders two text inputs, name and description, with appropriate placeholders", () => {
     const { getByTestId } = render(<AddPet />)
@@ -45,6 +47,36 @@ describe("Tier 4: AddPet component", () => {
   })
 
   // TODO: Revisit this test for clarity
+  it("prevents default form submission behavior", async () => {
+    mockAxios.onPost("/api/pets").reply(201)
+
+    const { container, getByTestId } = render(<AddPet />)
+    const form = getByTestId("add-pet")
+
+    const nameInput = form.querySelector('input[name="name"]')
+    fireEvent.change(nameInput, { target: { value: "Toby" } })
+
+    const descriptionInput = form.querySelector('input[name="description"]')
+    fireEvent.change(descriptionInput, { target: { value: "Cute pupper" } })
+
+    const speciesSelect = form.querySelector("select")
+    fireEvent.change(speciesSelect, { target: { value: "dog" } })
+
+    let defaultPrevented = null
+    container.addEventListener("submit", event => {
+      defaultPrevented = event.defaultPrevented
+    })
+    fireEvent.submit(form)
+
+    await wait(
+      () => {
+        assert.isTrue(defaultPrevented)
+      },
+      { timeout: 10, interval: 5 }
+    )
+  })
+
+  // TODO: Write this test
   it("submitting the form posts the new pet data to /api/pets", async () => {
     const lucky = {
       name: "Lucky",
@@ -53,48 +85,26 @@ describe("Tier 4: AddPet component", () => {
     }
     mockAxios.onPost("/api/pets", lucky).reply(201, lucky)
 
-    const { container, getByTestId } = render(<AddPet />)
+    const { getByTestId } = render(<AddPet />)
     const form = getByTestId("add-pet")
 
     const nameInput = form.querySelector('input[name="name"]')
-    fireEvent.change(nameInput, {
-      target: {
-        value: lucky.name
-      }
-    })
+    fireEvent.change(nameInput, { target: { value: lucky.name } })
 
     const descriptionInput = form.querySelector('input[name="description"]')
-    fireEvent.change(descriptionInput, {
-      target: {
-        value: lucky.description
-      }
-    })
+    fireEvent.change(descriptionInput, { target: { value: lucky.description } })
 
     const speciesSelect = form.querySelector("select")
-    fireEvent.change(speciesSelect, {
-      target: {
-        value: lucky.species
-      }
-    })
-
-    let defaultPrevented = null
-    container.addEventListener("submit", event => {
-      defaultPrevented = event.defaultPrevented
-    })
+    fireEvent.change(speciesSelect, { target: { value: lucky.species } })
     fireEvent.submit(form)
+
     await wait(
       () => {
-        assert.isTrue(defaultPrevented)
+        assert.equal(postRequests(), 1)
       },
-      {
-        timeout: 10,
-        interval: 5
-      }
+      { timeout: 10, interval: 5 }
     )
   })
-
-  // TODO: Write this test
-  it("submitting the form posts the new pet data to /api/pets", () => {})
 
   // TODO: Write this test
   it("clears the form after submission", () => {})
