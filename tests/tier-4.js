@@ -46,7 +46,6 @@ describe("Tier 4: AddPet component", () => {
     assert.includeMembers(optionsValues, ["cat", "dog"])
   })
 
-  // TODO: Revisit this test for clarity
   it("prevents default form submission behavior", async () => {
     mockAxios.onPost("/api/pets").reply(201)
 
@@ -77,7 +76,6 @@ describe("Tier 4: AddPet component", () => {
     )
   })
 
-  // TODO: Revisit this test for clarity
   it("submitting the form posts the new pet data to /api/pets", async () => {
     const lucky = {
       name: "Lucky",
@@ -110,9 +108,37 @@ describe("Tier 4: AddPet component", () => {
     )
   })
 
-  // TODO: Write this test
-  it("clears the form after submission", () => {})
+  it("resets the form after form submission", async () => {
+    const lucky = {
+      name: "Lucky",
+      description: "Labradoodle who loves to chase squirrels",
+      species: "dog"
+    }
+    mockAxios.onPost("/api/pets", lucky).reply(201, lucky)
 
-  // TODO: Write this test
+    const { getByTestId } = render(<AddPet />)
+    const form = getByTestId("add-pet")
+
+    const nameInput = form.querySelector('input[name="name"]')
+    fireEvent.change(nameInput, { target: { value: lucky.name } })
+
+    const descriptionInput = form.querySelector('input[name="description"]')
+    fireEvent.change(descriptionInput, { target: { value: lucky.description } })
+
+    const speciesSelect = form.querySelector("select")
+    fireEvent.change(speciesSelect, { target: { value: lucky.species } })
+
+    fireEvent.submit(form)
+
+    await wait(
+      () => {
+        assert.equal(nameInput.value, "")
+        assert.equal(descriptionInput.value, "")
+        assert.equal(speciesSelect.value, "cat")
+      },
+      { timeout: 10, interval: 5 }
+    )
+  })
+
   it("BONUS: re-fetches the list of pets after form submission", () => {})
 })

@@ -15,6 +15,9 @@ const AddPet = () => {
     try {
       const reqBody = { name, description, species }
       await axios.post("/api/pets", reqBody)
+      setName("")
+      setDescription("")
+      setSpecies("cat")
     } catch (err) {
       console.error(err.message)
     }
