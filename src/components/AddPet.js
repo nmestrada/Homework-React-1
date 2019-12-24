@@ -21,8 +21,14 @@ const AddPet = () => {
     }
   }
   return (
-    <form className="add-pet-form" onSubmit={handleSubmit}>
-      <input
+    <form
+      className="add-pet-form"
+      onSubmit={handleSubmit}
+      data-testid="add-pet"
+    >
+      <input placeholder="Name" type="text" name="name" />
+      <input placeholder="Description" type="text" name="description" />
+      {/* <input
         name="name"
         type="text"
         placeholder="Name"
@@ -39,7 +45,7 @@ const AddPet = () => {
       <select name="species" value={species} onChange={handleChange}>
         <option>cat</option>
         <option>dog</option>
-      </select>
+      </select> */}
       <button type="submit">Submit New Pet</button>
     </form>
   )

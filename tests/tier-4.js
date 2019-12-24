@@ -19,25 +19,26 @@ describe("Tier 4: AddPet component", () => {
   afterEach(cleanup)
   afterEach(mockAxios.reset)
 
-  it("has two text inputs, name and description, with appropriate placeholders", async () => {
-    const { getByPlaceholderText } = render(<AddPet />)
+  it("renders two text inputs, name and description, with appropriate placeholders", () => {
+    const { getByTestId } = render(<AddPet />)
+    const form = getByTestId("add-pet")
 
-    const nameInput = getByPlaceholderText("Name", { exact: false })
-    assert.equal(nameInput.name, "name")
-    assert.equal(nameInput.type, "text")
-    assert.equal(nameInput.value, "")
+    const nameInput = form.querySelector('input[name="name"]')
+    assert.isNotNull(nameInput)
+    assert.equal(nameInput.placeholder, "Name")
 
-    const descriptionInput = getByPlaceholderText("Description", {
-      exact: false
-    })
-    assert.equal(descriptionInput.name, "description")
-    assert.equal(descriptionInput.type, "text")
-    assert.equal(descriptionInput.value, "")
+    const descriptionInput = form.querySelector('input[name="description"]')
+    assert.isNotNull(descriptionInput)
+    assert.equal(descriptionInput.placeholder, "Description")
   })
 
-  it("a test", async () => {})
+  it("renders a select dropdown with two options: cat and dog", async () => {})
 
-  it("a test", async () => {})
+  it("submitting the form POSTs the new pet data to /api/pets", async () => {})
 
-  it("a test", async () => {})
+  it("prevents default form submission behavior", async () => {})
+
+  it("clears the form after submission", async () => {})
+
+  it("BONUS: re-fetches the list of pets after form submission", async () => {})
 })
