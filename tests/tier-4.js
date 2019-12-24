@@ -44,7 +44,7 @@ describe("Tier 4: AddPet component", () => {
     assert.includeMembers(optionsValues, ["cat", "dog"])
   })
 
-  // TODO: figure out this test
+  // TODO: Revisit this test for clarity
   it("submitting the form posts the new pet data to /api/pets", async () => {
     const lucky = {
       name: "Lucky",
@@ -53,30 +53,48 @@ describe("Tier 4: AddPet component", () => {
     }
     mockAxios.onPost("/api/pets", lucky).reply(201, lucky)
 
-    const { getByTestId } = render(<AddPet />)
+    const { container, getByTestId } = render(<AddPet />)
     const form = getByTestId("add-pet")
 
     const nameInput = form.querySelector('input[name="name"]')
-    fireEvent.change(nameInput, { target: { value: lucky.name } })
+    fireEvent.change(nameInput, {
+      target: {
+        value: lucky.name
+      }
+    })
 
     const descriptionInput = form.querySelector('input[name="description"]')
-    fireEvent.change(descriptionInput, { target: { value: lucky.description } })
+    fireEvent.change(descriptionInput, {
+      target: {
+        value: lucky.description
+      }
+    })
 
     const speciesSelect = form.querySelector("select")
-    fireEvent.change(speciesSelect, { target: { value: lucky.species } })
+    fireEvent.change(speciesSelect, {
+      target: {
+        value: lucky.species
+      }
+    })
 
-    const submitButton = form.querySelector('button[type="submit"]')
-    await wait(() => {
-      fireEvent.click(submitButton)
-    }, { timeout: 10, interval: 5 })
-
-    // console.log(speciesSelect.value)
-    // console.log(nameInput.value)
-    // console.log(descriptionInput.value)
+    let defaultPrevented = null
+    container.addEventListener("submit", event => {
+      defaultPrevented = event.defaultPrevented
+    })
+    fireEvent.submit(form)
+    await wait(
+      () => {
+        assert.isTrue(defaultPrevented)
+      },
+      {
+        timeout: 10,
+        interval: 5
+      }
+    )
   })
 
   // TODO: Write this test
-  it("prevents default form submission behavior", () => {})
+  it("submitting the form posts the new pet data to /api/pets", () => {})
 
   // TODO: Write this test
   it("clears the form after submission", () => {})

@@ -11,14 +11,14 @@ const AddPet = () => {
     if (evt.target.name === "species") setSpecies(evt.target.value)
   }
   const handleSubmit = async evt => {
-    // evt.preventDefault()
-    try {
-      const reqBody = { name, description, species }
-      const response = await axios.post("/api/pets", reqBody)
-      console.log(response)
-    } catch (err) {
-      console.error(err.message)
-    }
+    evt.preventDefault()
+    // try {
+    const reqBody = { name, description, species }
+    const response = await axios.post("/api/pets", reqBody)
+    // console.log(response)
+    // } catch (err) {
+    //   console.error(err.message)
+    // }
   }
   return (
     <form
