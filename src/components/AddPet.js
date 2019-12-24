@@ -11,7 +11,7 @@ const AddPet = () => {
     if (evt.target.name === "species") setSpecies(evt.target.value)
   }
   const handleSubmit = async evt => {
-    evt.preventDefault()
+    // evt.preventDefault()
     try {
       const reqBody = { name, description, species }
       const response = await axios.post("/api/pets", reqBody)
@@ -26,9 +26,13 @@ const AddPet = () => {
       onSubmit={handleSubmit}
       data-testid="add-pet"
     >
-      <input placeholder="Name" type="text" name="name" />
+      {/* <input placeholder="Name" type="text" name="name" />
       <input placeholder="Description" type="text" name="description" />
-      {/* <input
+      <select>
+        <option>cat</option>
+        <option>dog</option>
+      </select> */}
+      <input
         name="name"
         type="text"
         placeholder="Name"
@@ -45,7 +49,7 @@ const AddPet = () => {
       <select name="species" value={species} onChange={handleChange}>
         <option>cat</option>
         <option>dog</option>
-      </select> */}
+      </select>
       <button type="submit">Submit New Pet</button>
     </form>
   )

@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import React from "react"
-import { render, cleanup, wait } from "@testing-library/react"
+import { render, cleanup, wait, fireEvent } from "@testing-library/react"
 import { assert } from "chai"
 
 import AddPet from "../src/components/AddPet"
@@ -32,13 +32,55 @@ describe("Tier 4: AddPet component", () => {
     assert.equal(descriptionInput.placeholder, "Description")
   })
 
-  it("renders a select dropdown with two options: cat and dog", async () => {})
+  it("renders a select dropdown with two options: cat and dog", () => {
+    const { getByTestId } = render(<AddPet />)
+    const form = getByTestId("add-pet")
 
-  it("submitting the form POSTs the new pet data to /api/pets", async () => {})
+    const speciesSelect = form.querySelector("select")
+    assert.isNotNull(speciesSelect)
+    const optionsValues = [...speciesSelect.querySelectorAll("option")].map(
+      option => option.value
+    )
+    assert.includeMembers(optionsValues, ["cat", "dog"])
+  })
 
-  it("prevents default form submission behavior", async () => {})
+  // TODO: figure out this test
+  it("submitting the form posts the new pet data to /api/pets", async () => {
+    const lucky = {
+      name: "Lucky",
+      description: "Labradoodle who loves to chase squirrels",
+      species: "dog"
+    }
+    mockAxios.onPost("/api/pets", lucky).reply(201, lucky)
 
-  it("clears the form after submission", async () => {})
+    const { getByTestId } = render(<AddPet />)
+    const form = getByTestId("add-pet")
 
-  it("BONUS: re-fetches the list of pets after form submission", async () => {})
+    const nameInput = form.querySelector('input[name="name"]')
+    fireEvent.change(nameInput, { target: { value: lucky.name } })
+
+    const descriptionInput = form.querySelector('input[name="description"]')
+    fireEvent.change(descriptionInput, { target: { value: lucky.description } })
+
+    const speciesSelect = form.querySelector("select")
+    fireEvent.change(speciesSelect, { target: { value: lucky.species } })
+
+    const submitButton = form.querySelector('button[type="submit"]')
+    await wait(() => {
+      fireEvent.click(submitButton)
+    }, { timeout: 10, interval: 5 })
+
+    // console.log(speciesSelect.value)
+    // console.log(nameInput.value)
+    // console.log(descriptionInput.value)
+  })
+
+  // TODO: Write this test
+  it("prevents default form submission behavior", () => {})
+
+  // TODO: Write this test
+  it("clears the form after submission", () => {})
+
+  // TODO: Write this test
+  it("BONUS: re-fetches the list of pets after form submission", () => {})
 })
