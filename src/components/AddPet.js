@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import axios from "axios"
 
-const AddPet = () => {
+const AddPet = props => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [species, setSpecies] = useState("cat")
@@ -15,6 +15,7 @@ const AddPet = () => {
     try {
       const reqBody = { name, description, species }
       await axios.post("/api/pets", reqBody)
+      props.refetch()
       setName("")
       setDescription("")
       setSpecies("cat")
