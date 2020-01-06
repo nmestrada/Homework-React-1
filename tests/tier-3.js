@@ -2,6 +2,7 @@
 import React from "react"
 import { render, cleanup, wait } from "@testing-library/react"
 import { assert } from "chai"
+import { spy } from "sinon"
 
 import Root from "../src/components/Root"
 import { mockAxios } from "./setup"
@@ -104,16 +105,21 @@ describe("Tier 3: Root component", () => {
     )
   })
 
-  it("displays error message if the server responds with status code 500", async () => {
+  it("logs the error (console.error) and display error message if server fails", async () => {
     mockAxios.onGet("/api/pets").reply(500)
     const { getByText } = render(<Root />)
+
+    // const logError = spy()
+    const logError = spy(console, "error")
 
     await wait(
       () => {
         getByText("Request failed with status code 500", { exact: false })
         assert.throws(() => getByText("Rigatoni", { exact: false }))
+        // console.log(logError.firstCall.args[0].message)
       },
       { timeout: 10, interval: 5 }
     )
+    logError.restore()
   })
 })

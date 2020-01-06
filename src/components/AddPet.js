@@ -1,6 +1,11 @@
 import React, { useState } from "react"
 import axios from "axios"
 
+const nextTickPromise = () =>
+  new Promise(resolve => {
+    process.nextTick(resolve)
+  })
+
 const AddPet = props => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -11,7 +16,16 @@ const AddPet = props => {
     if (evt.target.name === "species") setSpecies(evt.target.value)
   }
   const handleSubmit = async evt => {
+    console.log("String 2")
+    evt.persist()
+    // await nextTickPromise()
     evt.preventDefault()
+
+    // process.nextTick(() => {
+    //   console.log("HELLO")
+    //   evt.preventDefault()
+    // })
+    // evt.preventDefault()
     try {
       const reqBody = { name, description, species }
       await axios.post("/api/pets", reqBody)

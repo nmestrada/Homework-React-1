@@ -37,6 +37,7 @@ By default, Parcel will open up the React application at
 - Writing a helper function
 - useFetch
   - Get data from a provided server
+- handling errors
 - Handling events
   - Click, Change, Submit
 - Lists and Keys

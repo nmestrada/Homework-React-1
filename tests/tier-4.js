@@ -49,10 +49,30 @@ describe("Tier 4: AddPet component", () => {
     assert.includeMembers(optionsValues, ["cat", "dog"])
   })
 
-  it("prevents default form submission behavior", async () => {
+  const nextTickPromise = () =>
+    new Promise(resolve => {
+      process.nextTick(resolve)
+    })
+
+  it.only("prevents default form submission behavior", async () => {
     mockAxios.onPost("/api/pets").reply(201)
 
-    const { container, getByTestId } = render(<AddPet refetch={() => {}} />)
+    const containerDiv = document.createElement("div")
+
+    // const { container } = render(<TableBody {...props} />, {
+    //   container: document.body.appendChild(table)
+    // })
+    let defaultPrevented = null
+    // document.addEventListener()
+    containerDiv.addEventListener("submit", event => {
+      console.log("String 1")
+      defaultPrevented = event.defaultPrevented
+      console.log(event.target)
+    }, true)
+
+    const { container, getByTestId } = render(<AddPet refetch={() => {}} />, {
+      container: document.body.appendChild(containerDiv)
+    })
     const form = getByTestId("add-pet")
 
     const nameInput = form.querySelector('input[name="name"]')
@@ -64,12 +84,23 @@ describe("Tier 4: AddPet component", () => {
     const speciesSelect = form.querySelector("select")
     fireEvent.change(speciesSelect, { target: { value: "dog" } })
 
-    let defaultPrevented = null
-    container.addEventListener("submit", event => {
-      defaultPrevented = event.defaultPrevented
-    })
+    // let defaultPrevented = null
+    // container.addEventListener("submit", event => {
+    //   console.log("String 1")
+    //   defaultPrevented = event.defaultPrevented
+    // })
 
+    console.log("String 3")
     fireEvent.submit(form)
+    console.log("String 4")
+    // await nextTickPromise()
+    assert.isTrue(defaultPrevented)
+
+    // process.nextTick(() => {
+    //   process.nextTick(() => {
+    //     assert.isTrue(defaultPrevented)
+    //   })
+    // })
 
     await wait(
       () => {
@@ -111,7 +142,7 @@ describe("Tier 4: AddPet component", () => {
     )
   })
 
-  it("resets the form after form submission", async () => {
+  it("resets the form after submission", async () => {
     const lucky = {
       name: "Lucky",
       description: "Labradoodle who loves to chase squirrels",
@@ -144,7 +175,7 @@ describe("Tier 4: AddPet component", () => {
   })
 
   // Assume for now that AddPet is a child of Root...
-  it("BONUS: calls props.refetch after form submission", async () => {
+  it("calls props.refetch after form submission", async () => {
     const refetch = spy()
     const { getByTestId } = render(<AddPet refetch={refetch} />)
 
@@ -177,7 +208,7 @@ describe("Tier 4: AddPet component", () => {
     )
   })
 
-  it("BONUS: Root refetches list of pets after form submission", async () => {
+  it("Root refetches list of pets after form submission", async () => {
     const { getByTestId } = render(<Root />)
 
     const lucky = {
@@ -210,5 +241,38 @@ describe("Tier 4: AddPet component", () => {
   })
 
   // TODO: Write this one maybe.
-  it("BONUS: handles errors gracefully", async () => {})
+  it("logs the error (console.error) if server fails", async () => {
+    const lucky = {
+      name: "Lucky",
+      description: "Labradoodle who loves to chase squirrels",
+      species: "dog"
+    }
+    mockAxios.onPost("/api/pets").reply(500)
+
+    const { getByTestId } = render(<AddPet refetch={() => {}} />)
+    const form = getByTestId("add-pet")
+
+    const nameInput = form.querySelector('input[name="name"]')
+    fireEvent.change(nameInput, { target: { value: lucky.name } })
+
+    const descriptionInput = form.querySelector('input[name="description"]')
+    fireEvent.change(descriptionInput, { target: { value: lucky.description } })
+
+    const speciesSelect = form.querySelector("select")
+    fireEvent.change(speciesSelect, { target: { value: lucky.species } })
+
+    const logError = spy()
+    console.error = logError
+    fireEvent.submit(form)
+
+    await wait(
+      () => {
+        assert.equal(nameInput.value, lucky.name)
+        assert.equal(descriptionInput.value, lucky.description)
+        assert.equal(speciesSelect.value, lucky.species)
+        assert.isTrue(logError.called)
+      },
+      { timeout: 10, interval: 5 }
+    )
+  })
 })
