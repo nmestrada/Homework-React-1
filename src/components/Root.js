@@ -13,10 +13,10 @@ class Root extends React.Component {
       error: null,
       loading: true
     }
-    this.fetch = this.fetch.bind(this)
+    this.fetchPets = this.fetchPets.bind(this)
   }
 
-  async fetch() {
+  async fetchPets() {
     try {
       const { data } = await axios.get("/api/pets")
       this.setState({ pets: data })
@@ -27,7 +27,7 @@ class Root extends React.Component {
     }
   }
   componentDidMount() {
-    this.fetch()
+    this.fetchPets()
   }
 
   render() {
@@ -37,7 +37,7 @@ class Root extends React.Component {
         {error}
         {loading && "Loading"}
         <h1>Adoption Center</h1>
-        <AddPet refetch={this.fetch} />
+        <AddPet refetch={this.fetchPets} />
         <PetList pets={pets} />
       </>
     )
