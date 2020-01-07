@@ -28,7 +28,7 @@ import PetList from "../src/components/PetList"
  */
 
 describe("Tier 2: PetList component", () => {
-  afterEach(() => cleanup())
+  afterEach(cleanup)
 
   const pets = [
     {

@@ -27,7 +27,7 @@ const getRequests = () => mockAxios.history.get.length
  */
 
 describe("Tier 3: Root component", () => {
-  afterEach(() => cleanup())
+  afterEach(cleanup)
   afterEach(() => mockAxios.reset())
 
   it("fetches data from /api/pets once after Root first mounts", async () => {

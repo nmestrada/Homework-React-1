@@ -21,7 +21,7 @@ const getRequests = () => mockAxios.history.get.length
  */
 
 describe("Tier 4: AddPet component", () => {
-  afterEach(() => cleanup())
+  afterEach(cleanup)
   afterEach(() => mockAxios.reset())
 
   it("renders two text inputs, name and description, with appropriate placeholders", () => {
@@ -144,71 +144,71 @@ describe("Tier 4: AddPet component", () => {
   })
 
   // Assume for now that AddPet is a child of Root...
-  it("BONUS: calls props.refetch after form submission", async () => {
-    const refetch = spy()
-    const { getByTestId } = render(<AddPet refetch={refetch} />)
+  // it("BONUS: calls props.refetch after form submission", async () => {
+  //   const refetch = spy()
+  //   const { getByTestId } = render(<AddPet refetch={refetch} />)
 
-    const lucky = {
-      name: "Lucky",
-      description: "Labradoodle who loves to chase squirrels",
-      species: "dog"
-    }
-    mockAxios.onPost("/api/pets", lucky).reply(201, lucky)
-    const form = getByTestId("add-pet")
+  //   const lucky = {
+  //     name: "Lucky",
+  //     description: "Labradoodle who loves to chase squirrels",
+  //     species: "dog"
+  //   }
+  //   mockAxios.onPost("/api/pets", lucky).reply(201, lucky)
+  //   const form = getByTestId("add-pet")
 
-    const nameInput = form.querySelector('input[name="name"]')
-    fireEvent.change(nameInput, { target: { value: lucky.name } })
+  //   const nameInput = form.querySelector('input[name="name"]')
+  //   fireEvent.change(nameInput, { target: { value: lucky.name } })
 
-    const descriptionInput = form.querySelector('input[name="description"]')
-    fireEvent.change(descriptionInput, {
-      target: { value: lucky.description }
-    })
+  //   const descriptionInput = form.querySelector('input[name="description"]')
+  //   fireEvent.change(descriptionInput, {
+  //     target: { value: lucky.description }
+  //   })
 
-    const speciesSelect = form.querySelector("select")
-    fireEvent.change(speciesSelect, { target: { value: lucky.species } })
+  //   const speciesSelect = form.querySelector("select")
+  //   fireEvent.change(speciesSelect, { target: { value: lucky.species } })
 
-    fireEvent.submit(form)
+  //   fireEvent.submit(form)
 
-    await wait(
-      () => {
-        assert.isTrue(refetch.called)
-      },
-      { timeout: 10, interval: 5 }
-    )
-  })
+  //   await wait(
+  //     () => {
+  //       assert.isTrue(refetch.called)
+  //     },
+  //     { timeout: 10, interval: 5 }
+  //   )
+  // })
 
-  it("BONUS: Root refetches list of pets after form submission", async () => {
-    const { getByTestId } = render(<Root />)
+  // it("BONUS: Root refetches list of pets after form submission", async () => {
+  //   const { getByTestId } = render(<Root />)
 
-    const lucky = {
-      name: "Lucky",
-      description: "Labradoodle who loves to chase squirrels",
-      species: "dog"
-    }
-    mockAxios.onPost("/api/pets", lucky).reply(201, lucky)
-    const form = getByTestId("add-pet")
+  //   const lucky = {
+  //     name: "Lucky",
+  //     description: "Labradoodle who loves to chase squirrels",
+  //     species: "dog"
+  //   }
+  //   mockAxios.onPost("/api/pets", lucky).reply(201, lucky)
+  //   const form = getByTestId("add-pet")
 
-    const nameInput = form.querySelector('input[name="name"]')
-    fireEvent.change(nameInput, { target: { value: lucky.name } })
+  //   const nameInput = form.querySelector('input[name="name"]')
+  //   fireEvent.change(nameInput, { target: { value: lucky.name } })
 
-    const descriptionInput = form.querySelector('input[name="description"]')
-    fireEvent.change(descriptionInput, {
-      target: { value: lucky.description }
-    })
+  //   const descriptionInput = form.querySelector('input[name="description"]')
+  //   fireEvent.change(descriptionInput, {
+  //     target: { value: lucky.description }
+  //   })
 
-    const speciesSelect = form.querySelector("select")
-    fireEvent.change(speciesSelect, { target: { value: lucky.species } })
+  //   const speciesSelect = form.querySelector("select")
+  //   fireEvent.change(speciesSelect, { target: { value: lucky.species } })
 
-    fireEvent.submit(form)
+  //   fireEvent.submit(form)
 
-    await wait(
-      () => {
-        assert.equal(getRequests(), 2)
-      },
-      { timeout: 10, interval: 5 }
-    )
-  })
+  //   await wait(
+  //     () => {
+  //       assert.equal(getRequests(), 2)
+  //     },
+  //     { timeout: 10, interval: 5 }
+  //   )
+  // })
 
-  // TODO: Write this one maybe.
-  it("BONUS: handles errors gracefully", async () => {})
+  // // TODO: Write this one maybe.
+  // it("BONUS: handles errors gracefully", async () => {})
 })
