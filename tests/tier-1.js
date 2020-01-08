@@ -1,8 +1,7 @@
 /* eslint-env mocha */
-/* eslint-disable no-unused-expressions */
 import React from "react"
 // import { render, cleanup, fireEvent } from "@testing-library/react"
-import { assert, expect } from "chai"
+import { expect } from "chai"
 import { mount } from "enzyme"
 
 import SinglePet from "../src/components/SinglePet"
@@ -50,29 +49,33 @@ describe("Tier 1: SinglePet component", () => {
     expect(wrapper.contains(rigatoni.species)).to.equal(true)
   })
 
-  xit("renders different name, description, and species if passed different props", () => {
-    // const { getByText } = render(<SinglePet pet={cody} />)
-    // getByText("Cody", { exact: false })
-    // getByText("Adorable pug who loves to hug", { exact: false })
-    // getByText("dog", { exact: false })
+  it("renders different name, description, and species if passed different props", () => {
+    const wrapper = mount(<SinglePet pet={cody} />)
+    expect(wrapper.contains(cody.name)).to.equal(true)
+    expect(wrapper.contains(cody.description)).to.equal(true)
+    expect(wrapper.contains(cody.species)).to.equal(true)
   })
 
-  xit("renders a 'Toggle Adopted' button", () => {
-    // The button doesn't need to "do anything" yet. See the next test.
-    // const { getByRole } = render(<SinglePet pet={rigatoni} />)
-    // const { innerHTML } = getByRole("button")
-    // assert.equal(innerHTML, "Toggle Adopted")
+  it("renders a 'Toggle Adopted' button", () => {
+    // The button doesn't need to "do anything" just yet. See the next test.
+    const wrapper = mount(<SinglePet pet={rigatoni} />)
+    expect(wrapper.exists("button")).to.equal(true)
+    expect(wrapper.find("button").text()).to.equal("Toggle Adopted")
   })
 
-  xit("the 'Toggle Adopted' button toggles the pet's adopted status", () => {
-    // const { getByText } = render(<SinglePet pet={rigatoni} />)
+  it("the 'Toggle Adopted' button toggles the pet's adopted status", () => {
+    const wrapper = mount(<SinglePet pet={rigatoni} />)
+    const toggleAdoptedButton = wrapper.find("button")
+
     // The component should render "Available for adoption" and not "Adopted!"
-    // getByText("Available for Adoption", { exact: false })
-    // assert.throws(() => getByText("Adopted!", { exact: false }))
+    expect(wrapper.contains("Available for adoption")).to.equal(true)
+    expect(wrapper.contains("Adopted!")).to.equal(false)
+
     // Click the button!
-    // fireEvent.click(getByText("Toggle Adopted"))
-    // // NOW the component should render "Adopted!"
-    // getByText("Adopted!", { exact: false })
-    // assert.throws(() => getByText("Available for adoption", { exact: false }))
+    toggleAdoptedButton.simulate("click")
+
+    // NOW the component should render "Adopted!"
+    expect(wrapper.contains("Available for adoption")).to.equal(false)
+    expect(wrapper.contains("Adopted!")).to.equal(true)
   })
 })
