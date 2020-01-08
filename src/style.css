@@ -1,0 +1,25 @@
+body {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+  padding: 0px;
+}
+
+.pet-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.single-pet {
+  width: 15rem;
+  margin: 0.5rem;
+}
+
+.add-pet-form * {
+  margin: 0.3rem;
+  padding: 3px;
+}
