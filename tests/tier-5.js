@@ -92,6 +92,7 @@ describe("Tier 5: refetching data [BONUS]", () => {
     )
   })
 
-  // TODO: Write this one maybe.
-  it("handles errors gracefully", async () => {})
+  // TODO: Write this one. If the post fails, don't reset the form and don't
+  // refetch data. Also, display an error message.
+  xit("handles errors gracefully", async () => {})
 })

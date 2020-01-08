@@ -2,14 +2,11 @@
 import React from "react"
 import { render, cleanup, wait, fireEvent } from "@testing-library/react"
 import { assert } from "chai"
-import { spy } from "sinon"
 
 import AddPet from "../src/components/AddPet"
-import Root from "../src/components/Root"
 import { mockAxios } from "./setup"
 
 const postRequests = () => mockAxios.history.post.length
-const getRequests = () => mockAxios.history.get.length
 
 /**
  * Tier 4 is about

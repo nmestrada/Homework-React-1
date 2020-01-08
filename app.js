@@ -1,6 +1,5 @@
 const express = require("express")
 const morgan = require("morgan")
-// const ParcelBundler = require("parcel-bundler")
 const { join } = require("path")
 const pets = require("./petdata")
 const webpack = require("webpack")
@@ -43,22 +42,13 @@ app.post("/api/pets", (req, res) => {
 const compiler = webpack(webpackConfig)
 app.use(
   middleware(compiler, {
-    // webpack-dev-middleware options
-    publicPath: join(__dirname, "public"),
+    // publicPath: join(__dirname, "public"),
+    publicPath: webpackConfig.output.publicPath,
     writeToDisk: true,
   })
 )
+
 // static file-serving middleware
 app.use(express.static(join(__dirname, "public")))
-
-
-// Parcel Bundler
-// sends index.html
-// app.use("*", (req, res) => {
-  //   res.sendFile(join(__dirname, "public", "index.html"))
-  // })
-
-// const bundler = new ParcelBundler(join(__dirname, "./src/index.html"))
-// app.use(bundler.middleware())
 
 module.exports = app
