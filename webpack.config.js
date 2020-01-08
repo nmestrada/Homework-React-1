@@ -7,10 +7,6 @@ module.exports = {
     filename: "public/bundle.js",
     publicPath: "/"
   },
-  devServer: {
-    contentBase: "public",
-    hot: true
-  },
   module: {
     rules: [
       {
