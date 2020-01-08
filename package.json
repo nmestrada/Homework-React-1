@@ -35,13 +35,14 @@
     "axios-mock-adapter": "^1.17.0",
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "jsdom": "^15.2.1",
     "jsdom-global": "^3.0.2",
     "mocha": "^6.2.2",
     "sass": "^1.23.7",
     "sinon": "^8.0.4",
     "webpack": "^4.41.5",
-    "webpack-dev-middleware": "^3.7.2",
-    "webpack-hot-middleware": "^2.25.0"
+    "webpack-dev-middleware": "^3.7.2"
   }
 }

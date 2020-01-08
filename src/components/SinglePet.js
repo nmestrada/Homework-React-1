@@ -29,13 +29,7 @@ class SinglePet extends React.Component {
     return (
       <div className="single-pet">
         <h2>{name}</h2>
-        <div>
-          {species}
-          <span>
-            {species === "cat" && " 😸"}
-            {species === "dog" && " 🐶"}
-          </span>
-        </div>
+        <div>{species}</div>
         <div>{description}</div>
         <hr />
         <div>{adopted ? "Adopted!" : "Available for adoption"}</div>
