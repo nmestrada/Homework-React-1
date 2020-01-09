@@ -70,8 +70,6 @@ describe("Tier 1: SinglePet component", () => {
     // The component should render "Available for adoption" and not "Adopted!"
     expect(wrapper.text()).to.contain("Available for adoption")
     expect(wrapper.text()).to.not.contain("Adopted!")
-    // expect(wrapper.contains("Available for adoption")).to.equal(true)
-    // expect(wrapper.contains("Adopted!")).to.equal(false)
 
     // Click the button!
     toggleAdoptedButton.simulate("click")
@@ -79,7 +77,5 @@ describe("Tier 1: SinglePet component", () => {
     // NOW the component should render "Adopted!"
     expect(wrapper.text()).to.not.contain("Available for adoption")
     expect(wrapper.text()).to.contain("Adopted!")
-    // expect(wrapper.contains("Available for adoption")).to.equal(false)
-    // expect(wrapper.contains("Adopted!")).to.equal(true)
   })
 })

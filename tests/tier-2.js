@@ -61,6 +61,8 @@ describe("Tier 2: PetList component", () => {
     expect(wrapper.text()).to.contain("Anabelle")
   })
 
+  const valueOf = reactWrapper => reactWrapper.get(0).props.value
+
   it("renders a select dropdown with three options: all, cats, dogs", () => {
     const wrapper = mount(<PetList pets={pets} />)
     const select = wrapper.find("select")
@@ -68,29 +70,26 @@ describe("Tier 2: PetList component", () => {
     expect(options).to.have.lengthOf(3)
     const optionValues = options.map(option => option.text())
     expect(optionValues).to.include.members(["all", "cats", "dogs"])
-
-    // console.log(options.length)
-    // options.forEach(o => console.log(o.text()))
-    // expect(options.containsAllMatchingElements([
-    //   <option>all</option>,
-    //   <option>cats</option>,
-    //   <option>dogs</option>,
-    // ])).to.equal(true)
-
-    // const options = [...select.querySelectorAll("option")].map(n => n.value)
-    // assert.lengthOf(options, 3)
-    // assert.includeMembers(options, ["all", "cats", "dogs"])
   })
 
-  xit("when the filter is set to 'cats', only render SinglePets with cats", () => {
-    // const { queryByTestId, getByText } = render(<PetList pets={pets} />)
-    // const select = queryByTestId("species-filter").querySelector("select")
-    // fireEvent.change(select, { target: { value: "cats" } })
-    // assert.equal(select.value, "cats")
-    // getByText("Rigatoni", { exact: false })
-    // getByText("Frankie", { exact: false })
-    // assert.throws(() => getByText("Cody", { exact: false }))
-    // assert.throws(() => getByText("Anabelle", { exact: false }))
+  it("when the filter is set to 'cats', only render SinglePets with cats", () => {
+    const wrapper = mount(<PetList pets={pets} />)
+
+    // By default, the value of select should be "all"
+    let select = wrapper.find("select")
+    expect(valueOf(select)).to.equal("all")
+
+    // Simulate a user clicking the dropdown menu and selecting cats
+    select.simulate("change", { target: { value: "cats" } })
+
+    // Now, the value of select should be "cats"
+    select = wrapper.find("select")
+    expect(valueOf(select)).to.equal("cats")
+
+    expect(wrapper.text()).to.contain("Rigatoni")
+    expect(wrapper.text()).to.not.contain("Cody")
+    expect(wrapper.text()).to.contain("Frankie")
+    expect(wrapper.text()).to.not.contain("Anabelle")
   })
 
   xit("when the filter is set to 'dogs', only render SinglePets with dogs", () => {
