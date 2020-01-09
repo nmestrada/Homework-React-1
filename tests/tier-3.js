@@ -35,58 +35,30 @@ describe("Tier 3: Root component", () => {
     await waitForExpect(() => {
       expect(getRequests()).to.equal(1)
     })
-    // await wait(() => {
-    //   expect(getRequests()).to.equal(20)
-    // })
-
-    // setTimeout(() => {
-    //   expect(getRequests()).to.equal(1)
-    //   done()
-    // }, 1)
-    // process.nextTick(() => {
-    //   process.nextTick(() => {
-    //     expect(getRequests()).to.equal(1)
-
-    //   })
-    // })
-    //   render(<Root />)
-
-    //   await wait(
-    //     () => {
-    //       assert.equal(getRequests(), 1)
-    //     },
-    //     { timeout: 10, interval: 5 }
-    //   )
   })
 
-  xit("renders PetList with data retrieved from /api/pets", async () => {
-    // const samplePets = [
-    //   {
-    //     name: "Rigatoni",
-    //     description: "A flaming hot cheetoh in feline form",
-    //     species: "cat"
-    //   },
-    //   {
-    //     name: "Cody",
-    //     description: "Adorable pug who loves to hug",
-    //     species: "dog"
-    //   }
-    // ]
-    // mockAxios.onGet("/api/pets").reply(200, samplePets)
-    // const { getByText } = render(<Root />)
-
-    await wait(
-      () => {
-        getByText("Rigatoni", { exact: false })
-        getByText("Cody", { exact: false })
-        assert.throws(() => getByText("Frankie", { exact: false }))
-        assert.throws(() => getByText("Anabelle", { exact: false }))
-        assert.throws(() =>
-          getByText("Request failed with status code 500", { exact: false })
-        )
+  it("renders PetList with data retrieved from /api/pets", async () => {
+    const samplePets = [
+      {
+        name: "Rigatoni",
+        description: "A flaming hot cheetoh in feline form",
+        species: "cat"
       },
-      { timeout: 10, interval: 5 }
-    )
+      {
+        name: "Cody",
+        description: "Adorable pug who loves to hug",
+        species: "dog"
+      }
+    ]
+    mockAxios.onGet("/api/pets").reply(200, samplePets)
+
+    const wrapper = mount(<Root />)
+    await waitForExpect(() => {
+      expect(wrapper.text()).to.contain("Rigatoni")
+      expect(wrapper.text()).to.contain("Cody")
+      expect(wrapper.text()).to.not.contain("Frankie")
+      expect(wrapper.text()).to.not.contain("Anabelle")
+    })
   })
 
   xit("displays loading message while waiting for the data", async () => {
