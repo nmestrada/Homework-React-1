@@ -4,11 +4,7 @@ import { expect } from "chai"
 import { mount } from "enzyme"
 
 import PetList from "../src/components/PetList"
-
-const valueOf = reactWrapper => {
-  if (reactWrapper.get(0).props.value) return reactWrapper.get(0).props.value
-  return reactWrapper.text()
-}
+import { valueOf } from "./utils"
 
 /**
  * Tier 2 is about

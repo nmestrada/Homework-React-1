@@ -42,6 +42,7 @@
     "mocha": "^6.2.2",
     "sass": "^1.23.7",
     "sinon": "^8.0.4",
+    "wait-for-expect": "^3.0.1",
     "webpack": "^4.41.5",
     "webpack-dev-middleware": "^3.7.2"
   }
