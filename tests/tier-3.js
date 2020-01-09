@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 import React from "react"
 import { expect } from "chai"
-import { mount, render } from "enzyme"
+import { mount } from "enzyme"
 import waitForExpect from "wait-for-expect"
 import Root from "../src/components/Root"
 import { mockAxios } from "./setup"
@@ -31,7 +31,9 @@ describe("Tier 3: Root component", () => {
 
   it("fetches data from /api/pets once after Root first mounts", async () => {
     expect(getRequests()).to.equal(0)
+
     mount(<Root />)
+
     await waitForExpect(() => {
       expect(getRequests()).to.equal(1)
     })
@@ -50,9 +52,12 @@ describe("Tier 3: Root component", () => {
         species: "dog"
       }
     ]
+    // For the purposes of this test, any axios request to /api/pets will
+    // respond with the sample pets. It WILL NOT reach the express server defined
+    // in /app.js
     mockAxios.onGet("/api/pets").reply(200, samplePets)
-
     const wrapper = mount(<Root />)
+
     await waitForExpect(() => {
       expect(wrapper.text()).to.contain("Rigatoni")
       expect(wrapper.text()).to.contain("Cody")
@@ -76,6 +81,7 @@ describe("Tier 3: Root component", () => {
     ]
     mockAxios.onGet("/api/pets").reply(200, samplePets)
     const wrapper = mount(<Root />)
+
     expect(wrapper.text()).to.contain("Loading")
     await waitForExpect(() => {
       wrapper.update()
@@ -85,33 +91,18 @@ describe("Tier 3: Root component", () => {
       expect(wrapper.text()).to.contain("Frankie")
       expect(wrapper.text()).to.contain("Anabelle")
     })
-
-    // const { getByText } = render(<Root />)
-    // getByText("Loading", { exact: false })
-    // await wait(
-    //   () => {
-    //     assert.throws(() => getByText("Loading", { exact: false }))
-    //     getByText("Frankie", { exact: false })
-    //     getByText("Anabelle", { exact: false })
-    //     assert.throws(() => getByText("Rigatoni", { exact: false }))
-    //     assert.throws(() => getByText("Cody", { exact: false }))
-    //     assert.throws(() =>
-    //       getByText("Request failed with status code 500", { exact: false })
-    //     )
-    //   },
-    //   { timeout: 10, interval: 5 }
-    // )
   })
 
-  xit("displays error message if the server responds with status code 500", async () => {
-    // mockAxios.onGet("/api/pets").reply(500)
-    // const { getByText } = render(<Root />)
-    // await wait(
-    //   () => {
-    //     getByText("Request failed with status code 500", { exact: false })
-    //     assert.throws(() => getByText("Rigatoni", { exact: false }))
-    //   },
-    //   { timeout: 10, interval: 5 }
-    // )
+  it("displays error message if the server responds with status code 500", async () => {
+    mockAxios.onGet("/api/pets").reply(500)
+    const wrapper = mount(<Root />)
+
+    expect(wrapper.text()).to.not.contain("Error")
+    await waitForExpect(() => {
+      wrapper.update()
+      expect(wrapper.text()).to.contain("Error")
+      expect(wrapper.text()).to.not.contain("Loading")
+      expect(wrapper.text()).to.not.contain("Rigatoni")
+    })
   })
 })

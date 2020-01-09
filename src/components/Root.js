@@ -34,7 +34,7 @@ class Root extends React.Component {
     const { error, loading, pets } = this.state
     return (
       <>
-        {error && <div>{error}</div>}
+        {error && <div>Error: {error}</div>}
         {loading && <div>Loading</div>}
         <h1>Adoption Center</h1>
         <AddPet refetch={this.fetchPets} />
