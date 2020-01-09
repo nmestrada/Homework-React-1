@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 import React from "react"
 import { expect } from "chai"
-import { mount } from "enzyme"
+import { mount, render } from "enzyme"
 import waitForExpect from "wait-for-expect"
 import Root from "../src/components/Root"
 import { mockAxios } from "./setup"
@@ -78,6 +78,7 @@ describe("Tier 3: Root component", () => {
     const wrapper = mount(<Root />)
     expect(wrapper.text()).to.contain("Loading")
     await waitForExpect(() => {
+      wrapper.update()
       expect(wrapper.text()).to.not.contain("Loading")
       expect(wrapper.text()).to.not.contain("Rigatoni")
       expect(wrapper.text()).to.not.contain("Cody")
