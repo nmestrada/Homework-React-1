@@ -30,7 +30,6 @@ import PetList from "../src/components/PetList"
  */
 
 describe("Tier 2: PetList component", () => {
-
   const pets = [
     {
       name: "Rigatoni",
@@ -62,9 +61,22 @@ describe("Tier 2: PetList component", () => {
     expect(wrapper.text()).to.contain("Anabelle")
   })
 
-  xit("renders a select dropdown with three options: all, cats, dogs", () => {
-    // const { queryByTestId } = render(<PetList pets={pets} />)
-    // const select = queryByTestId("species-filter").querySelector("select")
+  it("renders a select dropdown with three options: all, cats, dogs", () => {
+    const wrapper = mount(<PetList pets={pets} />)
+    const select = wrapper.find("select")
+    const options = select.find("option")
+    expect(options).to.have.lengthOf(3)
+    const optionValues = options.map(option => option.text())
+    expect(optionValues).to.include.members(["all", "cats", "dogs"])
+
+    // console.log(options.length)
+    // options.forEach(o => console.log(o.text()))
+    // expect(options.containsAllMatchingElements([
+    //   <option>all</option>,
+    //   <option>cats</option>,
+    //   <option>dogs</option>,
+    // ])).to.equal(true)
+
     // const options = [...select.querySelectorAll("option")].map(n => n.value)
     // assert.lengthOf(options, 3)
     // assert.includeMembers(options, ["all", "cats", "dogs"])
@@ -74,7 +86,6 @@ describe("Tier 2: PetList component", () => {
     // const { queryByTestId, getByText } = render(<PetList pets={pets} />)
     // const select = queryByTestId("species-filter").querySelector("select")
     // fireEvent.change(select, { target: { value: "cats" } })
-
     // assert.equal(select.value, "cats")
     // getByText("Rigatoni", { exact: false })
     // getByText("Frankie", { exact: false })
@@ -86,7 +97,6 @@ describe("Tier 2: PetList component", () => {
     // const { queryByTestId, getByText } = render(<PetList pets={pets} />)
     // const select = queryByTestId("species-filter").querySelector("select")
     // fireEvent.change(select, { target: { value: "dogs" } })
-
     // assert.equal(select.value, "dogs")
     // getByText("Cody", { exact: false })
     // getByText("Anabelle", { exact: false })
