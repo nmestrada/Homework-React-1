@@ -44,22 +44,22 @@ describe("Tier 1: SinglePet component", () => {
 
   it("renders a pet's name, description, and species passed in as props", () => {
     const wrapper = mount(<SinglePet pet={rigatoni} />)
-    expect(wrapper.contains(rigatoni.name)).to.equal(true)
-    expect(wrapper.contains(rigatoni.description)).to.equal(true)
-    expect(wrapper.contains(rigatoni.species)).to.equal(true)
+    expect(wrapper.text()).to.contain("Rigatoni")
+    expect(wrapper.text()).to.contain("A flaming hot cheetoh in feline form")
+    expect(wrapper.text()).to.contain("cat")
   })
 
   it("renders different name, description, and species if passed different props", () => {
     const wrapper = mount(<SinglePet pet={cody} />)
-    expect(wrapper.contains(cody.name)).to.equal(true)
-    expect(wrapper.contains(cody.description)).to.equal(true)
-    expect(wrapper.contains(cody.species)).to.equal(true)
+    expect(wrapper.text()).to.contain("Cody")
+    expect(wrapper.text()).to.contain("Adorable pug who loves to hug")
+    expect(wrapper.text()).to.contain("dog")
   })
 
   it("renders a 'Toggle Adopted' button", () => {
     // The button doesn't need to "do anything" just yet. See the next test.
     const wrapper = mount(<SinglePet pet={rigatoni} />)
-    expect(wrapper.exists("button")).to.equal(true)
+    expect(wrapper.find("button")).to.have.lengthOf(1)
     expect(wrapper.find("button").text()).to.equal("Toggle Adopted")
   })
 
@@ -68,14 +68,18 @@ describe("Tier 1: SinglePet component", () => {
     const toggleAdoptedButton = wrapper.find("button")
 
     // The component should render "Available for adoption" and not "Adopted!"
-    expect(wrapper.contains("Available for adoption")).to.equal(true)
-    expect(wrapper.contains("Adopted!")).to.equal(false)
+    expect(wrapper.text()).to.contain("Available for adoption")
+    expect(wrapper.text()).to.not.contain("Adopted!")
+    // expect(wrapper.contains("Available for adoption")).to.equal(true)
+    // expect(wrapper.contains("Adopted!")).to.equal(false)
 
     // Click the button!
     toggleAdoptedButton.simulate("click")
 
     // NOW the component should render "Adopted!"
-    expect(wrapper.contains("Available for adoption")).to.equal(false)
-    expect(wrapper.contains("Adopted!")).to.equal(true)
+    expect(wrapper.text()).to.not.contain("Available for adoption")
+    expect(wrapper.text()).to.contain("Adopted!")
+    // expect(wrapper.contains("Available for adoption")).to.equal(false)
+    // expect(wrapper.contains("Adopted!")).to.equal(true)
   })
 })
