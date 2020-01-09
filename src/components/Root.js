@@ -38,7 +38,6 @@ class Root extends React.Component {
         {loading && "Loading"}
         <h1>Adoption Center</h1>
         <AddPet refetch={this.fetchPets} />
-        {/* <div>Hello World!</div> */}
         <PetList pets={pets} />
       </>
     )

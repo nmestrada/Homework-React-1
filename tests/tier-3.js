@@ -61,20 +61,30 @@ describe("Tier 3: Root component", () => {
     })
   })
 
-  xit("displays loading message while waiting for the data", async () => {
-    // const samplePets = [
-    //   {
-    //     name: "Frankie",
-    //     description: "The snuggliest kitty",
-    //     species: "cat"
-    //   },
-    //   {
-    //     name: "Anabelle",
-    //     description: "Might eat your couch",
-    //     species: "dog"
-    //   }
-    // ]
-    // mockAxios.onGet("/api/pets").reply(200, samplePets)
+  it("displays loading message while waiting for the data", async () => {
+    const samplePets = [
+      {
+        name: "Frankie",
+        description: "The snuggliest kitty",
+        species: "cat"
+      },
+      {
+        name: "Anabelle",
+        description: "Might eat your couch",
+        species: "dog"
+      }
+    ]
+    mockAxios.onGet("/api/pets").reply(200, samplePets)
+    const wrapper = mount(<Root />)
+    expect(wrapper.text()).to.contain("Loading")
+    await waitForExpect(() => {
+      expect(wrapper.text()).to.not.contain("Loading")
+      expect(wrapper.text()).to.not.contain("Rigatoni")
+      expect(wrapper.text()).to.not.contain("Cody")
+      expect(wrapper.text()).to.contain("Frankie")
+      expect(wrapper.text()).to.contain("Anabelle")
+    })
+
     // const { getByText } = render(<Root />)
     // getByText("Loading", { exact: false })
     // await wait(
