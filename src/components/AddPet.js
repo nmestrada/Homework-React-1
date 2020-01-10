@@ -46,7 +46,6 @@ class AddPet extends React.Component {
       <form
         className="add-pet-form"
         onSubmit={this.handleSubmit}
-        data-testid="add-pet"
       >
         <input
           name="name"
@@ -99,7 +98,6 @@ class AddPet extends React.Component {
 //     <form
 //       className="add-pet-form"
 //       onSubmit={handleSubmit}
-//       data-testid="add-pet"
 //     >
 //       <input
 //         name="name"
