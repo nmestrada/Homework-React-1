@@ -1,8 +1,7 @@
 /* eslint-env mocha */
 import React from "react"
-// import { render, cleanup, wait, fireEvent } from "@testing-library/react"
 import { mount } from "enzyme"
-import { assert, expect } from "chai"
+import { expect } from "chai"
 
 import AddPet from "../src/components/AddPet"
 import { valueOf } from "./utils"
@@ -29,7 +28,7 @@ describe("Tier 4: AddPet component", () => {
     const wrapper = mount(<AddPet />)
     const textInputs = wrapper.find("input")
     expect(textInputs).to.have.length(2)
-    const [ nameInput, descriptionInput ] = textInputs
+    const [nameInput, descriptionInput] = textInputs
     expect(nameInput.props.placeholder).to.equal("Name")
     expect(descriptionInput.props.placeholder).to.equal("Description")
   })
@@ -73,7 +72,7 @@ describe("Tier 4: AddPet component", () => {
   //   )
   // })
 
-  xit("submitting the form posts the new pet data to /api/pets", async () => {
+  it("submitting the form posts the new pet data to /api/pets", async () => {
     const lucky = {
       name: "Lucky",
       description: "Labradoodle who loves to chase squirrels",
@@ -81,28 +80,55 @@ describe("Tier 4: AddPet component", () => {
     }
     mockAxios.onPost("/api/pets", lucky).reply(201, lucky)
 
-    const { getByTestId } = render(<AddPet refetch={() => {}} />)
-    const form = getByTestId("add-pet")
+    const wrapper = mount(<AddPet refetch={() => {}} />)
+    const form = wrapper.find("form")
+    const select = wrapper.find("select")
+    const nameInput = wrapper.find('[placeholder="Name"]')
+    const descriptionInput = wrapper.find('[placeholder="Description"]')
 
-    const nameInput = form.querySelector('input[name="name"]')
-    fireEvent.change(nameInput, { target: { value: lucky.name } })
+    // Simulate a user typing "Snoopy" into the name input
+    nameInput.simulate("change", {
+      target: {
+        value: "Snoopy"
+      }
+    })
 
-    const descriptionInput = form.querySelector('input[name="description"]')
-    fireEvent.change(descriptionInput, { target: { value: lucky.description } })
+    // Simulate a user typing "Beagle and licensed pilot" into the name input
+    descriptionInput.simulate("change", {
+      target: {
+        value: "Beagle and licensed pilot"
+      }
+    })
 
-    const speciesSelect = form.querySelector("select")
-    fireEvent.change(speciesSelect, { target: { value: lucky.species } })
+    // Simulate a user clicking the dropdown menu and selecting dog
+    select.simulate("change", {
+      target: {
+        value: "dog"
+      }
+    })
 
-    fireEvent.submit(form)
+    // const { getByTestId } = render(<AddPet refetch={() => {}} />)
+    // const form = getByTestId("add-pet")
 
-    await wait(
-      () => {
-        assert.equal(postRequests(), 1)
-        const postRequestBody = JSON.parse(mockAxios.history.post[0].data)
-        assert.deepEqual(postRequestBody, lucky)
-      },
-      { timeout: 10, interval: 5 }
-    )
+    // const nameInput = form.querySelector('input[name="name"]')
+    // fireEvent.change(nameInput, { target: { value: lucky.name } })
+
+    // const descriptionInput = form.querySelector('input[name="description"]')
+    // fireEvent.change(descriptionInput, { target: { value: lucky.description } })
+
+    // const speciesSelect = form.querySelector("select")
+    // fireEvent.change(speciesSelect, { target: { value: lucky.species } })
+
+    // fireEvent.submit(form)
+
+    // await wait(
+    //   () => {
+    //     assert.equal(postRequests(), 1)
+    //     const postRequestBody = JSON.parse(mockAxios.history.post[0].data)
+    //     assert.deepEqual(postRequestBody, lucky)
+    //   },
+    //   { timeout: 10, interval: 5 }
+    // )
   })
 
   xit("resets the form after form submission", async () => {
