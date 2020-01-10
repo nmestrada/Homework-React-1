@@ -18,12 +18,11 @@ class Root extends React.Component {
 
   async fetchPets() {
     try {
+      this.setState({ loading: true })
       const { data } = await axios.get("/api/pets")
-      this.setState({ pets: data })
+      this.setState({ pets: data, loading: false })
     } catch (err) {
-      this.setState({ error: err.message })
-    } finally {
-      this.setState({ loading: false })
+      this.setState({ error: err.message, loading: false })
     }
   }
   componentDidMount() {
