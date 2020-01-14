@@ -30,6 +30,7 @@ describe("Tier 4: AddPet component", () => {
   afterEach(() => mockAxios.reset())
 
   // Remember to put the `name` attribute on all your inputs
+  // (HINT: name="name" and name="description")
   it("renders two text inputs, name and description, with appropriate placeholders", () => {
     const wrapper = mount(<AddPet />)
     const textInputs = wrapper.find("input")
@@ -40,7 +41,9 @@ describe("Tier 4: AddPet component", () => {
     expect(descriptionInput.getDOMNode().placeholder).to.equal("Description")
   })
 
-  it("renders a select dropdown with two options: cat and dog", () => {
+  // You should also put the `name` attribute on your select
+  // (HINT: name="species")
+  it("renders a select (dropdown menu) with two options: cat and dog", () => {
     const wrapper = mount(<AddPet />)
     const select = wrapper.find('select[name="species"]')
     const options = select.find("option")
@@ -49,36 +52,6 @@ describe("Tier 4: AddPet component", () => {
     expect(optionValues).to.include.members(["cat", "dog"])
   })
 
-  // it("prevents default form submission behavior", async () => {
-  //   mockAxios.onPost("/api/pets").reply(201)
-
-  //   const { container, getByTestId } = render(<AddPet refetch={() => {}} />)
-  //   const form = getByTestId("add-pet")
-
-  //   const nameInput = form.querySelector('input[name="name"]')
-  //   fireEvent.change(nameInput, { target: { value: "Toby" } })
-
-  //   const descriptionInput = form.querySelector('input[name="description"]')
-  //   fireEvent.change(descriptionInput, { target: { value: "Cute pupper" } })
-
-  //   const speciesSelect = form.querySelector("select")
-  //   fireEvent.change(speciesSelect, { target: { value: "dog" } })
-
-  //   let defaultPrevented = null
-  //   container.addEventListener("submit", event => {
-  //     defaultPrevented = event.defaultPrevented
-  //   })
-
-  //   fireEvent.submit(form)
-
-  //   await wait(
-  //     () => {
-  //       assert.isTrue(defaultPrevented)
-  //     },
-  //     { timeout: 10, interval: 5 }
-  //   )
-  // })
-
   it("submitting the form posts the new pet data to /api/pets", async () => {
     const snoopy = {
       name: "Snoopy",
@@ -86,8 +59,6 @@ describe("Tier 4: AddPet component", () => {
       species: "dog"
     }
     mockAxios.onPost("/api/pets", snoopy).reply(201, snoopy)
-
-    mockAxios.onGet("/api/pets").reply(200, [snoopy])
 
     const wrapper = mount(<AddPet refetch={() => {}} />)
     const form = wrapper.find("form")
@@ -125,34 +96,9 @@ describe("Tier 4: AddPet component", () => {
       expect(postRequests()).to.have.lengthOf(1)
 
       // What request body did the server receive? Let's find out!
-      // const postRequestBody = JSON.parse(postRequests()[0].data)
-      const [{ data }] = postRequests()
-      const postRequestBody = JSON.parse(data)
+      const postRequestBody = JSON.parse(postRequests()[0].data)
       expect(postRequestBody).to.deep.equal(snoopy)
     })
-
-    // const { getByTestId } = render(<AddPet refetch={() => {}} />)
-    // const form = getByTestId("add-pet")
-
-    // const nameInput = form.querySelector('input[name="name"]')
-    // fireEvent.change(nameInput, { target: { value: lucky.name } })
-
-    // const descriptionInput = form.querySelector('input[name="description"]')
-    // fireEvent.change(descriptionInput, { target: { value: lucky.description } })
-
-    // const speciesSelect = form.querySelector("select")
-    // fireEvent.change(speciesSelect, { target: { value: lucky.species } })
-
-    // fireEvent.submit(form)
-
-    // await wait(
-    //   () => {
-    //     assert.equal(postRequests(), 1)
-    //     const postRequestBody = JSON.parse(mockAxios.history.post[0].data)
-    //     assert.deepEqual(postRequestBody, lucky)
-    //   },
-    //   { timeout: 10, interval: 5 }
-    // )
   })
 
   xit("resets the form after form submission", async () => {
