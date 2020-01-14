@@ -27,6 +27,14 @@ const postRequests = () => mockAxios.history.post
  */
 
 describe("Tier 4: AddPet component", () => {
+  const snoopy = {
+    name: "Snoopy",
+    description: "Licensed pilot",
+    species: "dog"
+  }
+  beforeEach(() => {
+    mockAxios.onPost("/api/pets", snoopy).reply(201, snoopy)
+  })
   afterEach(() => mockAxios.reset())
 
   // Remember to put the `name` attribute on all your inputs
@@ -53,13 +61,6 @@ describe("Tier 4: AddPet component", () => {
   })
 
   it("submitting the form posts the new pet data to /api/pets", async () => {
-    const snoopy = {
-      name: "Snoopy",
-      description: "Licensed pilot",
-      species: "dog"
-    }
-    mockAxios.onPost("/api/pets", snoopy).reply(201, snoopy)
-
     const wrapper = mount(<AddPet refetch={() => {}} />)
     const form = wrapper.find("form")
     const select = wrapper.find("select")
@@ -90,6 +91,7 @@ describe("Tier 4: AddPet component", () => {
       }
     })
 
+    // Submit the form!
     form.simulate("submit")
 
     await waitForExpect(() => {
@@ -101,98 +103,50 @@ describe("Tier 4: AddPet component", () => {
     })
   })
 
-  xit("resets the form after form submission", async () => {
-    // const lucky = {
-    //   name: "Lucky",
-    //   description: "Labradoodle who loves to chase squirrels",
-    //   species: "dog"
-    // }
-    // mockAxios.onPost("/api/pets", lucky).reply(201, lucky)
-    // const { getByTestId } = render(<AddPet refetch={() => {}} />)
-    // const form = getByTestId("add-pet")
-    // const nameInput = form.querySelector('input[name="name"]')
-    // fireEvent.change(nameInput, { target: { value: lucky.name } })
-    // const descriptionInput = form.querySelector('input[name="description"]')
-    // fireEvent.change(descriptionInput, { target: { value: lucky.description } })
-    // const speciesSelect = form.querySelector("select")
-    // fireEvent.change(speciesSelect, { target: { value: lucky.species } })
-    // fireEvent.submit(form)
-    // await wait(
-    //   () => {
-    //     assert.equal(nameInput.value, "")
-    //     assert.equal(descriptionInput.value, "")
-    //     assert.equal(speciesSelect.value, "cat")
-    //   },
-    //   { timeout: 10, interval: 5 }
-    // )
+  it("resets the form after form submission", async () => {
+    const wrapper = mount(<AddPet refetch={() => {}} />)
+    const form = wrapper.find("form")
+    const select = wrapper.find("select")
+    const nameInput = wrapper.find('input[name="name"]')
+    const descriptionInput = wrapper.find('[placeholder="Description"]')
+
+    // Simulate a user typing "Snoopy" into the name input
+    nameInput.simulate("change", {
+      target: {
+        name: "name",
+        value: "Snoopy"
+      }
+    })
+
+    // Simulate a user typing "Licensed pilot" into the description input
+    descriptionInput.simulate("change", {
+      target: {
+        name: "description",
+        value: "Licensed pilot"
+      }
+    })
+
+    // Simulate a user clicking the dropdown menu and selecting "dog"
+    select.simulate("change", {
+      target: {
+        name: "species",
+        value: "dog"
+      }
+    })
+
+    // Before submitting the form, we expect the form to contain our data
+    expect(wrapper.html()).to.contain("Snoopy")
+    expect(wrapper.html()).to.contain("Licensed pilot")
+
+    // Submit the form!
+    form.simulate("submit")
+
+    await waitForExpect(() => {
+      wrapper.update()
+
+      // After submitting the form, we expect the form to be reset to default
+      expect(wrapper.html()).to.not.contain("Snoopy")
+      expect(wrapper.html()).to.not.contain("Licensed pilot")
+    })
   })
-
-  // Assume for now that AddPet is a child of Root...
-  // it("BONUS: calls props.refetch after form submission", async () => {
-  //   const refetch = spy()
-  //   const { getByTestId } = render(<AddPet refetch={refetch} />)
-
-  //   const lucky = {
-  //     name: "Lucky",
-  //     description: "Labradoodle who loves to chase squirrels",
-  //     species: "dog"
-  //   }
-  //   mockAxios.onPost("/api/pets", lucky).reply(201, lucky)
-  //   const form = getByTestId("add-pet")
-
-  //   const nameInput = form.querySelector('input[name="name"]')
-  //   fireEvent.change(nameInput, { target: { value: lucky.name } })
-
-  //   const descriptionInput = form.querySelector('input[name="description"]')
-  //   fireEvent.change(descriptionInput, {
-  //     target: { value: lucky.description }
-  //   })
-
-  //   const speciesSelect = form.querySelector("select")
-  //   fireEvent.change(speciesSelect, { target: { value: lucky.species } })
-
-  //   fireEvent.submit(form)
-
-  //   await wait(
-  //     () => {
-  //       assert.isTrue(refetch.called)
-  //     },
-  //     { timeout: 10, interval: 5 }
-  //   )
-  // })
-
-  // it("BONUS: Root refetches list of pets after form submission", async () => {
-  //   const { getByTestId } = render(<Root />)
-
-  //   const lucky = {
-  //     name: "Lucky",
-  //     description: "Labradoodle who loves to chase squirrels",
-  //     species: "dog"
-  //   }
-  //   mockAxios.onPost("/api/pets", lucky).reply(201, lucky)
-  //   const form = getByTestId("add-pet")
-
-  //   const nameInput = form.querySelector('input[name="name"]')
-  //   fireEvent.change(nameInput, { target: { value: lucky.name } })
-
-  //   const descriptionInput = form.querySelector('input[name="description"]')
-  //   fireEvent.change(descriptionInput, {
-  //     target: { value: lucky.description }
-  //   })
-
-  //   const speciesSelect = form.querySelector("select")
-  //   fireEvent.change(speciesSelect, { target: { value: lucky.species } })
-
-  //   fireEvent.submit(form)
-
-  //   await wait(
-  //     () => {
-  //       assert.equal(getRequests(), 2)
-  //     },
-  //     { timeout: 10, interval: 5 }
-  //   )
-  // })
-
-  // // TODO: Write this one maybe.
-  // it("BONUS: handles errors gracefully", async () => {})
 })
