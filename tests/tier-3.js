@@ -6,7 +6,7 @@ import waitForExpect from "wait-for-expect"
 import Root from "../src/components/Root"
 import { mockAxios } from "./setup"
 
-const getRequests = () => mockAxios.history.get.length
+const getRequests = () => mockAxios.history.get
 
 /**
  * Tier 3 is about
@@ -30,12 +30,12 @@ describe("Tier 3: Root component", () => {
   afterEach(() => mockAxios.reset())
 
   it("fetches data from /api/pets once after Root first mounts", async () => {
-    expect(getRequests()).to.equal(0)
+    expect(getRequests()).to.have.lengthOf(0)
 
     mount(<Root />)
 
     await waitForExpect(() => {
-      expect(getRequests()).to.equal(1)
+      expect(getRequests()).to.have.lengthOf(1)
     })
   })
 

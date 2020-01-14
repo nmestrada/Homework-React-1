@@ -35,7 +35,6 @@ class AddPet extends React.Component {
       this.props.refetch()
       this.resetForm()
     } catch (err) {
-      // console.log('HELLO WORLD')
       console.error(err.message)
     }
   }
