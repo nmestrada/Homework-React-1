@@ -32,6 +32,7 @@ app.get("/api/pets", (req, res) => {
 
 // POST a new pet
 app.post("/api/pets", (req, res) => {
+  console.log('server received this request body:\n', req.body)
   const { name, description, species } = req.body
   const newPet = { name, description, species }
   pets.push(newPet)
