@@ -73,12 +73,14 @@ describe("Tier 4: AddPet component", () => {
   // })
 
   it("submitting the form posts the new pet data to /api/pets", async () => {
-    const lucky = {
-      name: "Lucky",
-      description: "Labradoodle who loves to chase squirrels",
+    const snoopy = {
+      name: "Snoopy",
+      description: "Licensed pilot",
       species: "dog"
     }
-    mockAxios.onPost("/api/pets", lucky).reply(201, lucky)
+    mockAxios.onPost("/api/pets", snoopy).reply(201, snoopy)
+
+    mockAxios.onGet("/api/pets").reply(200, [snoopy])
 
     const wrapper = mount(<AddPet refetch={() => {}} />)
     const form = wrapper.find("form")
@@ -87,25 +89,15 @@ describe("Tier 4: AddPet component", () => {
     const descriptionInput = wrapper.find('[placeholder="Description"]')
 
     // Simulate a user typing "Snoopy" into the name input
-    nameInput.simulate("change", {
-      target: {
-        value: "Snoopy"
-      }
-    })
+    nameInput.simulate("change", { target: { value: "Snoopy" } })
 
     // Simulate a user typing "Beagle and licensed pilot" into the name input
-    descriptionInput.simulate("change", {
-      target: {
-        value: "Beagle and licensed pilot"
-      }
-    })
+    descriptionInput.simulate("change", { target: { value: "Licensed pilot" } })
 
     // Simulate a user clicking the dropdown menu and selecting dog
-    select.simulate("change", {
-      target: {
-        value: "dog"
-      }
-    })
+    select.simulate("change", { target: { value: "dog" } })
+
+    form.simulate("submit")
 
     // const { getByTestId } = render(<AddPet refetch={() => {}} />)
     // const form = getByTestId("add-pet")

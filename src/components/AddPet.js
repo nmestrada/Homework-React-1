@@ -35,6 +35,7 @@ class AddPet extends React.Component {
       this.props.refetch()
       this.resetForm()
     } catch (err) {
+      // console.log('HELLO WORLD')
       console.error(err.message)
     }
   }
@@ -43,10 +44,7 @@ class AddPet extends React.Component {
     const { name, description, species } = this.state
 
     return (
-      <form
-        className="add-pet-form"
-        onSubmit={this.handleSubmit}
-      >
+      <form className="add-pet-form" onSubmit={this.handleSubmit}>
         <input
           name="name"
           type="text"
