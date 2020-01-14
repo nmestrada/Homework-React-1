@@ -18,12 +18,11 @@ class Root extends React.Component {
 
   async fetchPets() {
     try {
+      this.setState({ loading: true })
       const { data } = await axios.get("/api/pets")
-      this.setState({ pets: data })
+      this.setState({ pets: data, loading: false })
     } catch (err) {
-      this.setState({ error: err.message })
-    } finally {
-      this.setState({ loading: false })
+      this.setState({ error: err.message, loading: false })
     }
   }
   componentDidMount() {
@@ -34,11 +33,10 @@ class Root extends React.Component {
     const { error, loading, pets } = this.state
     return (
       <>
-        {error}
-        {loading && "Loading"}
+        {error && <div>Error: {error}</div>}
+        {loading && <div>Loading</div>}
         <h1>Adoption Center</h1>
         <AddPet refetch={this.fetchPets} />
-        {/* <div>Hello World!</div> */}
         <PetList pets={pets} />
       </>
     )
@@ -67,8 +65,8 @@ class Root extends React.Component {
 //   // const refetch = () => {}
 //   return (
 //     <>
-//       {error}
-//       {loading && "Loading"}
+//        {error && <div>{error}</div>}
+//        {loading && <div>Loading</div>}
 //       <h1>Adoption Center</h1>
 //       <AddPet refetch={refetch} />
 //       <PetList pets={pets} />

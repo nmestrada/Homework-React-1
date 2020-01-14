@@ -43,11 +43,7 @@ class AddPet extends React.Component {
     const { name, description, species } = this.state
 
     return (
-      <form
-        className="add-pet-form"
-        onSubmit={this.handleSubmit}
-        data-testid="add-pet"
-      >
+      <form className="add-pet-form" onSubmit={this.handleSubmit}>
         <input
           name="name"
           type="text"
@@ -99,7 +95,6 @@ class AddPet extends React.Component {
 //     <form
 //       className="add-pet-form"
 //       onSubmit={handleSubmit}
-//       data-testid="add-pet"
 //     >
 //       <input
 //         name="name"

@@ -22,7 +22,7 @@ const getRequests = () => mockAxios.history.get.length
  * Edit the AddPet component in src/components/AddPet.js
  */
 
-describe("Tier 5: refetching data [BONUS]", () => {
+xdescribe("Tier 5: refetching data [BONUS]", () => {
   afterEach(cleanup)
   afterEach(() => mockAxios.reset())
 

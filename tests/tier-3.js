@@ -1,12 +1,12 @@
 /* eslint-env mocha */
 import React from "react"
-import { render, cleanup, wait } from "@testing-library/react"
-import { assert } from "chai"
-
+import { expect } from "chai"
+import { mount } from "enzyme"
+import waitForExpect from "wait-for-expect"
 import Root from "../src/components/Root"
 import { mockAxios } from "./setup"
 
-const getRequests = () => mockAxios.history.get.length
+const getRequests = () => mockAxios.history.get
 
 /**
  * Tier 3 is about
@@ -27,19 +27,16 @@ const getRequests = () => mockAxios.history.get.length
  */
 
 describe("Tier 3: Root component", () => {
-  afterEach(cleanup)
   afterEach(() => mockAxios.reset())
 
   it("fetches data from /api/pets once after Root first mounts", async () => {
-    render(<Root />)
+    expect(getRequests()).to.have.lengthOf(0)
 
-    assert.equal(getRequests(), 0)
-    await wait(
-      () => {
-        assert.equal(getRequests(), 1)
-      },
-      { timeout: 10, interval: 5 }
-    )
+    mount(<Root />)
+
+    await waitForExpect(() => {
+      expect(getRequests()).to.have.lengthOf(1)
+    })
   })
 
   it("renders PetList with data retrieved from /api/pets", async () => {
@@ -55,21 +52,18 @@ describe("Tier 3: Root component", () => {
         species: "dog"
       }
     ]
+    // For the purposes of this test, any axios request to /api/pets will
+    // respond with the sample pets. It WILL NOT reach the express server defined
+    // in /app.js
     mockAxios.onGet("/api/pets").reply(200, samplePets)
-    const { getByText } = render(<Root />)
+    const wrapper = mount(<Root />)
 
-    await wait(
-      () => {
-        getByText("Rigatoni", { exact: false })
-        getByText("Cody", { exact: false })
-        assert.throws(() => getByText("Frankie", { exact: false }))
-        assert.throws(() => getByText("Anabelle", { exact: false }))
-        assert.throws(() =>
-          getByText("Request failed with status code 500", { exact: false })
-        )
-      },
-      { timeout: 10, interval: 5 }
-    )
+    await waitForExpect(() => {
+      expect(wrapper.text()).to.contain("Rigatoni")
+      expect(wrapper.text()).to.contain("Cody")
+      expect(wrapper.text()).to.not.contain("Frankie")
+      expect(wrapper.text()).to.not.contain("Anabelle")
+    })
   })
 
   it("displays loading message while waiting for the data", async () => {
@@ -86,34 +80,29 @@ describe("Tier 3: Root component", () => {
       }
     ]
     mockAxios.onGet("/api/pets").reply(200, samplePets)
-    const { getByText } = render(<Root />)
+    const wrapper = mount(<Root />)
 
-    getByText("Loading", { exact: false })
-    await wait(
-      () => {
-        assert.throws(() => getByText("Loading", { exact: false }))
-        getByText("Frankie", { exact: false })
-        getByText("Anabelle", { exact: false })
-        assert.throws(() => getByText("Rigatoni", { exact: false }))
-        assert.throws(() => getByText("Cody", { exact: false }))
-        assert.throws(() =>
-          getByText("Request failed with status code 500", { exact: false })
-        )
-      },
-      { timeout: 10, interval: 5 }
-    )
+    expect(wrapper.text()).to.contain("Loading")
+    await waitForExpect(() => {
+      wrapper.update()
+      expect(wrapper.text()).to.not.contain("Loading")
+      expect(wrapper.text()).to.not.contain("Rigatoni")
+      expect(wrapper.text()).to.not.contain("Cody")
+      expect(wrapper.text()).to.contain("Frankie")
+      expect(wrapper.text()).to.contain("Anabelle")
+    })
   })
 
   it("displays error message if the server responds with status code 500", async () => {
     mockAxios.onGet("/api/pets").reply(500)
-    const { getByText } = render(<Root />)
+    const wrapper = mount(<Root />)
 
-    await wait(
-      () => {
-        getByText("Request failed with status code 500", { exact: false })
-        assert.throws(() => getByText("Rigatoni", { exact: false }))
-      },
-      { timeout: 10, interval: 5 }
-    )
+    expect(wrapper.text()).to.not.contain("Error")
+    await waitForExpect(() => {
+      wrapper.update()
+      expect(wrapper.text()).to.contain("Error")
+      expect(wrapper.text()).to.not.contain("Loading")
+      expect(wrapper.text()).to.not.contain("Rigatoni")
+    })
   })
 })

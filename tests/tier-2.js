@@ -1,9 +1,10 @@
 /* eslint-env mocha */
 import React from "react"
-import { render, cleanup, fireEvent } from "@testing-library/react"
-import { assert } from "chai"
+import { expect } from "chai"
+import { mount } from "enzyme"
 
 import PetList from "../src/components/PetList"
+import { valueOf } from "./utils"
 
 /**
  * Tier 2 is about
@@ -28,8 +29,6 @@ import PetList from "../src/components/PetList"
  */
 
 describe("Tier 2: PetList component", () => {
-  afterEach(cleanup)
-
   const pets = [
     {
       name: "Rigatoni",
@@ -54,42 +53,65 @@ describe("Tier 2: PetList component", () => {
   ]
 
   it("renders a list of SinglePets", () => {
-    const { getByText } = render(<PetList pets={pets} />)
-    getByText("Rigatoni", { exact: false })
-    getByText("Cody", { exact: false })
-    getByText("Frankie", { exact: false })
-    getByText("Anabelle", { exact: false })
+    const wrapper = mount(<PetList pets={pets} />)
+    expect(wrapper.text()).to.contain("Rigatoni")
+    expect(wrapper.text()).to.contain("Cody")
+    expect(wrapper.text()).to.contain("Frankie")
+    expect(wrapper.text()).to.contain("Anabelle")
   })
 
   it("renders a select dropdown with three options: all, cats, dogs", () => {
-    const { queryByTestId } = render(<PetList pets={pets} />)
-    const select = queryByTestId("species-filter").querySelector("select")
-    const options = [...select.querySelectorAll("option")].map(n => n.value)
-    assert.lengthOf(options, 3)
-    assert.includeMembers(options, ["all", "cats", "dogs"])
+    const wrapper = mount(<PetList pets={pets} />)
+    const select = wrapper.find("select")
+    const options = select.find("option")
+    expect(options).to.have.lengthOf(3)
+    const optionValues = options.map(option => valueOf(option))
+    expect(optionValues).to.include.members(["all", "cats", "dogs"])
   })
 
   it("when the filter is set to 'cats', only render SinglePets with cats", () => {
-    const { queryByTestId, getByText } = render(<PetList pets={pets} />)
-    const select = queryByTestId("species-filter").querySelector("select")
-    fireEvent.change(select, { target: { value: "cats" } })
+    const wrapper = mount(<PetList pets={pets} />)
 
-    assert.equal(select.value, "cats")
-    getByText("Rigatoni", { exact: false })
-    getByText("Frankie", { exact: false })
-    assert.throws(() => getByText("Cody", { exact: false }))
-    assert.throws(() => getByText("Anabelle", { exact: false }))
+    // By default, the value of select should be "all"
+    let select = wrapper.find("select")
+    expect(valueOf(select)).to.equal("all")
+
+    // Simulate a user clicking the dropdown menu and selecting cats
+    select.simulate("change", { target: { value: "cats" } })
+
+    // Now, the value of select should be "cats"
+    select = wrapper.find("select")
+    expect(valueOf(select)).to.equal("cats")
+
+    // We should expect to see Rigatoni and Frankie, but not Cody or Anabelle
+    expect(wrapper.text()).to.contain("Rigatoni")
+    expect(wrapper.text()).to.not.contain("Cody")
+    expect(wrapper.text()).to.contain("Frankie")
+    expect(wrapper.text()).to.not.contain("Anabelle")
   })
 
   it("when the filter is set to 'dogs', only render SinglePets with dogs", () => {
-    const { queryByTestId, getByText } = render(<PetList pets={pets} />)
-    const select = queryByTestId("species-filter").querySelector("select")
-    fireEvent.change(select, { target: { value: "dogs" } })
+    const wrapper = mount(<PetList pets={pets} />)
 
-    assert.equal(select.value, "dogs")
-    getByText("Cody", { exact: false })
-    getByText("Anabelle", { exact: false })
-    assert.throws(() => getByText("Rigatoni", { exact: false }))
-    assert.throws(() => getByText("Frankie", { exact: false }))
+    // By default, the value of select should be "all"
+    let select = wrapper.find("select")
+    expect(valueOf(select)).to.equal("all")
+
+    // Simulate a user clicking the dropdown menu and selecting dogs
+    select.simulate("change", {
+      target: {
+        value: "dogs"
+      }
+    })
+
+    // Now, the value of select should be "dogs"
+    select = wrapper.find("select")
+    expect(valueOf(select)).to.equal("dogs")
+
+    // We should expect to see Cody and Anabelle, but not Rigatoni or Frankie
+    expect(wrapper.text()).to.not.contain("Rigatoni")
+    expect(wrapper.text()).to.contain("Cody")
+    expect(wrapper.text()).to.not.contain("Frankie")
+    expect(wrapper.text()).to.contain("Anabelle")
   })
 })
