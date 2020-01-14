@@ -95,26 +95,27 @@ describe("Tier 4: AddPet component", () => {
     const nameInput = wrapper.find('input[name="name"]')
     const descriptionInput = wrapper.find('[placeholder="Description"]')
 
+    // Simulate a user typing "Snoopy" into the name input
     nameInput.simulate("change", {
       target: {
-        value: "Snoopy",
-        name: "name"
+        name: "name",
+        value: "Snoopy"
       }
     })
 
-    // Simulate a user typing "Beagle and licensed pilot" into the name input
+    // Simulate a user typing "Licensed pilot" into the description input
     descriptionInput.simulate("change", {
       target: {
-        value: "Licensed pilot",
-        name: "description"
+        name: "description",
+        value: "Licensed pilot"
       }
     })
 
-    // Simulate a user clicking the dropdown menu and selecting dog
+    // Simulate a user clicking the dropdown menu and selecting "dog"
     select.simulate("change", {
       target: {
-        value: "dog",
-        name: "species"
+        name: "species",
+        value: "dog"
       }
     })
 
@@ -122,8 +123,12 @@ describe("Tier 4: AddPet component", () => {
 
     await waitForExpect(() => {
       expect(postRequests()).to.have.lengthOf(1)
+
+      // What request body did the server receive? Let's find out!
+      // const postRequestBody = JSON.parse(postRequests()[0].data)
       const [{ data }] = postRequests()
-      console.log(JSON.parse(data))
+      const postRequestBody = JSON.parse(data)
+      expect(postRequestBody).to.deep.equal(snoopy)
     })
 
     // const { getByTestId } = render(<AddPet refetch={() => {}} />)
