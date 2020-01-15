@@ -62,13 +62,20 @@ describe("Tier 1: SinglePet component", () => {
   it("renders a 'Toggle Adopted' button", () => {
     // The button doesn't need to "do anything" just yet. See the next test.
     const wrapper = mount(<SinglePet pet={rigatoni} />)
-    expect(wrapper.find("button")).to.have.lengthOf(1)
-    expect(wrapper.find("button").text()).to.equal("Toggle Adopted")
+
+    expect(wrapper.find("button")).to.have.length.greaterThan(0)
+    expect(
+      wrapper.containsMatchingElement(<button>Toggle Adopted</button>)
+    ).to.equal(true)
   })
 
   it("the 'Toggle Adopted' button toggles the pet's adopted status", () => {
     const wrapper = mount(<SinglePet pet={rigatoni} />)
-    const toggleAdoptedButton = wrapper.find("button")
+    const toggleAdoptedButton = wrapper.findWhere(node => {
+      return node.type() === "button" && node.text() === "Toggle Adopted"
+    })
+
+    expect(toggleAdoptedButton).to.have.length(1)
 
     // The component should render "Available for adoption" and not "Adopted!"
     expect(wrapper.text()).to.contain("Available for adoption")

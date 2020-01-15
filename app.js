@@ -39,6 +39,13 @@ app.post("/api/pets", (req, res) => {
   res.json(newPet)
 })
 
+// DELETE pet with the given id
+app.delete("/api/pets/:id", (req, res) => {
+  const id = Number(req.params.id)
+  removePet(id)
+  res.sendStatus(204)
+})
+
 // Webpack Dev Middleware
 const compiler = webpack(webpackConfig)
 app.use(

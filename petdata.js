@@ -33,7 +33,7 @@ const addPet = pet => {
 }
 const removePet = petId => {
   const id = pets.findIndex(pet => pet.id === petId)
-  if (id < 0) throw new Error("Not Found")
+  if (id < 0) throw new Error("Pet Not Found")
   pets.splice(id, 1)
 }
 
