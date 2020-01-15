@@ -42,11 +42,13 @@ describe("Tier 3: Root component", () => {
   it("renders PetList with data retrieved from /api/pets", async () => {
     const samplePets = [
       {
+        id: 1,
         name: "Rigatoni",
         description: "A flaming hot cheetoh in feline form",
         species: "cat"
       },
       {
+        id: 2,
         name: "Cody",
         description: "Adorable pug who loves to hug",
         species: "dog"
@@ -69,11 +71,13 @@ describe("Tier 3: Root component", () => {
   it("displays loading message while waiting for the data", async () => {
     const samplePets = [
       {
+        id: 1,
         name: "Frankie",
         description: "The snuggliest kitty",
         species: "cat"
       },
       {
+        id: 2,
         name: "Anabelle",
         description: "Might eat your couch",
         species: "dog"

@@ -18,8 +18,9 @@ import SinglePet from "../src/components/SinglePet"
  * It will be passed a pet object as props.pet
  * A pet object looks like this:
  * {
- *   name: "Some Pet Name"
- *   description: "Describing the pet"
+ *   id: 1,
+ *   name: "Some Pet Name",
+ *   description: "Describing the pet",
  *   species: either "dog" or "cat"
  * }
  *
@@ -31,12 +32,14 @@ describe("Tier 1: SinglePet component", () => {
   // afterEach(cleanup)
 
   const rigatoni = {
+    id: 1,
     name: "Rigatoni",
     description: "A flaming hot cheetoh in feline form",
     species: "cat"
   }
 
   const cody = {
+    id: 2,
     name: "Cody",
     description: "Adorable pug who loves to hug",
     species: "dog"

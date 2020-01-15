@@ -1,7 +1,7 @@
 const express = require("express")
 const morgan = require("morgan")
 const { join } = require("path")
-const pets = require("./petdata")
+const { getPets, addPet, removePet } = require("./petdata")
 const webpack = require("webpack")
 const middleware = require("webpack-dev-middleware")
 const webpackConfig = require("./webpack.config")
@@ -23,19 +23,21 @@ app.get("/api/pets", (req, res) => {
   // Wanna see what would happen if this endpoint were to take a whole second?
   // Uncomment this line and comment out the other responses:
   // setTimeout(() => {
-  //   res.json(pets)
+  //   res.json(getPets())
   // }, 1000)
 
   // This is how this endpoint SHOULD behave:
-  res.json(pets)
+
+  console.log(getPets())
+  res.json(getPets())
 })
 
 // POST a new pet
 app.post("/api/pets", (req, res) => {
-  console.log('server received this request body:\n', req.body)
+  console.log("server received this request body:\n", req.body)
   const { name, description, species } = req.body
   const newPet = { name, description, species }
-  pets.push(newPet)
+  addPet(newPet)
   res.json(newPet)
 })
 
@@ -45,7 +47,7 @@ app.use(
   middleware(compiler, {
     // publicPath: join(__dirname, "public"),
     publicPath: webpackConfig.output.publicPath,
-    writeToDisk: true,
+    writeToDisk: true
   })
 )
 
