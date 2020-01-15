@@ -8,8 +8,8 @@ import axios from "axios"
  * 3. When user clicks the button, send DELETE to /api/pets/:petId
  *    where petId is provided by props
  * 4. Call the `handleDelete` function, provided on props
- * 5. INTEGRATION STEP! The pet should now be deleted either
- *    a. refetch the pets from the server again
+ * 5. INTEGRATION STEP! The pet should now be deleted. EITHER
+ *    a. refetch the pets from the server, OR
  *    b. syncronously remove the pet from the Root component
  * 6. If the server responds with 500, then don't call handleDelete
  */

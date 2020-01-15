@@ -61,9 +61,9 @@ const Root = () => {
       }
     })()
   }, [fetchCounter])
-  const deletePet = (petId) => {
-    setPets(pets => pets.filter(pet => pet.id !== petId))
-  }
+  // const deletePet = (petId) => {
+  //   setPets(pets => pets.filter(pet => pet.id !== petId))
+  // }
   const refetch = () => setFetchCounter(fetchCounter + 1)
   // const refetch = () => {}
   return (
