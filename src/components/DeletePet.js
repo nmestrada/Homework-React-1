@@ -14,6 +14,7 @@ import axios from "axios"
  * 6. If the server responds with 500, then don't call handleDelete
  */
 
+// Hooks / Class Solution
 const DeletePet = props => {
   const { handleDelete, petId } = props
   const handleClick = async () => {
@@ -31,5 +32,8 @@ const DeletePet = props => {
     </button>
   )
 }
+
+// Starting Point
+// const DeletePet = () => null
 
 export default DeletePet

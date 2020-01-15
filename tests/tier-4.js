@@ -33,6 +33,7 @@ import { mockAxios } from "./setup"
 
 describe("Tier 4: DeletePet component", () => {
   it("renders a 'Delete' button", () => {})
-  it("", () => {})
-  it("three", () => {})
+  it("sends a delete request to /api/pets/:petId when user clicks", () => {})
+  it("calls props.handleDelete if (and only if) the delete request is successful", () => {})
+  it("removes the deleted pet", () => {})
 })
