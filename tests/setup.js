@@ -5,17 +5,20 @@ import "regenerator-runtime/runtime"
 
 import Enzyme from "enzyme"
 import Adapter from "enzyme-adapter-react-16"
+import chai from "chai"
+import sinonChai from "sinon-chai"
+import MockAdapter from "axios-mock-adapter"
+import axios from "axios"
+import waitForExpect from "wait-for-expect"
+
+import { getPets } from "../petdata"
 
 Enzyme.configure({ adapter: new Adapter() })
 
-import waitForExpect from "wait-for-expect"
+chai.use(sinonChai)
+
 waitForExpect.defaults.timeout = 10
 waitForExpect.defaults.interval = 5
 
-import MockAdapter from "axios-mock-adapter"
-import axios from "axios"
-
 export const mockAxios = new MockAdapter(axios)
-
-const { getPets } = require('../petdata')
 mockAxios.onGet('/api/pets').reply(200, getPets())
