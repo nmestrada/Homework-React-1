@@ -68,8 +68,8 @@ const Root = () => {
       {error && <div>Error: {error}</div>}
       {loading && <div>Loading</div>}
       <h1>Adoption Center</h1>
-      {/* <AddPet refetch={refetch} /> */}
-      <PetList pets={pets} />
+      <AddPet refetch={refetch} />
+      <PetList pets={pets} refetch={refetch} />
     </>
   )
 }

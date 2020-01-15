@@ -11,13 +11,15 @@ import axios from "axios"
  * 5. INTEGRATION STEP! The pet should now be deleted either
  *    a. refetch the pets from the server again
  *    b. syncronously remove the pet from the Root component
+ * 6. If the server responds with 500, then don't call handleDelete
  */
 
 const DeletePet = props => {
   const { handleDelete, petId } = props
   const handleClick = async () => {
     try {
-      await axios.delete(`/api/pets/${petId + 1}`)
+      await axios.delete(`/api/pets/${petId}`)
+      handleDelete()
     } catch (err) {
       console.error(err.message)
     }

@@ -50,6 +50,7 @@ import SinglePet from "./SinglePet"
 // Hooks Solution
 const PetList = props => {
   const [filter, setFilter] = useState("all")
+  const { refetch } = props
   const handleSelectChange = evt => {
     setFilter(evt.target.value)
   }
@@ -74,7 +75,7 @@ const PetList = props => {
       </div>
       <div className="pet-list">
         {pets.map(pet => {
-          return <SinglePet key={pet.name} pet={pet} />
+          return <SinglePet key={pet.name} pet={pet} refetch={refetch} />
         })}
       </div>
     </>
