@@ -1,11 +1,14 @@
 /* eslint-env mocha */
 import React from "react"
 import { expect } from "chai"
+import { spy } from "sinon"
 import { mount } from "enzyme"
 import waitForExpect from "wait-for-expect"
 import Root from "../src/components/Root"
 import DeletePet from "../src/components/DeletePet"
 import { mockAxios } from "./setup"
+
+const deleteRequests = () => mockAxios.history.delete
 
 /**
  * Tier 4 is about
@@ -32,8 +35,45 @@ import { mockAxios } from "./setup"
  */
 
 describe("Tier 4: DeletePet component", () => {
-  it("renders a 'Delete' button", () => {})
-  it("sends a delete request to /api/pets/:petId when user clicks", () => {})
-  it("calls props.handleDelete if (and only if) the delete request is successful", () => {})
-  it("removes the deleted pet", () => {})
+  afterEach(() => mockAxios.reset())
+
+  it("renders a 'Delete' button", () => {
+    const wrapper = mount(<DeletePet petId={1} handleDelete={() => {}} />)
+
+    expect(wrapper.find("button")).to.have.length(1)
+    expect(wrapper.containsMatchingElement(<button>Delete</button>)).to.equal(
+      true
+    )
+  })
+
+  it("sends a delete request to /api/pets/:petId when user clicks the button", async () => {
+    mockAxios.onDelete("/api/pets/1").reply(204)
+    const wrapper = mount(<DeletePet petId={1} handleDelete={() => {}} />)
+
+    expect(deleteRequests()).to.have.lengthOf(0)
+
+    wrapper.simulate("click")
+
+    await waitForExpect(() => {
+      expect(deleteRequests()).to.have.lengthOf(1)
+    })
+  })
+
+  it("calls props.handleDelete if the delete request is successful", async () => {
+    mockAxios.onDelete("/api/pets/2").reply(204)
+    const handleDeleteSpy = spy()
+    const wrapper = mount(
+      <DeletePet petId={2} handleDelete={handleDeleteSpy} />
+    )
+
+    wrapper.simulate("click")
+
+    await waitForExpect(() => {
+      expect(handleDeleteSpy.called).to.equal(true)
+    })
+  })
+
+  xit("does not call props.handleDelete if the delete request fails", () => {})
+
+  xit("removes the deleted pet", () => {})
 })
