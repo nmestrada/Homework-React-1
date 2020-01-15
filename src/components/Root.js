@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react"
-// import oldPets from "../petdata"
 import PetList from "./PetList"
 import axios from "axios"
-import AddPet from "./AddPet"
 
 // Class Solution
 // class Root extends React.Component {
@@ -70,7 +68,6 @@ const Root = () => {
       {error && <div>Error: {error}</div>}
       {loading && <div>Loading</div>}
       <h1>Adoption Center</h1>
-      <AddPet refetch={refetch} />
       {/* <PetList pets={pets} deletePet={deletePet} /> */}
       <PetList pets={pets} refetch={refetch} />
     </>
