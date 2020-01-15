@@ -72,7 +72,8 @@ const Root = () => {
       {loading && <div>Loading</div>}
       <h1>Adoption Center</h1>
       <AddPet refetch={refetch} />
-      <PetList pets={pets} deletePet={deletePet} />
+      {/* <PetList pets={pets} deletePet={deletePet} /> */}
+      <PetList pets={pets} refetch={refetch} />
     </>
   )
 }

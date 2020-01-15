@@ -19,7 +19,8 @@ const DeletePet = props => {
   const handleClick = async () => {
     try {
       await axios.delete(`/api/pets/${petId}`)
-      handleDelete(petId)
+      // handleDelete(petId)
+      handleDelete()
     } catch (err) {
       console.error(err.message)
     }

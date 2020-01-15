@@ -43,7 +43,7 @@ import DeletePet from "./DeletePet"
 // Hooks Solution
 const SinglePet = props => {
   const { id, name, description, species } = props.pet
-  const { deletePet } = props
+  const { refetch } = props
   const [adopted, setAdopted] = useState(false)
   return (
     <div className="single-pet">
@@ -59,7 +59,8 @@ const SinglePet = props => {
       <hr />
       <div>{adopted ? "Adopted!" : "Available for adoption"}</div>
       <button onClick={() => setAdopted(!adopted)}>Toggle Adopted</button>
-      <DeletePet petId={id} handleDelete={deletePet} />
+      {/* <DeletePet petId={id} handleDelete={deletePet} /> */}
+      <DeletePet petId={id} handleDelete={refetch} />
     </div>
   )
 }
