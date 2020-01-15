@@ -65,7 +65,6 @@ const Root = () => {
   //   setPets(pets => pets.filter(pet => pet.id !== petId))
   // }
   const refetch = () => setFetchCounter(fetchCounter + 1)
-  // const refetch = () => {}
   return (
     <>
       {error && <div>Error: {error}</div>}
