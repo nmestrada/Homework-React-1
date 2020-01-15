@@ -27,8 +27,6 @@ app.get("/api/pets", (req, res) => {
   // }, 1000)
 
   // This is how this endpoint SHOULD behave:
-
-  console.log(getPets())
   res.json(getPets())
 })
 

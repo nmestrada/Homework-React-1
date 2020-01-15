@@ -17,5 +17,5 @@ import axios from "axios"
 
 export const mockAxios = new MockAdapter(axios)
 
-const pets = require('../petdata')
-mockAxios.onGet('/api/pets').reply(200, pets)
+const { getPets } = require('../petdata')
+mockAxios.onGet('/api/pets').reply(200, getPets())
