@@ -29,8 +29,6 @@ import SinglePet from "../src/components/SinglePet"
  */
 
 describe("Tier 1: SinglePet component", () => {
-  // afterEach(cleanup)
-
   const rigatoni = {
     id: 1,
     name: "Rigatoni",
