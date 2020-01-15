@@ -75,7 +75,7 @@ const PetList = props => {
       </div>
       <div className="pet-list">
         {pets.map(pet => {
-          return <SinglePet key={pet.name} pet={pet} refetch={refetch} />
+          return <SinglePet key={pet.id} pet={pet} refetch={refetch} />
         })}
       </div>
     </>
