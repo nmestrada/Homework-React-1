@@ -23,3 +23,7 @@ ul {
   margin: 0.3rem;
   padding: 3px;
 }
+
+.delete-button {
+  background-color: orange;
+}
