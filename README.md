@@ -34,9 +34,7 @@ You can view the React application in the browser at
   - Setting state
   - Rendering from state
 - Passing props to child components
-- Writing a helper function
-- Handling events
-  - Click, Change, Submit
-- GET data from a provided server
-- POST data to a provided server
 - Lists and Keys
+- Handling events: click, change
+- GET data from a provided server
+- DELETE data from a provided server
