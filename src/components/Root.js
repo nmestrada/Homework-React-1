@@ -59,17 +59,17 @@ const Root = () => {
       }
     })()
   }, [fetchCounter])
-  // const deletePet = (petId) => {
-  //   setPets(pets => pets.filter(pet => pet.id !== petId))
-  // }
-  const refetch = () => setFetchCounter(fetchCounter + 1)
+  const deletePet = petId => {
+    setPets(pets.filter(pet => pet.id !== petId))
+  }
+  // const refetch = () => setFetchCounter(fetchCounter + 1)
   return (
     <>
       {error && <div>Error: {error}</div>}
       {loading && <div>Loading</div>}
       <h1>Adoption Center</h1>
-      {/* <PetList pets={pets} deletePet={deletePet} /> */}
-      <PetList pets={pets} refetch={refetch} />
+      <PetList pets={pets} handleDelete={deletePet} />
+      {/* <PetList pets={pets} handleDelete={refetch} /> */}
     </>
   )
 }

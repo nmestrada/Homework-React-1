@@ -9,7 +9,6 @@ import DeletePet from "../src/components/DeletePet"
 import { mockAxios } from "./setup"
 
 const deleteRequests = () => mockAxios.history.delete
-const getRequests = () => mockAxios.history.get
 
 /**
  * Tier 4 is about
@@ -30,7 +29,7 @@ const getRequests = () => mockAxios.history.get
  * Pass handleDelete to DeletePet (through PetList and each SinglePet)
  * Root's handleDelete function should do one of two things:
  *   1. Re-fetch the data from the server (e.g. GET /api/pets)
- *   2. Remove the deleted pet from its state (without making a network request)
+ *   2. Remove the deleted pet from state (without making a network request)
  * If it all works correctly, you should be able to click "Delete" and the pet
  * will disappear from the list.
  */
@@ -41,10 +40,12 @@ describe("Tier 4: DeletePet component", () => {
   it("renders a 'Delete' button", () => {
     const wrapper = mount(<DeletePet petId={1} handleDelete={() => {}} />)
 
-    expect(wrapper.find("button")).to.have.length(1)
-    expect(wrapper.containsMatchingElement(<button>Delete</button>)).to.equal(
-      true
-    )
+    expect(wrapper.find("button")).to.have.lengthOf(1)
+    expect(
+      wrapper.containsMatchingElement(
+        <button className="delete-button">Delete</button>
+      )
+    ).to.equal(true)
   })
 
   it("sends a delete request to /api/pets/:petId when user clicks the button", async () => {
@@ -88,7 +89,9 @@ describe("Tier 4: DeletePet component", () => {
     })
   })
 
-  it.only("removes the deleted pet", async () => {
+  // There's quite a lot going on in this test! Read the comments carefully to
+  // get a solid grasp on what's going on.
+  it("removes the deleted pet", async () => {
     const samplePets = [
       {
         id: 1,
@@ -103,7 +106,11 @@ describe("Tier 4: DeletePet component", () => {
         species: "dog"
       }
     ]
-    // TODO: Clean up this mess
+    // For this test, we'll have to manipulate how mockAxios respondes to
+    // requests. The first time you make a GET request to /api/pets, you'll get
+    // both sample pets. If you make a DELETE request to /api/pets/1, it'll
+    // respond with 204 (success!). Then, on second GET request, you'll get only
+    // the second pet.
     mockAxios.resetHandlers()
     mockAxios
       .onGet("/api/pets")
@@ -113,29 +120,28 @@ describe("Tier 4: DeletePet component", () => {
       .onGet("/api/pets")
       .replyOnce(200, samplePets.slice(1))
 
+    // This test may require some changes to Root, PetList, SinglePet AND
+    // DeletePet.
     const wrapper = mount(<Root />)
 
-    wrapper.simulate("click")
-
+    // First, we'll wait for Root to fetch the list of pets from /api/pets
     await waitForExpect(async () => {
-      expect(wrapper.html()).to.contain("Rigatoni")
       wrapper.update()
-      console.log(wrapper.html())
+      expect(wrapper.html()).to.contain("Rigatoni")
+      expect(wrapper.html()).to.contain("Cody")
 
+      // Find the delete button for Rigatoni and click it.
       const deletePet1Button = wrapper.find(".delete-button").at(0)
-      console.log("\n.delete-button", deletePet1Button.length)
-
       deletePet1Button.simulate("click")
+
+      // Next, we'll wait for Root to update it's state (either by making
+      // anoother GET request or by simply removing the pet from state) and
+      // re-rendering.
       await waitForExpect(async () => {
         expect(deleteRequests()).to.have.lengthOf(1)
-        console.log(deleteRequests())
-        console.log(getRequests())
         expect(wrapper.html()).to.not.contain("Rigatoni")
+        expect(wrapper.html()).to.contain("Cody")
       })
-      // console.log('matching buttons', wrapper.containsMatchingElement(<button></button>))
-      // deletePet1Button.forEach(n => console.log(n.html()))
-      // console.log(deletePet1Button.length)
-      // expect(handleDeleteSpy.called).to.equal(true)
     })
   })
 })

@@ -20,18 +20,14 @@ const DeletePet = props => {
   const handleClick = async () => {
     try {
       await axios.delete(`/api/pets/${petId}`)
-      // handleDelete(petId)
-      handleDelete()
+      handleDelete(petId)
+      // handleDelete()
     } catch (err) {
       // console.error(err.message)
     }
   }
   return (
-    <button
-      id={`delete-${petId}`}
-      className="delete-button"
-      onClick={handleClick}
-    >
+    <button className="delete-button" onClick={handleClick}>
       Delete
     </button>
   )
