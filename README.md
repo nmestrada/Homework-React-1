@@ -1,4 +1,4 @@
-# React Homework 1: Basics
+# React Homework
 
 ## Getting Started
 
