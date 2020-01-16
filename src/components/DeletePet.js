@@ -23,11 +23,15 @@ const DeletePet = props => {
       // handleDelete(petId)
       handleDelete()
     } catch (err) {
-      console.error(err.message)
+      // console.error(err.message)
     }
   }
   return (
-    <button className="delete-button" onClick={handleClick}>
+    <button
+      id={`delete-${petId}`}
+      className="delete-button"
+      onClick={handleClick}
+    >
       Delete
     </button>
   )

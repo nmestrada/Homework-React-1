@@ -9,6 +9,7 @@ import DeletePet from "../src/components/DeletePet"
 import { mockAxios } from "./setup"
 
 const deleteRequests = () => mockAxios.history.delete
+const getRequests = () => mockAxios.history.get
 
 /**
  * Tier 4 is about
@@ -73,7 +74,68 @@ describe("Tier 4: DeletePet component", () => {
     })
   })
 
-  xit("does not call props.handleDelete if the delete request fails", () => {})
+  it("does not call props.handleDelete if the delete request fails", async () => {
+    mockAxios.onDelete("/api/pets/3").reply(500)
+    const handleDeleteSpy = spy()
+    const wrapper = mount(
+      <DeletePet petId={3} handleDelete={handleDeleteSpy} />
+    )
 
-  xit("removes the deleted pet", () => {})
+    wrapper.simulate("click")
+
+    await waitForExpect(() => {
+      expect(handleDeleteSpy.called).to.equal(false)
+    })
+  })
+
+  it.only("removes the deleted pet", async () => {
+    const samplePets = [
+      {
+        id: 1,
+        name: "Rigatoni",
+        description: "A flaming hot cheetoh in feline form",
+        species: "cat"
+      },
+      {
+        id: 2,
+        name: "Cody",
+        description: "Adorable pug who loves to hug",
+        species: "dog"
+      }
+    ]
+    // TODO: Clean up this mess
+    mockAxios.resetHandlers()
+    mockAxios
+      .onGet("/api/pets")
+      .replyOnce(200, samplePets)
+      .onDelete("/api/pets/1")
+      .reply(204)
+      .onGet("/api/pets")
+      .replyOnce(200, samplePets.slice(1))
+
+    const wrapper = mount(<Root />)
+
+    wrapper.simulate("click")
+
+    await waitForExpect(async () => {
+      expect(wrapper.html()).to.contain("Rigatoni")
+      wrapper.update()
+      console.log(wrapper.html())
+
+      const deletePet1Button = wrapper.find(".delete-button").at(0)
+      console.log("\n.delete-button", deletePet1Button.length)
+
+      deletePet1Button.simulate("click")
+      await waitForExpect(async () => {
+        expect(deleteRequests()).to.have.lengthOf(1)
+        console.log(deleteRequests())
+        console.log(getRequests())
+        expect(wrapper.html()).to.not.contain("Rigatoni")
+      })
+      // console.log('matching buttons', wrapper.containsMatchingElement(<button></button>))
+      // deletePet1Button.forEach(n => console.log(n.html()))
+      // console.log(deletePet1Button.length)
+      // expect(handleDeleteSpy.called).to.equal(true)
+    })
+  })
 })
