@@ -1,3 +1,5 @@
+View a video runthrough of these specs here: https://www.youtube.com/playlist?list=PLEghtKYcXWrj8bXVQuVCKVgyf4IkCiVKp
+
 # React Homework
 
 ## Getting Started
