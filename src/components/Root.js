@@ -32,7 +32,6 @@ class Root extends React.Component {
       })
     })
   }
-
   render() {
     const { pets, loading, error } = this.state
     return (
