@@ -14,7 +14,7 @@ class PetList extends React.Component {
   constructor() {
     super()
     this.state = {
-      filter: 'all'
+      filter: "all"
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -26,10 +26,10 @@ class PetList extends React.Component {
 
   render() {
     const { filter } = this.state
-    const { pets } = this.props
+    const { pets, handleDelete } = this.props
     const filteredPets = pets.filter(pet => {
-      if (filter === 'all') return true
-      return pet.species + 's' === filter
+      if (filter === "all") return true
+      return pet.species + "s" === filter
     })
     return (
       <div className="pet-list">
@@ -39,7 +39,9 @@ class PetList extends React.Component {
           <option>dogs</option>
         </select>
         {filteredPets.map(pet => {
-          return <SinglePet key={pet.id} pet={pet} />
+          return (
+            <SinglePet key={pet.id} pet={pet} handleDelete={handleDelete} />
+          )
         })}
       </div>
     )
