@@ -14,6 +14,7 @@ class Root extends React.Component {
       loading: true,
       error: null
     }
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
   async componentDidMount() {
@@ -24,6 +25,14 @@ class Root extends React.Component {
       this.setState({ error: err.message, loading: false })
     }
   }
+  handleDelete(petIdToDelete) {
+    this.setState({
+      pets: this.state.pets.filter(pet => {
+        return pet.id !== petIdToDelete
+      })
+    })
+  }
+
   render() {
     const { pets, loading, error } = this.state
     return (
@@ -31,7 +40,7 @@ class Root extends React.Component {
         <h1>Adoption Center</h1>
         {error && <div>Error: {error}</div>}
         {loading && <div>Loading...</div>}
-        <PetList pets={pets} />
+        <PetList pets={pets} handleDelete={this.handleDelete} />
       </>
     )
   }

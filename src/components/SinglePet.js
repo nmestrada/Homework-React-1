@@ -1,4 +1,5 @@
 import React from "react"
+import DeletePet from "./DeletePet"
 
 class SinglePet extends React.Component {
   constructor() {
@@ -15,7 +16,8 @@ class SinglePet extends React.Component {
 
   render() {
     const { adopted } = this.state
-    const { name, description, species } = this.props.pet
+    const { handleDelete } = this.props
+    const { id, name, description, species } = this.props.pet
     return (
       <div className="single-pet">
         <div>{name}</div>
@@ -23,6 +25,7 @@ class SinglePet extends React.Component {
         <div>{species}</div>
         <div>{adopted ? "Adopted!" : "Available for adoption"}</div>
         <button type="button" onClick={this.handleClick}>Toggle Adopted</button>
+        <DeletePet petId={id} handleDelete={handleDelete} />
       </div>
     )
   }
