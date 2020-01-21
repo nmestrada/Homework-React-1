@@ -40,7 +40,7 @@ import { findButton } from "./utils"
  * only have the class single-pet.
  */
 
-describe("Tier 1: SinglePet component", () => {
+describe.only("Tier 1: SinglePet component", () => {
   const rigatoni = {
     id: 1,
     name: "Rigatoni",
@@ -55,28 +55,28 @@ describe("Tier 1: SinglePet component", () => {
     species: "dog"
   }
 
-  xit("renders a pet's name, description, and species passed in as props", () => {
+  it("renders a pet's name, description, and species passed in as props", () => {
     const wrapper = mount(<SinglePet pet={rigatoni} />)
     expect(wrapper).to.include.text("Rigatoni")
     expect(wrapper).to.include.text("A flaming hot cheetoh in feline form")
     expect(wrapper).to.include.text("cat")
   })
 
-  xit("renders different name, description, and species if passed different props", () => {
+  it("renders different name, description, and species if passed different props", () => {
     const wrapper = mount(<SinglePet pet={cody} />)
     expect(wrapper).to.include.text("Cody")
     expect(wrapper).to.include.text("Adorable pug who loves to hug")
     expect(wrapper).to.include.text("dog")
   })
 
-  xit("renders a 'Toggle Status' button", () => {
+  it("renders a 'Toggle Status' button", () => {
     // The button doesn't need to "do anything" just yet. See the next test.
     const wrapper = mount(<SinglePet pet={rigatoni} />)
 
     expect(wrapper).to.containMatchingElement(<button>Toggle Status</button>)
   })
 
-  xit("the 'Toggle Status' button toggles 'Available' to 'Adopted!'", () => {
+  it("the 'Toggle Status' button toggles 'Available' to 'Adopted!'", () => {
     const wrapper = mount(<SinglePet pet={rigatoni} />)
     const toggleAdoptedButton = findButton(wrapper, "Toggle Status")
 
@@ -94,7 +94,7 @@ describe("Tier 1: SinglePet component", () => {
     expect(wrapper.text()).to.contain("Adopted!")
   })
 
-  xit("the 'Toggle Status' button toggles 'Adopted!' to 'Available'", () => {
+  it("the 'Toggle Status' button toggles 'Adopted!' to 'Available'", () => {
     const wrapper = mount(<SinglePet pet={rigatoni} />)
     const toggleAdoptedButton = findButton(wrapper, "Toggle Status")
 
@@ -109,7 +109,7 @@ describe("Tier 1: SinglePet component", () => {
     expect(wrapper.text()).to.not.contain("Adopted!")
   })
 
-  xit("the 'Toggle Status' button toggles the 'adopted' css class", () => {
+  it("the 'Toggle Status' button toggles the 'adopted' css class", () => {
     const wrapper = mount(<SinglePet pet={rigatoni} />)
     const toggleAdoptedButton = findButton(wrapper, "Toggle Status")
 
