@@ -27,7 +27,7 @@ const DeletePet = props => {
     }
   }
   return (
-    <button className="delete-button" onClick={handleClick}>
+    <button className="delete-pet" onClick={handleClick}>
       Delete
     </button>
   )

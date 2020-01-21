@@ -5,12 +5,15 @@ import { expect } from "chai"
 import { mount } from "enzyme"
 
 import SinglePet from "../src/components/SinglePet"
+import { findButton, findFirstMatchingDiv } from "./utils"
 
 /**
  * Tier 1 is about
  * - rendering data from props
  * - handling a click event from a button
  * - setting state (boolean)
+ * - rendering text conditionally from state
+ * - changing css class based on state
  */
 
 /** Instructions:
@@ -24,8 +27,17 @@ import SinglePet from "../src/components/SinglePet"
  *   species: either "dog" or "cat"
  * }
  *
- * By default, every pet is not adopted
- * Add a button that, when clicked, toggles the pet's adoption status
+ * By default, every pet is not adopted. NOTE: The pet provided on props
+ * DOES NOT have an adopted status. You are expected to handle that data as
+ * component's state.
+ *
+ * Add a button that, when clicked, toggles the pet's adoption status. The
+ * component should render "Available" when adopted is false, and "Adopted!"
+ * when adopted is true.
+ *
+ * When the pet is adopted, the containing div should have
+ * the classes single-pet and adopted. When the pet is not adopted, it should
+ * only have the class single-pet.
  */
 
 describe("Tier 1: SinglePet component", () => {
@@ -57,33 +69,70 @@ describe("Tier 1: SinglePet component", () => {
     expect(wrapper.text()).to.contain("dog")
   })
 
-  it("renders a 'Toggle Adopted' button", () => {
+  it("renders a 'Toggle Status' button", () => {
     // The button doesn't need to "do anything" just yet. See the next test.
     const wrapper = mount(<SinglePet pet={rigatoni} />)
 
     expect(wrapper.find("button")).to.have.length.greaterThan(0)
     expect(
-      wrapper.containsMatchingElement(<button>Toggle Adopted</button>)
+      wrapper.containsMatchingElement(<button>Toggle Status</button>)
     ).to.equal(true)
   })
 
-  it("the 'Toggle Adopted' button toggles the pet's adopted status", () => {
+  it("the 'Toggle Status' button toggles 'Available' to 'Adopted!'", () => {
     const wrapper = mount(<SinglePet pet={rigatoni} />)
-    const toggleAdoptedButton = wrapper.findWhere(node => {
-      return node.type() === "button" && node.text() === "Toggle Adopted"
-    })
+    const toggleAdoptedButton = findButton(wrapper, "Toggle Status")
 
     expect(toggleAdoptedButton).to.have.length(1)
 
     // The component should render "Available for adoption" and not "Adopted!"
-    expect(wrapper.text()).to.contain("Available for adoption")
+    expect(wrapper.text()).to.contain("Available")
     expect(wrapper.text()).to.not.contain("Adopted!")
 
     // Click the button!
     toggleAdoptedButton.simulate("click")
 
     // NOW the component should render "Adopted!"
-    expect(wrapper.text()).to.not.contain("Available for adoption")
+    expect(wrapper.text()).to.not.contain("Available")
     expect(wrapper.text()).to.contain("Adopted!")
+  })
+
+  it("the 'Toggle Status' button toggles 'Adopted!' to 'Available'", () => {
+    const wrapper = mount(<SinglePet pet={rigatoni} />)
+    const toggleAdoptedButton = findButton(wrapper, "Toggle Status")
+
+    expect(wrapper.text()).to.contain("Available")
+    expect(wrapper.text()).to.not.contain("Adopted!")
+
+    // Click the button twice this time!
+    toggleAdoptedButton.simulate("click")
+    toggleAdoptedButton.simulate("click")
+
+    expect(wrapper.text()).to.contain("Available")
+    expect(wrapper.text()).to.not.contain("Adopted!")
+  })
+
+  it("the 'Toggle Status' button toggles the 'adopted' css class", () => {
+    const wrapper = mount(<SinglePet pet={rigatoni} />)
+    const toggleAdoptedButton = findButton(wrapper, "Toggle Status")
+    const containerDiv = findFirstMatchingDiv(wrapper)
+
+    // At first, the container div should not have the adopted class applied
+    expect(containerDiv).to.have.className("single-pet")
+    expect(containerDiv).to.not.have.className("adopted")
+
+    // Click the button once
+    toggleAdoptedButton.simulate("click")
+
+    // We should see both single-pet AND adopted class applied now
+    expect(containerDiv).to.have.className("single-pet")
+    expect(containerDiv).to.have.className("adopted")
+
+    // Click the button a second time
+    toggleAdoptedButton.simulate("click")
+
+    // No adopted class anymore
+    expect(containerDiv).to.have.className("single-pet")
+    expect(containerDiv).to.not.have.className("adopted")
   })
 })

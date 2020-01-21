@@ -46,7 +46,7 @@ const SinglePet = props => {
   const { handleDelete } = props
   const [adopted, setAdopted] = useState(false)
   return (
-    <div className={`single-pet ${adopted && "adopted"}`}>
+    <div className={`single-pet ${adopted ? "adopted" : ""}`}>
       <h2>{name}</h2>
       <div>
         {species}
@@ -57,8 +57,8 @@ const SinglePet = props => {
       </div>
       <div>{description}</div>
       <hr />
-      <div>{adopted ? "Adopted!" : "Available for adoption"}</div>
-      <button onClick={() => setAdopted(!adopted)}>Toggle Adopted</button>
+      <div>{adopted ? "Adopted!" : "Available"}</div>
+      <button onClick={() => setAdopted(!adopted)}>Toggle Status</button>
       {/* <DeletePet petId={id} handleDelete={deletePet} /> */}
       <DeletePet petId={id} handleDelete={handleDelete} />
     </div>

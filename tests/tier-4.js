@@ -37,13 +37,13 @@ const deleteRequests = () => mockAxios.history.delete
 describe("Tier 4: DeletePet component", () => {
   afterEach(() => mockAxios.reset())
 
-  it("renders a 'Delete' button", () => {
+  it("renders a 'Delete' button with delete-pet class", () => {
     const wrapper = mount(<DeletePet petId={1} handleDelete={() => {}} />)
 
     expect(wrapper.find("button")).to.have.lengthOf(1)
     expect(
       wrapper.containsMatchingElement(
-        <button className="delete-button">Delete</button>
+        <button className="delete-pet">Delete</button>
       )
     ).to.equal(true)
   })
@@ -131,7 +131,7 @@ describe("Tier 4: DeletePet component", () => {
       expect(wrapper.html()).to.contain("Cody")
 
       // Find the delete button for Rigatoni and click it.
-      const deletePet1Button = wrapper.find(".delete-button").at(0)
+      const deletePet1Button = wrapper.find(".delete-pet").at(0)
       deletePet1Button.simulate("click")
 
       // Next, we'll wait for Root to update it's state (either by making
