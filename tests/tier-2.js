@@ -28,7 +28,7 @@ import { valueOf } from "./utils"
  * If the selected option is "dogs", render only the dogs
  */
 
-describe("Tier 2: PetList component", () => {
+describe.only("Tier 2: PetList component", () => {
   const pets = [
     {
       id: 1,
@@ -58,10 +58,10 @@ describe("Tier 2: PetList component", () => {
 
   it("renders a list of SinglePets", () => {
     const wrapper = mount(<PetList pets={pets} />)
-    expect(wrapper.text()).to.contain("Rigatoni")
-    expect(wrapper.text()).to.contain("Cody")
-    expect(wrapper.text()).to.contain("Frankie")
-    expect(wrapper.text()).to.contain("Anabelle")
+    expect(wrapper).to.include.text("Rigatoni")
+    expect(wrapper).to.include.text("Cody")
+    expect(wrapper).to.include.text("Frankie")
+    expect(wrapper).to.include.text("Anabelle")
   })
 
   it("renders a select dropdown with three options: all, cats, dogs", () => {
@@ -78,20 +78,21 @@ describe("Tier 2: PetList component", () => {
 
     // By default, the value of select should be "all"
     let select = wrapper.find("select")
-    expect(valueOf(select)).to.equal("all")
+    expect(select).to.have.value("all")
 
     // Simulate a user clicking the dropdown menu and selecting cats
     select.simulate("change", { target: { value: "cats" } })
 
     // Now, the value of select should be "cats"
     select = wrapper.find("select")
-    expect(valueOf(select)).to.equal("cats")
+    expect(select).to.have.value("cats")
 
     // We should expect to see Rigatoni and Frankie, but not Cody or Anabelle
-    expect(wrapper.text()).to.contain("Rigatoni")
-    expect(wrapper.text()).to.not.contain("Cody")
-    expect(wrapper.text()).to.contain("Frankie")
-    expect(wrapper.text()).to.not.contain("Anabelle")
+    // expect(wrapper).to.include.text("Rigatoni")
+    expect(wrapper).to.include.text("Rigatoni")
+    expect(wrapper).to.not.include.text("Cody")
+    expect(wrapper).to.include.text("Frankie")
+    expect(wrapper).to.not.include.text("Anabelle")
   })
 
   it("when the filter is set to 'dogs', only render SinglePets with dogs", () => {
@@ -99,7 +100,7 @@ describe("Tier 2: PetList component", () => {
 
     // By default, the value of select should be "all"
     let select = wrapper.find("select")
-    expect(valueOf(select)).to.equal("all")
+    expect(select).to.have.value("all")
 
     // Simulate a user clicking the dropdown menu and selecting dogs
     select.simulate("change", {
@@ -110,12 +111,12 @@ describe("Tier 2: PetList component", () => {
 
     // Now, the value of select should be "dogs"
     select = wrapper.find("select")
-    expect(valueOf(select)).to.equal("dogs")
+    expect(select).to.have.value("dogs")
 
     // We should expect to see Cody and Anabelle, but not Rigatoni or Frankie
-    expect(wrapper.text()).to.not.contain("Rigatoni")
-    expect(wrapper.text()).to.contain("Cody")
-    expect(wrapper.text()).to.not.contain("Frankie")
-    expect(wrapper.text()).to.contain("Anabelle")
+    expect(wrapper).to.not.include.text("Rigatoni")
+    expect(wrapper).to.include.text("Cody")
+    expect(wrapper).to.not.include.text("Frankie")
+    expect(wrapper).to.include.text("Anabelle")
   })
 })
