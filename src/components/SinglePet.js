@@ -46,7 +46,7 @@ const SinglePet = props => {
   const { handleDelete } = props
   const [adopted, setAdopted] = useState(false)
   return (
-    <div className="single-pet">
+    <div className={`single-pet ${adopted && "adopted"}`}>
       <h2>{name}</h2>
       <div>
         {species}
