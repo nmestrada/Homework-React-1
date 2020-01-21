@@ -48,7 +48,7 @@ const Root = () => {
   const [loading, setLoading] = useState(true)
   const [fetchCounter, setFetchCounter] = useState(0)
   useEffect(() => {
-    (async function() {
+    ;(async function() {
       try {
         const { data } = await axios.get("/api/pets")
         setPets(data)

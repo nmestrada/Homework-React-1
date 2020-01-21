@@ -13,6 +13,7 @@ const getRequests = () => mockAxios.history.get
  * - fetching data from a server
  * - using React lifecycle (componentDidMount or useEffect)
  * - setting state (array) from the server's response
+ * - setting state (boolean) while waiting for data from the server
  * - setting state (error object) if the server replies with a 500 status code
  */
 
@@ -36,6 +37,8 @@ describe("Tier 3: Root component", () => {
 
     await waitForExpect(() => {
       expect(getRequests()).to.have.lengthOf(1)
+      const [getRequest] = getRequests()
+      expect(getRequest).to.deep.include({ url: "/api/pets" })
     })
   })
 
@@ -61,10 +64,10 @@ describe("Tier 3: Root component", () => {
     const wrapper = mount(<Root />)
 
     await waitForExpect(() => {
-      expect(wrapper.text()).to.contain("Rigatoni")
-      expect(wrapper.text()).to.contain("Cody")
-      expect(wrapper.text()).to.not.contain("Frankie")
-      expect(wrapper.text()).to.not.contain("Anabelle")
+      expect(wrapper).to.include.text("Rigatoni")
+      expect(wrapper).to.include.text("Cody")
+      expect(wrapper).to.not.include.text("Frankie")
+      expect(wrapper).to.not.include.text("Anabelle")
     })
   })
 
@@ -86,14 +89,14 @@ describe("Tier 3: Root component", () => {
     mockAxios.onGet("/api/pets").reply(200, samplePets)
     const wrapper = mount(<Root />)
 
-    expect(wrapper.text()).to.contain("Loading")
+    expect(wrapper).to.include.text("Loading")
     await waitForExpect(() => {
       wrapper.update()
-      expect(wrapper.text()).to.not.contain("Loading")
-      expect(wrapper.text()).to.not.contain("Rigatoni")
-      expect(wrapper.text()).to.not.contain("Cody")
-      expect(wrapper.text()).to.contain("Frankie")
-      expect(wrapper.text()).to.contain("Anabelle")
+      expect(wrapper).to.not.include.text("Loading")
+      expect(wrapper).to.not.include.text("Rigatoni")
+      expect(wrapper).to.not.include.text("Cody")
+      expect(wrapper).to.include.text("Frankie")
+      expect(wrapper).to.include.text("Anabelle")
     })
   })
 
@@ -101,12 +104,13 @@ describe("Tier 3: Root component", () => {
     mockAxios.onGet("/api/pets").reply(500)
     const wrapper = mount(<Root />)
 
-    expect(wrapper.text()).to.not.contain("Error")
+    expect(wrapper).to.not.include.text("Error")
     await waitForExpect(() => {
       wrapper.update()
-      expect(wrapper.text()).to.contain("Error")
-      expect(wrapper.text()).to.not.contain("Loading")
-      expect(wrapper.text()).to.not.contain("Rigatoni")
+      expect(wrapper).to.include.text("Error")
+      expect(wrapper).to.not.include.text("Loading")
+      expect(wrapper).to.not.include.text("Cody")
+      expect(wrapper).to.not.include.text("Rigatoni")
     })
   })
 })

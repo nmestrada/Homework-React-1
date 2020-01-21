@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 import React from "react"
 import { expect } from "chai"
-import { mount } from "enzyme"
+import { shallow, mount } from "enzyme"
 
 import PetList from "../src/components/PetList"
 import { valueOf } from "./utils"
@@ -28,7 +28,7 @@ import { valueOf } from "./utils"
  * If the selected option is "dogs", render only the dogs
  */
 
-describe.only("Tier 2: PetList component", () => {
+describe("Tier 2: PetList component", () => {
   const pets = [
     {
       id: 1,
