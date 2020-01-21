@@ -5,7 +5,7 @@ import { expect } from "chai"
 import { mount } from "enzyme"
 
 import SinglePet from "../src/components/SinglePet"
-import { findButton, findFirstMatchingDiv } from "./utils"
+import { findButton } from "./utils"
 
 /**
  * Tier 1 is about
@@ -57,26 +57,23 @@ describe("Tier 1: SinglePet component", () => {
 
   it("renders a pet's name, description, and species passed in as props", () => {
     const wrapper = mount(<SinglePet pet={rigatoni} />)
-    expect(wrapper.text()).to.contain("Rigatoni")
-    expect(wrapper.text()).to.contain("A flaming hot cheetoh in feline form")
-    expect(wrapper.text()).to.contain("cat")
+    expect(wrapper).to.include.text("Rigatoni")
+    expect(wrapper).to.include.text("A flaming hot cheetoh in feline form")
+    expect(wrapper).to.include.text("cat")
   })
 
   it("renders different name, description, and species if passed different props", () => {
     const wrapper = mount(<SinglePet pet={cody} />)
-    expect(wrapper.text()).to.contain("Cody")
-    expect(wrapper.text()).to.contain("Adorable pug who loves to hug")
-    expect(wrapper.text()).to.contain("dog")
+    expect(wrapper).to.include.text("Cody")
+    expect(wrapper).to.include.text("Adorable pug who loves to hug")
+    expect(wrapper).to.include.text("dog")
   })
 
   it("renders a 'Toggle Status' button", () => {
     // The button doesn't need to "do anything" just yet. See the next test.
     const wrapper = mount(<SinglePet pet={rigatoni} />)
 
-    expect(wrapper.find("button")).to.have.length.greaterThan(0)
-    expect(
-      wrapper.containsMatchingElement(<button>Toggle Status</button>)
-    ).to.equal(true)
+    expect(wrapper).to.containMatchingElement(<button>Toggle Status</button>)
   })
 
   it("the 'Toggle Status' button toggles 'Available' to 'Adopted!'", () => {
@@ -115,24 +112,23 @@ describe("Tier 1: SinglePet component", () => {
   it("the 'Toggle Status' button toggles the 'adopted' css class", () => {
     const wrapper = mount(<SinglePet pet={rigatoni} />)
     const toggleAdoptedButton = findButton(wrapper, "Toggle Status")
-    const containerDiv = findFirstMatchingDiv(wrapper)
 
     // At first, the container div should not have the adopted class applied
-    expect(containerDiv).to.have.className("single-pet")
-    expect(containerDiv).to.not.have.className("adopted")
+    expect(wrapper).to.have.className("single-pet")
+    expect(wrapper).to.not.have.className("adopted")
 
     // Click the button once
     toggleAdoptedButton.simulate("click")
 
     // We should see both single-pet AND adopted class applied now
-    expect(containerDiv).to.have.className("single-pet")
-    expect(containerDiv).to.have.className("adopted")
+    expect(wrapper).to.have.className("single-pet")
+    expect(wrapper).to.have.className("adopted")
 
     // Click the button a second time
     toggleAdoptedButton.simulate("click")
 
     // No adopted class anymore
-    expect(containerDiv).to.have.className("single-pet")
-    expect(containerDiv).to.not.have.className("adopted")
+    expect(wrapper).to.have.className("single-pet")
+    expect(wrapper).to.not.have.className("adopted")
   })
 })
