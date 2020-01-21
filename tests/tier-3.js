@@ -27,7 +27,7 @@ const getRequests = () => mockAxios.history.get
  * While the data is loading, display a simple "Loading" message
  */
 
-describe.only("Tier 3: Root component", () => {
+describe("Tier 3: Root component", () => {
   afterEach(() => mockAxios.reset())
 
   it("fetches data from /api/pets once after Root first mounts", async () => {
