@@ -28,7 +28,7 @@ import { valueOf } from "./utils"
  * If the selected option is "dogs", render only the dogs
  */
 
-describe.only("Tier 2: PetList component", () => {
+describe("Tier 2: PetList component", () => {
   const pets = [
     {
       id: 1,
