@@ -26,6 +26,7 @@ class SinglePet extends React.Component {
         <div>{description}</div>
         <div>{species}</div>
         <div>{adopted ? "Adopted!" : "Available for adoption"}</div>
+        <hr />
         <button type="button" onClick={this.handleClick}>
           Toggle Adopted
         </button>
