@@ -25,13 +25,13 @@ const deleteRequests = () => mockAxios.history.delete
  * After the server confirms the successful deletion, call handleDelete
  *
  * Edit the Root component in src/components/Root.js
- * Add a handleDelete function to Root (it can be empty for now)
+ * Add a handleDelete function to Root
  * Pass handleDelete to DeletePet (through PetList and each SinglePet)
  * Root's handleDelete function should do one of two things:
  *   1. Re-fetch the data from the server (e.g. GET /api/pets)
  *   2. Remove the deleted pet from state (without making a network request)
- * If it all works correctly, you should be able to click "Delete" and the pet
- * will disappear from the list.
+ * If everything works correctly, you should be able to click "Delete" and the
+ * pet will disappear from the list.
  */
 
 describe("Tier 4: DeletePet component", () => {
@@ -41,23 +41,25 @@ describe("Tier 4: DeletePet component", () => {
     const wrapper = mount(<DeletePet petId={1} handleDelete={() => {}} />)
 
     expect(wrapper.find("button")).to.have.lengthOf(1)
-    expect(
-      wrapper.containsMatchingElement(
-        <button className="delete-pet">Delete</button>
-      )
-    ).to.equal(true)
+    expect(wrapper).to.containMatchingElement(
+      <button className="delete-pet">Delete</button>
+    )
   })
 
   it("sends a delete request to /api/pets/:petId when user clicks the button", async () => {
     mockAxios.onDelete("/api/pets/1").reply(204)
     const wrapper = mount(<DeletePet petId={1} handleDelete={() => {}} />)
 
+    const deletePetButton = wrapper.find("button")
+
     expect(deleteRequests()).to.have.lengthOf(0)
 
-    wrapper.simulate("click")
+    deletePetButton.simulate("click")
 
     await waitForExpect(() => {
       expect(deleteRequests()).to.have.lengthOf(1)
+      const [deleteRequest] = deleteRequests()
+      expect(deleteRequest).to.deep.include({ url: "/api/pets/1" })
     })
   })
 
@@ -68,10 +70,12 @@ describe("Tier 4: DeletePet component", () => {
       <DeletePet petId={2} handleDelete={handleDeleteSpy} />
     )
 
-    wrapper.simulate("click")
+    const deletePetButton = wrapper.find("button")
+
+    deletePetButton.simulate("click")
 
     await waitForExpect(() => {
-      expect(handleDeleteSpy.called).to.equal(true)
+      expect(handleDeleteSpy).to.have.callCount(1)
     })
   })
 
@@ -82,7 +86,9 @@ describe("Tier 4: DeletePet component", () => {
       <DeletePet petId={3} handleDelete={handleDeleteSpy} />
     )
 
-    wrapper.simulate("click")
+    const deletePetButton = wrapper.find("button")
+
+    deletePetButton.simulate("click")
 
     await waitForExpect(() => {
       expect(handleDeleteSpy.called).to.equal(false)
@@ -127,8 +133,8 @@ describe("Tier 4: DeletePet component", () => {
     // First, we'll wait for Root to fetch the list of pets from /api/pets
     await waitForExpect(async () => {
       wrapper.update()
-      expect(wrapper.html()).to.contain("Rigatoni")
-      expect(wrapper.html()).to.contain("Cody")
+      expect(wrapper).to.include.text("Rigatoni")
+      expect(wrapper).to.include.text("Cody")
 
       // Find the delete button for Rigatoni and click it.
       const deletePet1Button = wrapper.find(".delete-pet").at(0)
@@ -137,10 +143,11 @@ describe("Tier 4: DeletePet component", () => {
       // Next, we'll wait for Root to update it's state (either by making
       // anoother GET request or by simply removing the pet from state) and
       // re-rendering.
-      await waitForExpect(async () => {
+      await waitForExpect(() => {
+        wrapper.update()
         expect(deleteRequests()).to.have.lengthOf(1)
-        expect(wrapper.html()).to.not.contain("Rigatoni")
-        expect(wrapper.html()).to.contain("Cody")
+        expect(wrapper).to.not.include.text("Rigatoni")
+        expect(wrapper).to.include.text("Cody")
       })
     })
   })

@@ -58,8 +58,8 @@ describe("Tier 3: Root component", () => {
       }
     ]
     // For the purposes of this test, any axios request to /api/pets will
-    // respond with the sample pets. It WILL NOT reach the express server defined
-    // in /app.js
+    // respond with the sample pets (above). It WILL NOT reach the express
+    // routes defined in /app.js
     mockAxios.onGet("/api/pets").reply(200, samplePets)
     const wrapper = mount(<Root />)
 
