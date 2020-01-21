@@ -59,7 +59,7 @@ const Root = () => {
       }
     })()
   }, [fetchCounter])
-  const deletePet = petId => {
+  const removePet = petId => {
     setPets(pets.filter(pet => pet.id !== petId))
   }
   // const refetch = () => setFetchCounter(fetchCounter + 1)
@@ -68,7 +68,7 @@ const Root = () => {
       {error && <div>Error: {error}</div>}
       {loading && <div>Loading</div>}
       <h1>Adoption Center</h1>
-      <PetList pets={pets} handleDelete={deletePet} />
+      <PetList pets={pets} handleDelete={removePet} />
       {/* <PetList pets={pets} handleDelete={refetch} /> */}
     </>
   )

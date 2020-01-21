@@ -6,7 +6,9 @@ import { mount } from "enzyme"
 import waitForExpect from "wait-for-expect"
 import Root from "../src/components/Root"
 import DeletePet from "../src/components/DeletePet"
+import SinglePet from "../src/components/SinglePet"
 import { mockAxios } from "./setup"
+import { findSinglePet } from "./utils"
 
 const deleteRequests = () => mockAxios.history.delete
 
@@ -40,7 +42,6 @@ describe("Tier 4: DeletePet component", () => {
   it("renders a 'Delete' button with delete-pet class", () => {
     const wrapper = mount(<DeletePet petId={1} handleDelete={() => {}} />)
 
-    expect(wrapper.find("button")).to.have.lengthOf(1)
     expect(wrapper).to.containMatchingElement(
       <button className="delete-pet">Delete</button>
     )
@@ -76,6 +77,8 @@ describe("Tier 4: DeletePet component", () => {
 
     await waitForExpect(() => {
       expect(handleDeleteSpy).to.have.callCount(1)
+      const [deleteRequest] = deleteRequests()
+      expect(deleteRequest).to.deep.include({ url: "/api/pets/2" })
     })
   })
 
@@ -95,59 +98,72 @@ describe("Tier 4: DeletePet component", () => {
     })
   })
 
-  // There's quite a lot going on in this test! Read the comments carefully to
-  // get a solid grasp on what's going on.
-  it("removes the deleted pet", async () => {
-    const samplePets = [
-      {
-        id: 1,
-        name: "Rigatoni",
-        description: "A flaming hot cheetoh in feline form",
-        species: "cat"
-      },
-      {
-        id: 2,
-        name: "Cody",
-        description: "Adorable pug who loves to hug",
+  // The following tests are about integrating this DeletePet component into
+  // the rest of the app. You may need to edit the Root, PetList, SinglePet,
+  // _and_ DeletePet components.
+  describe("Integration", () => {
+    it("SinglePet renders DeletePet", async () => {
+      const anabelle = {
+        id: 4,
+        name: "Anabelle",
+        description: "Might eat your couch",
         species: "dog"
       }
-    ]
-    // For this test, we'll have to manipulate how mockAxios respondes to
-    // requests. The first time you make a GET request to /api/pets, you'll get
-    // both sample pets. If you make a DELETE request to /api/pets/1, it'll
-    // respond with 204 (success!). Then, on second GET request, you'll get only
-    // the second pet.
-    mockAxios.resetHandlers()
-    mockAxios
-      .onGet("/api/pets")
-      .replyOnce(200, samplePets)
-      .onDelete("/api/pets/1")
-      .reply(204)
-      .onGet("/api/pets")
-      .replyOnce(200, samplePets.slice(1))
+      const wrapper = mount(<SinglePet pet={anabelle} />)
 
-    // This test may require some changes to Root, PetList, SinglePet AND
-    // DeletePet.
-    const wrapper = mount(<Root />)
+      expect(wrapper).containMatchingElement(
+        <button className="delete-pet">Delete</button>
+      )
+    })
 
-    // First, we'll wait for Root to fetch the list of pets from /api/pets
-    await waitForExpect(async () => {
-      wrapper.update()
-      expect(wrapper).to.include.text("Rigatoni")
-      expect(wrapper).to.include.text("Cody")
+    it("DeletePet removes the deleted pet when clicked", async () => {
+      const samplePets = [
+        {
+          id: 1,
+          name: "Rigatoni",
+          description: "A flaming hot cheetoh in feline form",
+          species: "cat"
+        },
+        {
+          id: 2,
+          name: "Cody",
+          description: "Adorable pug who loves to hug",
+          species: "dog"
+        }
+      ]
+      // The first time you make a GET request to /api/pets, you'll get
+      // both sample pets (above). If you make a DELETE request to /api/pets/1,
+      // it'll respond with 204 (success!). Then, on second GET request, you'll
+      // get only the second pet.
+      mockAxios.resetHandlers()
+      mockAxios
+        .onGet("/api/pets")
+        .replyOnce(200, samplePets)
+        .onDelete("/api/pets/1")
+        .reply(204)
+        .onGet("/api/pets")
+        .replyOnce(200, samplePets.slice(1))
 
-      // Find the delete button for Rigatoni and click it.
-      const deletePet1Button = wrapper.find(".delete-pet").at(0)
-      deletePet1Button.simulate("click")
+      const wrapper = mount(<Root />)
 
-      // Next, we'll wait for Root to update it's state (either by making
-      // anoother GET request or by simply removing the pet from state) and
-      // re-rendering.
-      await waitForExpect(() => {
+      // First, we'll wait for Root to fetch the list of pets from /api/pets
+      await waitForExpect(async () => {
         wrapper.update()
-        expect(deleteRequests()).to.have.lengthOf(1)
-        expect(wrapper).to.not.include.text("Rigatoni")
+        expect(wrapper).to.include.text("Rigatoni")
         expect(wrapper).to.include.text("Cody")
+
+        const singlePetRigatoni = findSinglePet(wrapper, "Rigatoni")
+        const deletePetButton = singlePetRigatoni.find(".delete-pet")
+        deletePetButton.simulate("click")
+
+        // Next, we'll wait for Root to update it's state (either by making
+        // anoother GET request to refetch or by removing the pet from state)
+        await waitForExpect(() => {
+          wrapper.update()
+          expect(deleteRequests()).to.have.lengthOf(1)
+          expect(wrapper).to.not.include.text("Rigatoni")
+          expect(wrapper).to.include.text("Cody")
+        })
       })
     })
   })
