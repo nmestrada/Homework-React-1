@@ -56,7 +56,7 @@ describe("Tier 2: PetList component", () => {
     }
   ]
 
-  it("renders a list of SinglePets", () => {
+  xit("renders a list of SinglePets", () => {
     const wrapper = mount(<PetList pets={pets} />)
     expect(wrapper).to.include.text("Rigatoni")
     expect(wrapper).to.include.text("Cody")
@@ -64,7 +64,7 @@ describe("Tier 2: PetList component", () => {
     expect(wrapper).to.include.text("Anabelle")
   })
 
-  it("renders a select dropdown with three options: all, cats, dogs", () => {
+  xit("renders a select dropdown with three options: all, cats, dogs", () => {
     const wrapper = mount(<PetList pets={pets} />)
     const select = wrapper.find("select")
     const options = select.find("option")
@@ -73,7 +73,7 @@ describe("Tier 2: PetList component", () => {
     expect(optionValues).to.include.members(["all", "cats", "dogs"])
   })
 
-  it("when the filter is set to 'cats', only render SinglePets with cats", () => {
+  xit("when the filter is set to 'cats', only render SinglePets with cats", () => {
     const wrapper = mount(<PetList pets={pets} />)
 
     // By default, the value of select should be "all"
@@ -95,7 +95,7 @@ describe("Tier 2: PetList component", () => {
     expect(wrapper).to.not.include.text("Anabelle")
   })
 
-  it("when the filter is set to 'dogs', only render SinglePets with dogs", () => {
+  xit("when the filter is set to 'dogs', only render SinglePets with dogs", () => {
     const wrapper = mount(<PetList pets={pets} />)
 
     // By default, the value of select should be "all"

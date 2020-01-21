@@ -37,7 +37,7 @@ const deleteRequests = () => mockAxios.history.delete
 describe("Tier 4: DeletePet component", () => {
   afterEach(() => mockAxios.reset())
 
-  it("renders a 'Delete' button with delete-pet class", () => {
+  xit("renders a 'Delete' button with delete-pet class", () => {
     const wrapper = mount(<DeletePet petId={1} handleDelete={() => {}} />)
 
     expect(wrapper.find("button")).to.have.lengthOf(1)
@@ -46,7 +46,7 @@ describe("Tier 4: DeletePet component", () => {
     )
   })
 
-  it("sends a delete request to /api/pets/:petId when user clicks the button", async () => {
+  xit("sends a delete request to /api/pets/:petId when user clicks the button", async () => {
     mockAxios.onDelete("/api/pets/1").reply(204)
     const wrapper = mount(<DeletePet petId={1} handleDelete={() => {}} />)
 
@@ -63,7 +63,7 @@ describe("Tier 4: DeletePet component", () => {
     })
   })
 
-  it("calls props.handleDelete if the delete request is successful", async () => {
+  xit("calls props.handleDelete if the delete request is successful", async () => {
     mockAxios.onDelete("/api/pets/2").reply(204)
     const handleDeleteSpy = spy()
     const wrapper = mount(
@@ -79,7 +79,7 @@ describe("Tier 4: DeletePet component", () => {
     })
   })
 
-  it("does not call props.handleDelete if the delete request fails", async () => {
+  xit("does not call props.handleDelete if the delete request fails", async () => {
     mockAxios.onDelete("/api/pets/3").reply(500)
     const handleDeleteSpy = spy()
     const wrapper = mount(
@@ -97,7 +97,7 @@ describe("Tier 4: DeletePet component", () => {
 
   // There's quite a lot going on in this test! Read the comments carefully to
   // get a solid grasp on what's going on.
-  it("removes the deleted pet", async () => {
+  xit("removes the deleted pet", async () => {
     const samplePets = [
       {
         id: 1,
