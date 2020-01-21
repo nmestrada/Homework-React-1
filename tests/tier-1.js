@@ -40,7 +40,7 @@ import { findButton } from "./utils"
  * only have the class single-pet.
  */
 
-describe.only("Tier 1: SinglePet component", () => {
+describe("Tier 1: SinglePet component", () => {
   const rigatoni = {
     id: 1,
     name: "Rigatoni",

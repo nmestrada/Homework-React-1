@@ -28,7 +28,7 @@ import { valueOf } from "./utils"
  * If the selected option is "dogs", render only the dogs
  */
 
-describe("Tier 2: PetList component", () => {
+describe.only("Tier 2: PetList component", () => {
   const pets = [
     {
       id: 1,
@@ -56,7 +56,7 @@ describe("Tier 2: PetList component", () => {
     }
   ]
 
-  xit("renders a list of SinglePets", () => {
+  it("renders a list of SinglePets", () => {
     const wrapper = mount(<PetList pets={pets} />)
     expect(wrapper).to.include.text("Rigatoni")
     expect(wrapper).to.include.text("Cody")
@@ -64,7 +64,7 @@ describe("Tier 2: PetList component", () => {
     expect(wrapper).to.include.text("Anabelle")
   })
 
-  xit("renders a select dropdown with three options: all, cats, dogs", () => {
+  it("renders a select dropdown with three options: all, cats, dogs", () => {
     const wrapper = mount(<PetList pets={pets} />)
     const select = wrapper.find("select")
     const options = select.find("option")
@@ -73,7 +73,7 @@ describe("Tier 2: PetList component", () => {
     expect(optionValues).to.include.members(["all", "cats", "dogs"])
   })
 
-  xit("when the filter is set to 'cats', only render SinglePets with cats", () => {
+  it("when the filter is set to 'cats', only render SinglePets with cats", () => {
     const wrapper = mount(<PetList pets={pets} />)
 
     // By default, the value of select should be "all"
@@ -95,7 +95,7 @@ describe("Tier 2: PetList component", () => {
     expect(wrapper).to.not.include.text("Anabelle")
   })
 
-  xit("when the filter is set to 'dogs', only render SinglePets with dogs", () => {
+  it("when the filter is set to 'dogs', only render SinglePets with dogs", () => {
     const wrapper = mount(<PetList pets={pets} />)
 
     // By default, the value of select should be "all"
