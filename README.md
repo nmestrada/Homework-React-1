@@ -1,6 +1,6 @@
 # React Homework
 
-[📺 Screencast Link](#youtube-link-goes-here)
+[📺 Screencast Link Goes Here](#youtube-link-goes-here)
 
 ## Getting Started
 
