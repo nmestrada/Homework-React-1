@@ -20,20 +20,13 @@ const deleteRequests = () => mockAxios.history.delete
  */
 
 /** Instructions:
- * Edit the DeleteButton component in src/components/DeleteButton.js
+ * Edit the DeletePet component in src/components/DeletePet.js
  * Add a click handler to the button
- * In the click handler, send a DELETE request to /api/pets/ID
- * NOTE: DeletePet will be passed petId and handleDelete as a prop
+ * In the click handler, send a DELETE request to /api/pets/:petId
+ * NOTE: DeletePet will be passed petId and handleDelete as props
  * After the server confirms the successful deletion, call handleDelete
  *
- * Edit the Root component in src/components/Root.js
- * Add a handleDelete function to Root
- * Pass handleDelete to DeletePet (through PetList and each SinglePet)
- * Root's handleDelete function should do one of two things:
- *   1. Re-fetch the data from the server (e.g. GET /api/pets)
- *   2. Remove the deleted pet from state (without making a network request)
- * If everything works correctly, you should be able to click "Delete" and the
- * pet will disappear from the list.
+ * See Integration below for more instructions
  */
 
 describe("Tier 4: DeletePet component", () => {
@@ -60,7 +53,9 @@ describe("Tier 4: DeletePet component", () => {
     await waitForExpect(() => {
       expect(deleteRequests()).to.have.lengthOf(1)
       const [deleteRequest] = deleteRequests()
-      expect(deleteRequest).to.deep.include({ url: "/api/pets/1" })
+      expect(deleteRequest).to.deep.include({
+        url: "/api/pets/1"
+      })
     })
   })
 
@@ -78,7 +73,9 @@ describe("Tier 4: DeletePet component", () => {
     await waitForExpect(() => {
       expect(handleDeleteSpy).to.have.callCount(1)
       const [deleteRequest] = deleteRequests()
-      expect(deleteRequest).to.deep.include({ url: "/api/pets/2" })
+      expect(deleteRequest).to.deep.include({
+        url: "/api/pets/2"
+      })
     })
   })
 
@@ -98,9 +95,18 @@ describe("Tier 4: DeletePet component", () => {
     })
   })
 
-  // The following tests are about integrating this DeletePet component into
-  // the rest of the app. You may need to edit the Root, PetList, SinglePet,
-  // _and_ DeletePet components.
+  /** Integration Instructions:
+   * Edit the SinglePet, Root, and PetList components
+   * SinglePet should render DeletePet (remember to pass the correct petId)
+   * Add a handleDelete function to Root
+   * Root's handleDelete function should do one of two things -- you decide:
+   *   1. Re-fetch the data from the server (e.g. GET /api/pets)
+   *   2. Remove the provided pet from state (without making a network request)
+   * Pass handleDelete to DeletePet (through PetList and each SinglePet)
+   *
+   * If everything works correctly, you should be able to click "Delete" and the
+   * pet will disappear from the list.
+   */
   describe("Integration", () => {
     xit("SinglePet renders DeletePet", async () => {
       const anabelle = {
@@ -131,10 +137,13 @@ describe("Tier 4: DeletePet component", () => {
           species: "dog"
         }
       ]
-      // The first time you make a GET request to /api/pets, you'll get
-      // both sample pets (above). If you make a DELETE request to /api/pets/1,
-      // it'll respond with 204 (success!). Then, on second GET request, you'll
-      // get only the second pet.
+      /**
+       * The mockAxios setup below is only relevant if you've taken the
+       * "refetch after delete" approach. The first time you make a GET request
+       * to /api/pets, you'll get both sample pets (above). If you make a DELETE
+       * request to /api/pets/1, it'll respond with 204 (success!). Then, on a
+       * second GET request, you'll get only the second pet.
+       */
       mockAxios.resetHandlers()
       mockAxios
         .onGet("/api/pets")

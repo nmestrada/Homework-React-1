@@ -1,6 +1,5 @@
 /* eslint-env mocha */
 import React from "react"
-// import { render, cleanup, fireEvent } from "@testing-library/react"
 import { expect } from "chai"
 import { mount } from "enzyme"
 
