@@ -137,11 +137,13 @@ describe("Tier 4: DeletePet component", () => {
           species: "dog"
         }
       ]
-      // The first time you make a GET request to /api/pets, you'll get
-      // both sample pets (above). If you make a DELETE request to /api/pets/1,
-      // it'll respond with 204 (success!). Then, on second GET request, you'll
-      // get only the second pet. This is only relevant if you've taken the
-      // "refetch after delete" approach.
+      /**
+       * The mockAxios setup below is only relevant if you've taken the
+       * "refetch after delete" approach. The first time you make a GET request
+       * to /api/pets, you'll get both sample pets (above). If you make a DELETE
+       * request to /api/pets/1, it'll respond with 204 (success!). Then, on a
+       * second GET request, you'll get only the second pet.
+       */
       mockAxios.resetHandlers()
       mockAxios
         .onGet("/api/pets")
