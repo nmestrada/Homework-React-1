@@ -64,6 +64,7 @@ describe("Tier 3: Root component", () => {
     const wrapper = mount(<Root />)
 
     await waitForExpect(() => {
+      wrapper.update()
       expect(wrapper).to.include.text("Rigatoni")
       expect(wrapper).to.include.text("Cody")
       expect(wrapper).to.not.include.text("Frankie")

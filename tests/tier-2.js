@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 import React from "react"
 import { expect } from "chai"
-import { shallow, mount } from "enzyme"
+import { mount } from "enzyme"
 
 import PetList from "../src/components/PetList"
 import { valueOf } from "./utils"
@@ -78,17 +78,14 @@ describe("Tier 2: PetList component", () => {
 
     // By default, the value of select should be "all"
     let select = wrapper.find("select")
-    expect(select).to.have.value("all")
 
     // Simulate a user clicking the dropdown menu and selecting cats
     select.simulate("change", { target: { value: "cats" } })
 
     // Now, the value of select should be "cats"
     select = wrapper.find("select")
-    expect(select).to.have.value("cats")
 
     // We should expect to see Rigatoni and Frankie, but not Cody or Anabelle
-    // expect(wrapper).to.include.text("Rigatoni")
     expect(wrapper).to.include.text("Rigatoni")
     expect(wrapper).to.not.include.text("Cody")
     expect(wrapper).to.include.text("Frankie")
@@ -111,7 +108,6 @@ describe("Tier 2: PetList component", () => {
 
     // Now, the value of select should be "dogs"
     select = wrapper.find("select")
-    expect(select).to.have.value("dogs")
 
     // We should expect to see Cody and Anabelle, but not Rigatoni or Frankie
     expect(wrapper).to.not.include.text("Rigatoni")

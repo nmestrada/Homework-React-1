@@ -63,11 +63,7 @@ const PetList = props => {
     <>
       <div>
         <label htmlFor="speciesFilter">Filter by species: </label>
-        <select
-          onChange={handleSelectChange}
-          value={filter}
-          name="speciesFilter"
-        >
+        <select onChange={handleSelectChange} name="speciesFilter">
           <option>all</option>
           <option>cats</option>
           <option>dogs</option>
@@ -75,7 +71,6 @@ const PetList = props => {
       </div>
       <div className="pet-list">
         {pets.map(pet => {
-          // return <SinglePet key={pet.id} pet={pet} deletePet={deletePet} />
           return (
             <SinglePet key={pet.id} pet={pet} handleDelete={handleDelete} />
           )
