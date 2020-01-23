@@ -1,6 +1,6 @@
-export const valueOf = reactWrapper => {
-  if (reactWrapper.get(0).props.value) return reactWrapper.get(0).props.value
-  return reactWrapper.text()
+export const valueOf = wrapper => {
+  if (wrapper.get(0).props.value) return wrapper.get(0).props.value
+  return wrapper.text()
 }
 
 export const findButton = (wrapper, text) => {
