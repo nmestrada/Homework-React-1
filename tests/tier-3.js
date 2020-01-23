@@ -29,7 +29,7 @@ const getRequests = () => mockAxios.history.get
 describe("Tier 3: Root component", () => {
   afterEach(() => mockAxios.reset())
 
-  xit("fetches data from /api/pets once after Root first mounts", async () => {
+  it("fetches data from /api/pets once after Root first mounts", async () => {
     expect(getRequests()).to.have.lengthOf(0)
 
     mount(<Root />)
@@ -39,7 +39,7 @@ describe("Tier 3: Root component", () => {
     })
   })
 
-  xit("renders PetList with data retrieved from /api/pets", async () => {
+  it("renders PetList with data retrieved from /api/pets", async () => {
     const samplePets = [
       {
         id: 1,
@@ -61,6 +61,7 @@ describe("Tier 3: Root component", () => {
     const wrapper = mount(<Root />)
 
     await waitForExpect(() => {
+      wrapper.update()
       expect(wrapper.text()).to.contain("Rigatoni")
       expect(wrapper.text()).to.contain("Cody")
       expect(wrapper.text()).to.not.contain("Frankie")
@@ -68,7 +69,7 @@ describe("Tier 3: Root component", () => {
     })
   })
 
-  xit("displays loading message while waiting for the data", async () => {
+  it("displays loading message while waiting for the data", async () => {
     const samplePets = [
       {
         id: 1,
@@ -97,7 +98,7 @@ describe("Tier 3: Root component", () => {
     })
   })
 
-  xit("displays error message if the server responds with status code 500", async () => {
+  it("displays error message if the server responds with status code 500", async () => {
     mockAxios.onGet("/api/pets").reply(500)
     const wrapper = mount(<Root />)
 

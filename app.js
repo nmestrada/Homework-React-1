@@ -27,7 +27,7 @@ app.get("/api/pets", (req, res) => {
   // }, 1000)
 
   // This is how this endpoint SHOULD behave:
-  res.json(getPets())
+  res.send(getPets())
 })
 
 // POST a new pet
