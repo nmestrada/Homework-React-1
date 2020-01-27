@@ -32,7 +32,7 @@ const deleteRequests = () => mockAxios.history.delete
 describe("Tier 4: DeletePet component", () => {
   afterEach(() => mockAxios.reset())
 
-  xit("renders a 'Delete' button with delete-pet class", () => {
+  it("renders a 'Delete' button with delete-pet class", () => {
     const wrapper = mount(<DeletePet petId={1} handleDelete={() => {}} />)
 
     expect(wrapper).to.containMatchingElement(
@@ -40,7 +40,7 @@ describe("Tier 4: DeletePet component", () => {
     )
   })
 
-  xit("sends a delete request to /api/pets/:petId when user clicks the button", async () => {
+  it("sends a delete request to /api/pets/:petId when user clicks the button", async () => {
     mockAxios.onDelete("/api/pets/1").reply(204)
     const wrapper = mount(<DeletePet petId={1} handleDelete={() => {}} />)
 
@@ -59,7 +59,7 @@ describe("Tier 4: DeletePet component", () => {
     })
   })
 
-  xit("calls props.handleDelete if the delete request is successful", async () => {
+  it("calls props.handleDelete if the delete request is successful", async () => {
     mockAxios.onDelete("/api/pets/2").reply(204)
     const handleDeleteSpy = spy()
     const wrapper = mount(
@@ -79,7 +79,7 @@ describe("Tier 4: DeletePet component", () => {
     })
   })
 
-  xit("does not call props.handleDelete if the delete request fails", async () => {
+  it("does not call props.handleDelete if the delete request fails", async () => {
     mockAxios.onDelete("/api/pets/3").reply(500)
     const handleDeleteSpy = spy()
     const wrapper = mount(
@@ -108,7 +108,7 @@ describe("Tier 4: DeletePet component", () => {
    * pet will disappear from the list.
    */
   describe("Integration", () => {
-    xit("SinglePet renders DeletePet", async () => {
+    it("SinglePet renders DeletePet", async () => {
       const anabelle = {
         id: 4,
         name: "Anabelle",
@@ -122,7 +122,7 @@ describe("Tier 4: DeletePet component", () => {
       )
     })
 
-    xit("DeletePet removes the deleted pet when clicked", async () => {
+    it("DeletePet removes the deleted pet when clicked", async () => {
       const samplePets = [
         {
           id: 1,
